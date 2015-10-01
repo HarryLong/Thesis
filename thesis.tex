@@ -1,20 +1,55 @@
-\documentclass[a4paper,11pt]{report}
+\documentclass[a4paper,12pt]{report}
 
 \usepackage{fullpage}
 \usepackage{breakcites}
 \usepackage{todonotes}
 \usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{fixltx2e}
+\usepackage{titling}
+\usepackage{enumerate}
 \graphicspath{ {images/} }
 
-\bibliographystyle{plain}
+\widowpenalty 10000
+\clubpenalty 10000
 
 \begin{document}
 \nocite{*}
 
-\title{Procedurally generated realistic virtual rural worlds}
-\author{Harry Long}
-\date{Today}
-\maketitle
+\begin{titlepage}
+\begin{center}
+\Huge
+\textbf{Using procedural methods to generate realistic virtual rural worlds}
+\includegraphics[width = 400px]{uct_logo.jpg} \\
+\large
+\vfill
+\emph{Minor Dissertation presented in partial fulfilment of the requirements for the degree of Master of Science in Computer Science} \\
+\normalsize
+\vfill
+by \\
+\Large
+\vfill
+\textbf{Harry Long} \\
+\normalsize
+\vfill
+Supervised by: \\
+\large
+\vfill
+James Gain and Marie-Paul Cani \\
+\normalsize
+\vfill
+February 2016
+\end{center}
+\end{titlepage}
+
+\chapter*{}
+\begin{center}
+\begin{minipage}{.6\textwidth}
+\Large
+\emph{I know the meaning of plagiarism and declare that all of the work in this document, save for that which is properly acknowledged, is my own.}
+\normalsize
+\end{minipage}
+\end{center}
 
 \tableofcontents
 \listoffigures
@@ -22,5 +57,11 @@
 
 \include{Introduction/intro}
 
+\include{Background/background}
+\include{Background/terrain}
+\include{Background/rivers_and_streams}
+\include{Background/vegetation}
+
+\bibliographystyle{alpha}
 \bibliography{MyCollection}{}
 \end{document}
