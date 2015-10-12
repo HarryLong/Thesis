@@ -1,3 +1,40 @@
 \section{Rivers \& Streams}
 
-Rivers and Streams
+KELLEY ET AL. --> Terrain simulation using a model of stream erosion
+
+In the work by Kelly et al. the user specifies, on a horizontal plane, the terrain outline along with the main trunk stream. The terrain outline is used to configure the terrain extremities once ported to a 3 dimensional space. The main trunk stream specifies the path which the highest order water stream should follow on the resulting terrain.\\
+Given the terrain outline and the position of the initial main trunk stream, the system calculates the drainage area the stream is responsible for. If this value surpasses a preconfigured constant, the stream will be split to form new streams, each channelling a smaller drainage area. This constant depends on the type of soil as resistant materials (e.g. stone) will be stronger and less susceptible to splitting than weaker materials (e.g. clay). This splitting process is repeated iteratively until a balance is found where each stream is able to channel their associated drainage area. After which a plausible elevation is calculated for each junction and, subsequently, a plausible terrain generated.
+
+
+Derzapf ET AL. --> RIVER NETWORKS FOR INSTANT PROCEDURAL PLANETS
+
+In their work, Derzapf et al. permit the creation of procedural planets at any scale in real-time. To do so, only a rough representation of the planet is generated and detailed content is produced on-the-fly when the user navigates through it. This has the advantage of keeping memory usage minimum whilst not compromising on realism. 
+To initialise high-level planets, the system first creates the base mesh with all contained vertices representing the sea. The system then selects a given number of seed continent vertices and allows them to spread until a user-configured land-to-water ratio is reached. At this point, the "rough" planet is a mesh with each vertex assigned one of two labels: continent or sea. 
+
+First river is generated from the mouth with the given formula. Then surrounding continental altitudes are calculated in able to form a ridge and respect the rule that the river must follow the steapest path. Then remaining continental vertices are generated accordingly.. Don't speak about how they are generated... 
+
+the system randomly assigns fixed number of seed continent vertices to spread. The process of changing a 
+
+The continent seeding process simply involves changing the label of a vertex from sea to continent.
+
+  noticeable close up content will 
+
+render from of the content to render  depending on the distance from the camera. 
+
+ dynamically modify the level of detail at which content is generated; The rendering quality of content further away from the camera will be reduced to enable high quality rendering 
+
+ Close-up content will be rendered with lots of detail but further content wicontent is rendered at depending on the distance from the camera. 
+
+reduce the level of detail  render content in more detail when it is closer to the camera but re
+
+Another technique they use to minimize computational expense whilst reducing the impact on visual realism is to render content 
+
+in more detail when it is closer to the camera 
+
+This ensures memory requirements are manageable as the entire terrain does not To maximize visual realism whilst maintaining CPU and memory usage reasonable, rendering quality decreases . 
+
+ The system also generates content in more detail depending on how close it is to the camera.
+
+ This keeps memory requirements constant.
+
+ generate content dynamically whilst the user navigates the virtual world, rendering elements in more detail 
