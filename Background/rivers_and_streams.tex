@@ -70,18 +70,20 @@ Whether modelling erosion indirectly like in the work by Kelley et al. \cite{Kel
 
 In order to determine where on the terrain rivers will appear, work by Soon Tee \cite{Teoh2008} performs a rainfall simulation to determine both the location and quantity of water at different points on the terrain followed by a gravitation simulation (mentioned above) to determine the course of the water on the terrain. The rainfall simulation requires the user to specify wind direction and maximum rainfall. Then, starting from the source of the wind, the system simulates clouds moving in the direction of the wind with a configured velocity. When contact is made with points on the terrain, water is dropped on the corresponding cell. The amount of water dropped increases with altitude and zeroes out when all available rainfall is depleted. \\
 
-Simulating rainfall in order to determine where water will fall on the terrain and therefore where river networks will form is an original approach and one that successfully generates visually plausible terrains. Requiring only wind direction, wind velocity and maximum rainfall from the user, the system provides a good level of automation. Determining the influence these inputs have on the resulting scene could be unintuitive, however, and require a "trial-and-error" approach. Their algorithm creates the underlying terrain in O(n) time, n representing the number of cells on the terrain.
+Simulating rainfall in order to determine where water will fall on the terrain and therefore where river networks will form is an original approach and one that successfully generates visually plausible terrains. Requiring only wind direction, wind velocity and maximum rainfall from the user, the system provides a good level of automation. Determining the influence these inputs have on the resulting scene could be unintuitive, however, and require a "trial-and-error" approach. Their algorithm creates the  terrain along with the river networks in O(n) time, n representing the number of cells on the terrain.
 
 \subsection{Heuristic-based}
 
-Heuristic approaches attempt to build river and stream networks on terrains by algorithmically reproducing key behaviours based on real-world observations. These methods most often employ a certain degree of random to avoid repetition in the resulting rivers. \\
+Heuristic approaches attempt to build river and stream networks on terrains by algorithmically reproducing key characteristics based on real-world observations. \\
 
-Derzapf et al. \cite{Derzapf2011}ah use such methods in their work on procedurally generating planets with river networks in real-time. To do so, only a very basic mesh-representation of the terrain is generated at first. When the user navigates through the virtual world, detailed content is generated on-the-fly for parts of the terrain which are close by and clearly visible to the user. This permits memory usage to me minimal whilst not compromising on realism. To ensure updates are performed in real-time, their algorithms are implemented to take use of the massively parallel architecture of GPUs. \\
-To initialise high-level planets, the system first creates the base mesh with all contained vertices representing the sea. The system then selects a given number of seed continent vertices and allows them to spread until a user-configured land-to-water ratio is reached. At this point, the base planet is a mesh with each vertex assigned one of two labels: continent or sea.\\
-Similarly to the work by \cite{Genevaux2013} et al., they first locate continental points which are on coastal edges to act as the river mouths. To do so, the system iterates through all continental vertices in pseudo-random order to find those that are adjacent to a sea vertex (i.e the coast). When such a vertex is found, it acts as the river mouth from which adjacent continental vertices chosen pseudo-randomly are connected. This is performed iteratively to form the river networks.\\
-To assign ground altitudes to the river vertices the system employs the following formula for each river vertex, starting from the river mouth:
+Derzapf et al. \cite{Derzapf2011} use such methods in their work based on procedurally generating virtual planets in real-time. To do so, only a very basic mesh-representation of the terrain is generated at first and detailed content is generated on demand as the user navigates through the virtual world. This method of adaptive rendering permits memory usage to me manageable whilst not compromising on realism. To ensure updates are performed in real-time, their algorithms are designed to make use of the massively parallel architecture of GPUs. \\
+To initialise the base representation of the planets, the system first creates the base mesh with all vertices representing the sea. The system then randomly assigns a certain number of these vertices to act as seed continent vertices to spread until a user-configured land-to-water ratio is reached.
+To place rivers, similarly to the work by \cite{Genevaux2013} et al., they first locate continental points which are on coastal edges to act as river mouths. When such a vertices are found, adjacent continental vertices are iteratively selected pseudo-randomly and connected in order to form the river network. \\
+To assign ground altitudes to connected river vertices the system employs the following formula, starting from the river mouth:
 
-$a_{v} = a_{u} + e_{a}l_{e}\xi , e_{a} = \frac{a_{max_river}}{l_{r}} $
+\begin{center}
+$a_{v} = a_{u} + e_{a}l_{e}\xi , e_{a} = \frac{a_{maxriver}}{l_{r}} $ \\
+\end{center}
 
 Where:
 \begin{itemize}
@@ -90,13 +92,15 @@ Where:
 \item $e_{a}$ is the average ground elevation.
 \item $l_{e}$ is the length of the current vertex.
 \item $\xi \in [0,1[$ is a uniformly distributed pseudo-random number.
-\item $a_{max_river}$ is the user-configured maximum river altitude.
+\item $a_{maxriver}$ is the user-configured maximum river altitude.
 \item $l_{r}$ is the current river length.
 \end{itemize}
 
 When the ground altitudes have been assigned, the following formula is used iteratively on each river vertex to assign water altitudes:
 
+\begin{center}
 $w_{v} = a_{v} + e_{w}l_{e}, e_{w} = \frac{\epsilon_{river}}{l_{cr}} $
+\end{center}
 
 Where:
 \begin{itemize}
@@ -104,17 +108,17 @@ Where:
 \item $a_{v}$ is the ground altitude of the current vertex.
 \item $e_{w}$ is the average water elevation.
 \item $l_{e}$ is the length of the current vertex.
-\item $\epsilon_{river}$ is the maximum river depth.
+\item $\epsilon_{river}$ is the user-configured maximum river depth.
 \item $l_{cr}$ is the distance from the current vertex to the river spring.
 \end{itemize}
 
-All randomness in the algorithms depends on a configured seed value, enabling virtual virtual worlds to be easily reproducible. This has the added advantage of permitting networked users to explore the same virtual world with very little data exchange. \\
+All randomness in these algorithms depend on a configured seed value enabling the virtual world to be easily reproducible.  \\
 
 \subsubsection{FRACTALS}
 
-Another way to reproduce river streams heuristically is by employing fractal-based algorithms. Such methods use recursive splitting and string rewriting to determine plausible paths for river networks. 
+Another way to reproduce river streams heuristically is by employing fractal-based algorithms. Such methods use recursive splitting and string rewriting to determine plausible river networks. 
 
-In their work, Pmsinkiewicz et al. use a fractal-based technique based on midpoint-displacement to procedurally generate plausible rivers on a terrain. Midpoint-displacement is most commonly used for procedurally generating realistic terrain height-maps as follows: Given a starting triangle representing a terrain \textit{A}, midpoint-displacement iteratively subdivides \textit{A} it into four smaller triangles. Each time new triangle vertices are created they are displaced vertically by a random offset. This process is repeated until a given recursion limit is reached. See figure \ref{Midpoint displacement} for an example of a single iteration of the process.
+In their work, Pmsinkiewicz et al. use a fractal-based technique based on midpoint-displacement to procedurally generate plausible rivers on a terrain. Midpoint-displacement is most commonly used for procedurally generating realistic terrain height-maps and works follows follows: Given a starting triangle representing a terrain \textit{A}, midpoint-displacement iteratively subdivides \textit{A} it into four smaller triangles. Each time new triangle vertices are created they are displaced vertically by a random offset. This process is repeated until a given recursion limit is reached. See figure \ref{Midpoint displacement} for an example of a single iteration of the process.
 
 \begin{figure}[h]
   \centering
@@ -123,7 +127,7 @@ In their work, Pmsinkiewicz et al. use a fractal-based technique based on midpoi
 	\caption{A single iteration of midpoint displacement for the creation of mountains \cite{Prusinkiewicz1993}. New vertices $y_{A}$, $y_{B}$ and $y_{C}$ are created and shifted vertically by a random offset}
 \end{figure}
 
-To adapt this method to the generation of rivers on the terrain, the edges of each newly formed triangle are labelled as \textit{entry}, \textit{exit} or \textit{neutral}. An entry edge defines the point of entry for the river into the triangle, an exit edge the point of exit and a neutral edge prevents the river from passing through.\\
+To adapt this method to the generation of rivers on the terrain, rather than vertically displace newly formed triangle vertices, there edges are labelled as \textit{entry}, \textit{exit} or \textit{neutral} (figure \ref{Single production of midpoint displacement adapted to river generation. Given the initial triangle, four valid split scenarios.}). An \textit{entry edge} defines the point of entry for the river into the triangle, an \textit{exit edge} the point of exit and a \textit{neutral edge} prevents the river from passing through. \\
 
 When a production step is applied and a triangle split, the following constraints must be applied:
 \begin{itemize}
@@ -133,8 +137,6 @@ When a production step is applied and a triangle split, the following constraint
 \item The newly formed edge-pairs within the triangle must either be "entry/exit" or "neutral/neutral".
 \end{itemize}
 
-See figure \ref{Single production of midpoint displacement adapted to river generation. Given the initial triangle, four valid split scenarios. } for example valid productions.
-
 \begin{figure}[h]
   \centering
 	\label{Single production of midpoint displacement adapted to river generation. Given the initial triangle, four valid split scenarios. }
@@ -142,16 +144,15 @@ See figure \ref{Single production of midpoint displacement adapted to river gene
 	\caption{Single production of midpoint displacement adapted to river generation \cite{Prusinkiewicz1993}. Given the initial triangle, four valid split scenarios.}
 \end{figure}
 
-One difficulty with this technique is to ensure two adjacent triangles are coherent once they split. That is, that the exit edge of one coincides with the entry edge of the other edge. To overcome this, the location of the vertices of an edge are used as the key to a random number generating hash table which, based on its output number, determines which segment will be crossed by the river. When complete, a river path which is guaranteed not to cross itself is created. Post-processing is then used to create realistic terrain surrounding the riverbed.\\
+One difficulty with this technique is to ensure two adjacent triangles are coherent once they split. That is, that the exit edge of one coincides with the entry edge of the other. To solve this, the location of edge vertices are used as the key to a random number generating hash table which, based on its output number, determines which segment will be crossed by the river.  \\
 
-In their work, Génevaux et al. \cite{Genevaux2013} use fractal-based string rewriting to produce the river networks on the terrain. Once points have been chosen heuristically determined to act as the river, rewriting grammar is used to perform river node expansion. Configured values of $\rho_{a}, \rho_{s} and \rho_{c}$ influence the probability of selecting production rules favouring asymmetric branching, symmetric branching and continuation without branching, respectively. The position for the new node is then selected based on the following constraints:
+In their work, Génevaux et al. \cite{Genevaux2013} use fractal-based string rewriting to produce the river networks on the terrain. Once initial nodes have been heuristically selected to act as the river mouth, rewriting grammar is used to perform river node expansion. Configured values of $\rho_{a}, \rho_{s} and \rho_{c}$ influence the probability of selecting productions favouring asymmetric branching, symmetric branching and continuation without branching, respectively. The position for the new node is then selected based on the following constraints:
 \begin{itemize}
 \item It should be at a minimum distance from existing nodes and edges.
 \item The new node should be at a greater distance from the terrain contour.
 \item The new node should be compatible with the elevation constraints of existing nodes.
 \end{itemize}
 If a position satisfying these constraints is found, a new node is added at the given position and the process is repeated.\\
-
 
 \subsection{Explicit}
 
