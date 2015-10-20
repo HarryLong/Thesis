@@ -1,9 +1,10 @@
 \section{Rivers \& Streams}
 
-In this section will be reviewed the various techniques that are used to place rivers and streams on a terrain. We will split the review material into the following categories, each with a dedicated section: \textit{Classification-based}, \textit{Simulation-based}, \textit{Heuristic-based} and \textit{Explicit}.\\ 
+In this section will be reviewed the various techniques that are used to place rivers and streams on a terrain. We will split the review material into the following categories, each with a dedicated section: \textit{Classification-based}, \textit{Simulation-based}, \textit{Heuristic-based}, \textit{Fractal-based} and \textit{Explicit}.\\ 
 \textit{Classification-based} methods use pre-classified data based on real-world analysis to determine the most suited water network given a set of user-defined or terrain-defined constraints.\\
 \textit{Simulation-based} techniques attempt to simulate natural phenomena such as gravity to determine the water networks on a given terrain.\\
 \textit{Heuristic-based} techniques use algorithms based on real-world observation in an attempt to produce a plausible river network on the terrain. \\
+\textit{Fractal-based} techniques use recursive algorithms in their attempt to generate plausible river networks. \\
 \textit{Explicit} techniques require the user to specify in great detail the path the river should follow on the terrain.\\
 
 The various techniques will be critiqued based on: the realism of the generated river networks, their computational cost and the level of automation they provide.
@@ -114,9 +115,11 @@ Where:
 
 All randomness in these algorithms depend on a configured seed value enabling the virtual world to be easily reproducible.  \\
 
-\subsubsection{FRACTALS}
+This heuristic approach offers an extensive level of automation and, as a result, fine control over the resulting scene is lost. Rather than generating virtual worlds fitting specific user requirements, it is more suited to generating plausible virtual worlds which fit loose constraints (e.g. maximum river altitude, maximum water depth, river stream must flow downhill, etc.). 
 
-Another way to reproduce river streams heuristically is by employing fractal-based algorithms. Such methods use recursive splitting and string rewriting to determine plausible river networks. 
+\subsection{Fractal-based}
+
+Another technique employed to produce river streams is by employing fractal-based algorithms. Such methods use recursive splitting and string rewriting to determine plausible river networks. 
 
 In their work, Pmsinkiewicz et al. use a fractal-based technique based on midpoint-displacement to procedurally generate plausible rivers on a terrain. Midpoint-displacement is most commonly used for procedurally generating realistic terrain height-maps and works follows follows: Given a starting triangle representing a terrain \textit{A}, midpoint-displacement iteratively subdivides \textit{A} it into four smaller triangles. Each time new triangle vertices are created they are displaced vertically by a random offset. This process is repeated until a given recursion limit is reached. See figure \ref{Midpoint displacement} for an example of a single iteration of the process.
 
@@ -144,15 +147,17 @@ When a production step is applied and a triangle split, the following constraint
 	\caption{Single production of midpoint displacement adapted to river generation \cite{Prusinkiewicz1993}. Given the initial triangle, four valid split scenarios.}
 \end{figure}
 
-One difficulty with this technique is to ensure two adjacent triangles are coherent once they split. That is, that the exit edge of one coincides with the entry edge of the other. To solve this, the location of edge vertices are used as the key to a random number generating hash table which, based on its output number, determines which segment will be crossed by the river.  \\
+One difficulty with this technique is to ensure two adjacent triangles are coherent once split. That is, that the exit edge of one coincides with the entry edge of the other. To solve this, the location of edge vertices are used as the key to a random number generating hash table which, based on its output number, determines the segment that will be crossed by the river, if any.  \\
 
-In their work, Génevaux et al. \cite{Genevaux2013} use fractal-based string rewriting to produce the river networks on the terrain. Once initial nodes have been heuristically selected to act as the river mouth, rewriting grammar is used to perform river node expansion. Configured values of $\rho_{a}, \rho_{s} and \rho_{c}$ influence the probability of selecting productions favouring asymmetric branching, symmetric branching and continuation without branching, respectively. The position for the new node is then selected based on the following constraints:
+In their work, Génevaux et al. \cite{Genevaux2013} use fractal-based string rewriting to produce the river networks on the terrain. Once initial nodes have been selected to act as the river mouth, rewriting grammar is used to perform river node expansion. Configured values of $\rho_{a}, \rho_{s} and \rho_{c}$ influence the probability of selecting productions favouring asymmetric branching, symmetric branching and continuation without branching, respectively. The position for the new node is then selected based on the following constraints:
 \begin{itemize}
 \item It should be at a minimum distance from existing nodes and edges.
 \item The new node should be at a greater distance from the terrain contour.
 \item The new node should be compatible with the elevation constraints of existing nodes.
 \end{itemize}
 If a position satisfying these constraints is found, a new node is added at the given position and the process is repeated.\\
+
+Both these techniques are successful in generating realistic river networks on terrains. The user, however, is limited in the amount of control he has over the resulting rivers. In the work by Génevaux et al. \cite{Genevaux2013}, for example, this is limited to specify the preferred branching behaviours of the rivers. In terms of performance, Génevaux et al. \cite{Genevaux2013} are able to produce terrains of several hundred square kilometres in a matter of seconds.
 
 \subsection{Explicit}
 
@@ -163,3 +168,5 @@ Flood-filling is such a technique and is used in the work by Soon Tee \cite{Teoh
 Smelik et al. also use explicit techniques to create an interactive system permitting users to model a complete virtual world with content ranging from rural features (mountains, rivers, etc.) to man-made ones (buildings, road networks). When modelling the virtual world, interactions are split into two modes: \textbf{Landscape} and \textbf{Feature}. \textit{Landscape mode} permits the designer to paint ecotopes onto the terrain using traditional image editing tools. These ecotopes are predefined by the user and encompass both elevation and soil material information. In \textit{feature mode}, the user is able to place terrain content, including rivers. To do so, similarly to the interface provided by Emilien et al. \cite{Emilien2014}, the user sketches vector lines outlining the core path of the river and, based on this, a suitable course is plotted through the landscape. Other terrain features to which the river takes precedence adapt accordingly. For example, if the river is plotted to pass through a forest, trees on the rived bed and bank will be removed automatically. \\
 
 Rather than placing vector-lines, the work by Soon Tee \cite{Teoh2008} and Št'Ava et al. \cite{StAva2008} permits users to click single points on the terrain which will act as the water source. The system then automatically generates a plausible path for the water down slope of the terrain.
+
+As these methods provide very little automation in terms of guaranteeing consistency in the scene, the resulting realism is very much user-dependent. Real-time action-reaction feedback is essential with explicit methods and so the majority of the tools run in real-time.
