@@ -1,13 +1,8 @@
 \section{Rivers \& Streams}
 
-In this section will be reviewed the various techniques that are used to place rivers and streams on a terrain. We will split the review material into the following categories, each with a dedicated section: \textit{Classification-based}, \textit{Simulation-based}, \textit{Heuristic-based}, \textit{Fractal-based} and \textit{Explicit}.\\ 
-\textit{Classification-based} methods use pre-classified data based on real-world analysis to determine the most suited water network given a set of user-defined or terrain-defined constraints.\\
-\textit{Simulation-based} techniques attempt to simulate natural phenomena such as gravity to determine the water networks on a given terrain.\\
-\textit{Heuristic-based} techniques use algorithms based on real-world observation in an attempt to produce a plausible river network on the terrain. \\
-\textit{Fractal-based} techniques use recursive algorithms in their attempt to generate plausible river networks. \\
-\textit{Explicit} techniques require the user to specify in great detail the path the river should follow on the terrain.\\
+In this section will be reviewed the various techniques that are used to place rivers and streams on a terrain. We will split the review material into the following categories, each with a dedicated section: \textit{Classification-based}, \textit{Simulation-based}, \textit{Heuristic-based}, \textit{Fractal-based} and \textit{Explicit}. \textit{Classification-based} methods use pre-classified data based on real-world analysis to determine the most suited water network given a set of user-defined or terrain-defined constraints. \textit{Simulation-based} techniques attempt to simulate natural phenomena such as gravity to determine the water networks on a given terrain. \textit{Heuristic-based} techniques use algorithms based on real-world observation in an attempt to produce a plausible river network on the terrain. \textit{Fractal-based} techniques use recursive algorithms in their attempt to generate plausible river networks. \textit{Explicit} techniques require the user to specify in great detail the path the river should follow on the terrain.\\
 
-The various techniques will be critiqued based on: the realism of the generated river networks, their computational cost and the level of automation they provide.
+The various techniques will be critiqued based on their realism, computational cost, the automation they provide and the amount of control the user has on the resulting scene. 
 
 \subsection{Classification-based}
 
@@ -24,12 +19,11 @@ The slope and water flow intensity requirements are then used as input to the wa
 	\caption{Waterfall classifications \cite{Emilien2014}}
 \end{figure}
 
-By automatically generating plausible waterfall scenes based on trajectory input from the user, the technique strikes a good balance between automation and user control. A consequence of this, however, is that the resulting realism is heavily user-dependent. \\ 
-In terms of computational complexity, the work by Emilien et al \cite{Emilien2014} is able to produce complex waterfall scenes in near real-time.
+By automatically generating plausible waterfall scenes based on trajectory input from the user, the technique strikes a good balance between automation and user control. In terms of computational complexity, the work by Emilien et al \cite{Emilien2014} is able to produce complex waterfall scenes in near real-time.
 
 \subsection{Simulation-based}
 
-Simulation-based techniques attempt to reproduce real-world phenomena to generate realistic river networks on given terrains. These simulations vary greatly in the level of detail they attempt to reproduce and can be split into the following sub-categories, each with a dedicated section below: \textit{Gravitation-simulation} \textit{Erosion-simulation} and \textit{Rainfall simulation} \\
+Simulation-based techniques attempt to reproduce real-world phenomena in order to generate realistic river networks on terrains. The phenomena they attempt to reproduce differ and can be split into the following categories which will be discussed further: \textit{Gravity}, \textit{Erosion} and \textit{Rainfall}.
 
 \subsubsection{Gravity-simulation} \label{ssec:gravitation}
 
@@ -41,7 +35,7 @@ Similarly, in the work by Soon Tee \cite{Teoh2008}, water is placed at specific 
 
 In their work on modelling the effects of hydraulic erosion, Št'Ava et al. \cite{StAva2008} determine the course user-placed water takes on the terrain using a hydrostatic pipe-model simulation. In order to do so, the terrain is split into equal-sized (configurable) columns and the simulation iteratively evacuates water from source to surrounding destination columns based on column elevations, fluid density and gravitational acceleration. \\
 
-These techniques can produce very plausible results but have the downside of being dependent on the base terrain as their height-field must cater for river networks in the first place. This is not the case, however, for the work by Št'Ava et al. \cite{StAva2008} fow which the gravitation simulation is used as a feedback loop to model terrain erosion. The performance of these methods depend heavily on the level of detail of the underlying water flow simulation. Št'Ava et al. \cite{StAva2008} succeed in generating the water flow in real-time by optimizing their algorithms to use the heavily parallel architecture of GPUs.
+These techniques can produce very plausible results but have the downside of being dependent on the base terrain as their height-field must cater for river networks in the first place. This is not the case, however, for the work by Št'Ava et al. \cite{StAva2008} for which the gravitation simulation is used as a feedback loop to model terrain erosion. The performance of these methods depend heavily on the level of detail of the underlying water flow simulation. Št'Ava et al. \cite{StAva2008}, for example, succeed in generating the water flow in real-time by optimizing their algorithms to use the heavily parallel architecture of GPUs.
 
 \subsubsection{Erosion-simulation}
 
@@ -65,13 +59,13 @@ In the work by Kelley et al. \cite{Kelley1988}, the user specifies, on a horizon
 	\caption{Simulation of the effect of force-based erosion caused by running water \cite{StAva2008}}
 \end{figure}
 
-Whether modelling erosion indirectly like in the work by Kelley et al. \cite{Kelley1988} which builds the terrain around models of erosion or directly like the work by Št'Ava et al. \cite{StAva2008} which simulates the effect of erosion in real-time, both succeed in producing plausible terrains with integrated river networks. Fine-control over the resulting terrain, however, is limited in the work by Kelley et al. \cite{Kelley1988} due to extensive automation. This is overcome in the work by \cite{StAva2008} et al. by permitting the user to both place water using a virtual pipette and remodel the terrain relief. In terms of computational cost, Št'Ava et al. \cite{StAva2008} are able to reproduce the effects of erosion in real-time.  
+Whether modelling erosion indirectly like in the work by Kelley et al. \cite{Kelley1988} which builds the terrain around models of erosion or directly like the work by Št'Ava et al. \cite{StAva2008} which simulates the effect of erosion in real-time, both succeed in producing plausible terrains with integrated river networks. Fine-control over the resulting terrain, however, is limited in the work by Kelley et al. \cite{Kelley1988} due to extensive automation. This is overcome in the work by \cite{StAva2008} et al. by permitting the user to place water using a virtual pipette and remodel the terrain relief on-the-fly. In terms of computational cost, Št'Ava et al. \cite{StAva2008} are able to reproduce the effects of erosion in real-time.  
 
 \subsubsection{Rainfall simulations}
 
 In order to determine where on the terrain rivers will appear, work by Soon Tee \cite{Teoh2008} performs a rainfall simulation to determine both the location and quantity of water at different points on the terrain followed by a gravitation simulation (mentioned above) to determine the course of the water on the terrain. The rainfall simulation requires the user to specify wind direction and maximum rainfall. Then, starting from the source of the wind, the system simulates clouds moving in the direction of the wind with a configured velocity. When contact is made with points on the terrain, water is dropped on the corresponding cell. The amount of water dropped increases with altitude and zeroes out when all available rainfall is depleted. \\
 
-Simulating rainfall in order to determine where water will fall on the terrain and therefore where river networks will form is an original approach and one that successfully generates visually plausible terrains. Requiring only wind direction, wind velocity and maximum rainfall from the user, the system provides a good level of automation. Determining the influence these inputs have on the resulting scene could be unintuitive, however, and require a "trial-and-error" approach. Their algorithm creates the  terrain along with the river networks in O(n) time, n representing the number of cells on the terrain.
+Simulating rainfall in order to determine where water will fall on the terrain and therefore where river networks will form is an original approach and one that successfully generates visually plausible terrains. Requiring only wind direction, wind velocity and maximum rainfall from the user, the system provides a good level of automation. Determining the influence these inputs have on the resulting scene could be unintuitive however, and require a "trial-and-error" approach. Their algorithm creates the terrain along with the river networks in O(n) time, n representing the number of cells on the terrain.
 
 \subsection{Heuristic-based}
 
@@ -157,7 +151,7 @@ In their work, Génevaux et al. \cite{Genevaux2013} use fractal-based string rew
 \end{itemize}
 If a position satisfying these constraints is found, a new node is added at the given position and the process is repeated.\\
 
-Both these techniques are successful in generating realistic river networks on terrains. The user, however, is limited in the amount of control he has over the resulting rivers. In the work by Génevaux et al. \cite{Genevaux2013}, for example, this is limited to specify the preferred branching behaviours of the rivers. In terms of performance, Génevaux et al. \cite{Genevaux2013} are able to produce terrains of several hundred square kilometres in a matter of seconds.
+Both these techniques are successful in generating realistic river networks on terrains. The user, however, is limited in the amount of control he has over the resulting rivers. In the work by Génevaux et al. \cite{Genevaux2013}, for example, this is limited to specifying the preferred river branching behaviours. In terms of performance, Génevaux et al. \cite{Genevaux2013} are able to produce terrains of several hundred square kilometres in a matter of seconds.
 
 \subsection{Explicit}
 
@@ -167,6 +161,58 @@ Flood-filling is such a technique and is used in the work by Soon Tee \cite{Teoh
 
 Smelik et al. also use explicit techniques to create an interactive system permitting users to model a complete virtual world with content ranging from rural features (mountains, rivers, etc.) to man-made ones (buildings, road networks). When modelling the virtual world, interactions are split into two modes: \textbf{Landscape} and \textbf{Feature}. \textit{Landscape mode} permits the designer to paint ecotopes onto the terrain using traditional image editing tools. These ecotopes are predefined by the user and encompass both elevation and soil material information. In \textit{feature mode}, the user is able to place terrain content, including rivers. To do so, similarly to the interface provided by Emilien et al. \cite{Emilien2014}, the user sketches vector lines outlining the core path of the river and, based on this, a suitable course is plotted through the landscape. Other terrain features to which the river takes precedence adapt accordingly. For example, if the river is plotted to pass through a forest, trees on the rived bed and bank will be removed automatically. \\
 
-Rather than placing vector-lines, the work by Soon Tee \cite{Teoh2008} and Št'Ava et al. \cite{StAva2008} permits users to click single points on the terrain which will act as the water source. The system then automatically generates a plausible path for the water down slope of the terrain.
+Rather than placing vector-lines, the work by Soon Tee \cite{Teoh2008} and Št'Ava et al. \cite{StAva2008} permits users to click single points on the terrain which will act as the water source. The system then automatically generates a plausible path for the water down slope of the terrain.\\
 
-As these methods provide very little automation in terms of guaranteeing consistency in the scene, the resulting realism is very much user-dependent. Real-time action-reaction feedback is essential with explicit methods and so the majority of the tools run in real-time.
+As these methods provide very little automation in terms of guaranteeing consistency in the scene, the resulting realism is very much user-dependent. Real-time action-reaction feedback is essential with explicit modelling and so the majority of the methods run in real-time.
+
+\subsection{Conclusion} \label{Conclusion}
+
+Each technique has it's associated pros and cons and so choosing which one is best suited depends heavily on the requirements of the system. For example, if the terrain is fixed, using techniques which simulate real-time erosion of the terrain would be ill-suited. Similarly, if fine control over the resulting scene is necessary, heavily automated procedural methods which generate realistic scenes using very little user input would certainly not meet the requirements of the system. In this section we will summarize the pros and cons of the individual techniques in table form. These techniques will be rated based on:
+\begin{itemize}
+\item \textit{Automation}: The level of automation the technique provides.
+\item \textit{Realism}: The realism of generated scenes.
+\item \textit{Computational efficiency}: The techniques efficiency in terms of computational resources.
+\item \textit{User-control}: How much control the user has over the final scene. 
+\end{itemize}
+
+\textit{Classification-based}, \textit{Simulation-based}, \textit{Heuristic-based}, \textit{Fractal-based} and \textit{Explicit}
+
+\begin{table}[h]
+  \centering
+	  \label{Pros and cons of individual techniques}
+	    \begin{tabular}{|p{4cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|}
+  	    \hline	
+  	      & \textbf{Automation} & \textbf{Realism} & \textbf{Computational Efficiency} & \textbf{User-control} \\
+		\hline	
+		\textbf{Classification-based} & 
+		 %Automation  %Realism  %Comp. Effic. %User-control
+		 Good  & Very Good  & Good & Very Good  \\
+  	    \hline	
+		\textbf{Fractal-based} & 
+		 %Automation  %Realism  %Comp. Effic. % User-control
+		 Excellent & Good & Good & Poor  \\
+  	    \hline
+		\textbf{Explicit} & 
+		 %Automation  %Realism  %Comp. Effic. %User-control
+		 Poor & Fair & Very Good & Excellent   \\
+  	    \hline
+  	    \multicolumn{5}{|c|}{\textbf{Simulation-based}} \\
+  	    \hline				
+  	    \textbf{Gravity} & 
+		 %Automation  %Realism  %Comp. Effic. %User-control
+		 Very Good & Good & Fair & Fair   \\
+  	    \hline
+		\textbf{Erosion} & 
+		 %Automation  %Realism  %Comp. Effic. %User-control
+		 Very Good & Very Good & Good & Fair      \\
+  	    \hline
+  	    	\textbf{Rainfall} & 
+		 %Automation  %Realism  %Comp. Effic. %User-control
+		 Very Good & Good & Good & Poor      \\
+  	    \hline		
+  	    \end{tabular}
+  \caption[Summary of river placement techniques]{Summary of river placement techniques}
+\end{table}
+
+In our system, the base terrain will take the form of a preloaded height map. Modifications to this terrain and modelling new terrains will be out-of-scope and, as such, all techniques which require such behaviour can be discarded.\\
+Rainfall is a vital requirement to plant life and, as such, gathering rainfall data will be essential to model realistic vegetation on the terrain. Using this rainfall data along with soil properties, it is possible to calculate the amount of standing water which has not been absorbed by the soil. Using this, along with a gravitation simulation, it should be possible to determine main river networks on the terrain based on water builds up. This water drainage simulation should work in real-time and its duration controllable by the user in order to have fine-control over the size and depth of the resulting river networks (i.e. a longer simulation will drain more water and, as such, the river networks will be less intense).
