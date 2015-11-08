@@ -16,9 +16,9 @@ Arnaud et al. \cite{Emilien} permit users to insert individual plants manually b
 
 \begin{figure}[h]
   \centering
-	\label{Explicit placement as input examplars}
 	\includegraphics[natwidth=316,natheight=267]{worldbrush_forrest_reproduction.png}
 	\caption{Using explicit placement as input examplars for reproduction \cite{Emilien}}
+	\label{Explicit placement as input examplars}
 \end{figure}
 
 Similarly, Deussen et al. \cite{Deussen1998} allow users to use grayscale raster images as input to specify terrain vegetation. The location of individual plants is determined by pixel location whereas plant properties are correlated to pixel intensity.\\
@@ -61,18 +61,18 @@ A core part of radial distribution analysis is generating pair correlation histo
 
 \begin{figure}[h]
   \centering
-	\label{Pair Correlation Histograms}
 	\includegraphics[width=\textwidth]{pair_correlation_histograms.png}
 	\caption{Point distributions with associated pair correlation histogram \cite{Emilien2014}}
+	\label{Pair Correlation Histograms}
 \end{figure}
 
 To generate the pair correlation histogram \textit{H\textsubscript{AB}}, the algorithm iterates through each reference point of category \textit{C\textsubscript{A}} and, for each destination point of category \textit{C\textsubscript{B}} at a distance between \textit{R\textsubscript{min}} and \textit{R\textsubscript{max}}, increments the relevant bin in the histogram. In figure \ref{Radial distribution analysis}, for example, are being measured the points that lie within the annular shell of radius \textit{r} with bin size \textit{d\textsubscript{r}} (area \textit{d\textsubscript{A}}). 
 
 \begin{figure}[h]
   \centering
-	\label{Radial distribution analysis}
 	\includegraphics[natwidth=199,natheight=140]{radial_distribution_analysis.png}
 	\caption{Radial distribution analysis}
+	\label{Radial distribution analysis}
 \end{figure}
 
 Because of their larger circumference, the coverage area of annular shells get larger as the distance bin being measured increases. In other words, \textit{A\textsubscript{r}} \textless \textit{A\textsubscript{r+1}} where \textit{A\textsubscript{r}} is the area covered by the annular shell starting at distance \textit{r}. A direct consequence of this is that annular shells at further distances will naturally be prone to containing more points. To counter for this, normalisation is performed based on annular shell area. \\
@@ -138,9 +138,9 @@ All these ecosystems are stored in a database and, when vegetation is to be plac
 
 \begin{figure}[h]
   \centering
-	\label{Vegetation generated using predefined ecosystems}
 	\includegraphics{predefined_ecosystems.png}
 	\caption{Vegetation generated using predefined ecosystems \cite{Hammes2001}}
+	\label{Vegetation generated using predefined ecosystems}
 \end{figure}
 
 \subsubsection{CONCLUSIONS}
@@ -185,9 +185,9 @@ By going into such detail, these simulators produce very realistic simulations o
 
 \begin{figure}[h]
   \centering
-	  \label{Plant growing towards light source}
 	    \includegraphics[width=\textwidth]{plant_growing_towards_light_source.png}
 	\caption{Plant growing towards light source ~\cite{Soler2001} }
+	\label{Plant growing towards light source}
 \end{figure}
 
 \subsubsection{ECOSYSTEM SIMULATORS}
@@ -212,9 +212,9 @@ The L-System they implemented contains different production rules to represent t
 
 \begin{figure}[h]
   \centering
-    \label{Plant placement using an ecosystem simulator modelled by L-System}
     \includegraphics[width=\textwidth]{L-System-Result.png}
     \caption[Plant placement using an ecosystem simulator modelled by L-Systems]{ Plant placement using an ecosystem simulator modelled by L-Systems ~\cite{Lane2002}. \textit{Left:} Result of the simulation where orange circles indicate the positions of poplar trees and green circles the positions of spruce trees. \textit{Right:} Reproduced virtual world where the location of individual plants is deduced from the output of the simulator.}
+    \label{Plant placement using an ecosystem simulator modelled by L-System}
 \end{figure}
 
 Work by Deussen et al. ~\cite{Deussen1998} also uses L-Systems as the basis for an ecosystem simulator. As an extension to the work by Lane and Przemyslaw ~\cite{Lane2002}, they introduce the notion of soil humidity and an associated soil per specie humidity preference.
@@ -239,7 +239,6 @@ Which technique (Explicit, Probabilistic or Simulators) to use entirely depends 
 \end{itemize}
 \begin{table}[h]
   \centering
-	  \label{Pros and cons of individual techniques}
 	    \begin{tabular}{|p{4cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|}
   	    \hline	
   	      & \textbf{Automation} & \textbf{Realism} & \textbf{Computational Efficiency} & \textbf{Adaptability} \\
@@ -270,6 +269,7 @@ Which technique (Explicit, Probabilistic or Simulators) to use entirely depends 
   	    \hline
   	    \end{tabular}
   \caption[Summary of vegetation placement techniques]{Summary of vegetation placement techniques}
+  \label{Pros and cons of individual techniques}
 \end{table}
 
 Given a set of plant species, available resources and terrain, our system must be able to specify the locations of individual plants. The output must be: visually realistic; easily scalable in order to be able to re-run simulations with different input species; computationally efficient to ensure the effect of user actions appear in close to real-time. \\

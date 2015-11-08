@@ -14,9 +14,9 @@ The slope and water flow intensity requirements are then used as input to the wa
 
 \begin{figure}[h]
   \centering
-	\label{Waterfall classifications}
 	\includegraphics[]{waterfall_classification.png}
 	\caption{Waterfall classifications \cite{Emilien2014}}
+	\label{Waterfall classifications}
 \end{figure}
 
 By automatically generating plausible waterfall scenes based on trajectory input from the user, the technique strikes a good balance between automation and user control. In terms of computational complexity, the work by Emilien et al \cite{Emilien2014} is able to produce complex waterfall scenes in near real-time.
@@ -47,16 +47,16 @@ In the work by Kelley et al. \cite{Kelley1988}, the user specifies, on a horizon
 
 \begin{figure}[h]
   \centering
-	\label{dissolution_based_erosion-based erosion}
 	\includegraphics[scale=0.5]{dissolution_based_erosion.png}
 	\caption{Simulation of dissolution-based erosion erosion caused by water movement\cite{StAva2008}}
+	\label{dissolution_based_erosion-based erosion}
 \end{figure}
 
 \begin{figure}[h]
   \centering
-	\label{force-based erosion}
 	\includegraphics[width=\textwidth]{force_based_erosion.png}
 	\caption{Simulation of the effect of force-based erosion caused by running water \cite{StAva2008}}
+	\label{force-based erosion}
 \end{figure}
 
 Whether modelling erosion indirectly like in the work by Kelley et al. \cite{Kelley1988} which builds the terrain around models of erosion or directly like the work by Št'Ava et al. \cite{StAva2008} which simulates the effect of erosion in real-time, both succeed in producing plausible terrains with integrated river networks. Fine-control over the resulting terrain, however, is limited in the work by Kelley et al. \cite{Kelley1988} due to extensive automation. This is overcome in the work by \cite{StAva2008} et al. by permitting the user to place water using a virtual pipette and remodel the terrain relief on-the-fly. In terms of computational cost, Št'Ava et al. \cite{StAva2008} are able to reproduce the effects of erosion in real-time.  
@@ -119,9 +119,9 @@ In their work, Pmsinkiewicz et al. use a fractal-based technique based on midpoi
 
 \begin{figure}[h]
   \centering
-	\label{Midpoint displacement}
 	\includegraphics[width=\textwidth]{midpoint_displacement.png}
 	\caption{A single iteration of midpoint displacement for the creation of mountains \cite{Prusinkiewicz1993}. New vertices $y_{A}$, $y_{B}$ and $y_{C}$ are created and shifted vertically by a random offset}
+	\label{Midpoint displacement}
 \end{figure}
 
 To adapt this method to the generation of rivers on the terrain, rather than vertically displace newly formed triangle vertices, there edges are labelled as \textit{entry}, \textit{exit} or \textit{neutral} (figure \ref{Single production of midpoint displacement adapted to river generation. Given the initial triangle, four valid split scenarios.}). An \textit{entry edge} defines the point of entry for the river into the triangle, an \textit{exit edge} the point of exit and a \textit{neutral edge} prevents the river from passing through. \\
@@ -136,9 +136,9 @@ When a production step is applied and a triangle split, the following constraint
 
 \begin{figure}[h]
   \centering
-	\label{Single production of midpoint displacement adapted to river generation. Given the initial triangle, four valid split scenarios. }
 	\includegraphics[width=\textwidth]{midpoint_displacement_for_rivers_1.png}
 	\caption{Single production of midpoint displacement adapted to river generation \cite{Prusinkiewicz1993}. Given the initial triangle, four valid split scenarios.}
+	\label{Single production of midpoint displacement adapted to river generation. Given the initial triangle, four valid split scenarios. }
 \end{figure}
 
 One difficulty with this technique is to ensure two adjacent triangles are coherent once split. That is, that the exit edge of one coincides with the entry edge of the other. To solve this, the location of edge vertices are used as the key to a random number generating hash table which, based on its output number, determines the segment that will be crossed by the river, if any.  \\
@@ -179,7 +179,6 @@ Each technique has it's associated pros and cons and so choosing which one is be
 
 \begin{table}[h]
   \centering
-	  \label{Pros and cons of individual techniques}
 	    \begin{tabular}{|p{4cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|}
   	    \hline	
   	      & \textbf{Automation} & \textbf{Realism} & \textbf{Computational Efficiency} & \textbf{User-control} \\
@@ -212,6 +211,7 @@ Each technique has it's associated pros and cons and so choosing which one is be
   	    \hline		
   	    \end{tabular}
   \caption[Summary of river placement techniques]{Summary of river placement techniques}
+	\label{Pros and cons of individual techniques}
 \end{table}
 
 In our system, the base terrain will take the form of a preloaded height map. Modifications to this terrain and modelling new terrains will be out-of-scope and, as such, all techniques which require such behaviour can be discarded.\\
