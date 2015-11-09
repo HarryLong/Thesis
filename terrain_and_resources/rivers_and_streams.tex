@@ -1,0 +1,25 @@
+\section{Rivers \& Streams}
+
+Essential to the realism of virtual rural terrains are water networks which take the form of rivers and streams. These rivers form as run-off water is being transported by gravity from higher to lower grounds. In this section is  The algorithm used to model gravity and therefore the evacuation of water on any terrain is outlined below along with details on the GPU implementation used to accelerate the process.
+
+\subsection{Water Evacuation Algorithm} 
+
+Precipitation, precipitation intensity and soil infiltration are used to calculate the soil humidity, $S_{h}$, which equates to the quantity of water, in millimetres, absorbed by the soil. The water which isn't absorbed by the soil, \textit{W$_{standing}$} for a given terrain vertex can therefore be deduced using equation \ref{eq:standing_water_calculation}
+
+\begin{equation} \label{eq:standing_water_calculation}
+	W_{standing} = R_{q} - S_{h}
+\end{equation}
+where:
+\begin{itemize}
+\item \textit{W$_{standing}$} is the standing water, in millimetres.\\
+\item \textit{R$_{q}$} is the monthly rainfall quantity, in millimetres.\\
+\item \textit{S$_{h}$} is the quantity of water absorbed by the soil, in millimetres.\\
+\end{itemize}
+
+Similarly to the work by Stava et al. \cite{StAva2008}, a water evacuation algorithm is used where water is iteratively evacuated from source to destination vertices.
+
+\subsection{GPU Implementation}
+
+through the evacuation of run-off water from higher to lower altitudes and, eventually, 
+
+Water networks form due to the evacuation of 

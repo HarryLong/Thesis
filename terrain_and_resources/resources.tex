@@ -1,7 +1,7 @@
 \section{Resources}
 
 Two core features of rural landscapes are vegetation and water networks. Accurately replicating these features is therefore critical to the resulting realism of the modelled virtual world.\\
-The combination and annual variance of temperature, illumination and precipitation have a direct effect on vegetation and water networks. Therefore, to procedurally determine the vegetation and water networks, available resources must first be resolved. This section will focus on the approach taken to determine available resources throughout the terrain. Due to scope, not all resources could be modelled and this work focuses on: \textit{Illumination}, \textit{temperature}, \textit{precipitation}, \textit{soil humidity},  and \textit{slope}. 
+The combination and annual variance of temperature, illumination and precipitation have a direct effect on vegetation and water networks. Therefore, to procedurally determine the vegetation and water networks, available resources must first be resolved. This section will focus on the approach taken to determine available resources throughout the terrain. Due to scope, not all resources could be modelled and this work focuses on: \textit{Illumination}, \textit{temperature}, \textit{precipitation}, \textit{soil humidity} and \textit{slope}. 
 
 \subsection{Illumination}
 
@@ -70,7 +70,7 @@ where:
 where:
 \begin{itemize}
 \item \textit{V$_{R}(m)$} is the rotation axis of the sun at month \textit{m}.\\
-\item \textit{V$_{RE}$} is the rotation axis of the sun at the equinoxes (\ref{eq:equinox_rotation_axis}.\\
+\item \textit{V$_{RE}$} is the rotation axis of the sun at the equinoxes (equation \ref{eq:equinox_rotation_axis}).\\
 \item \textit{V$_{E}$} is the east-facing vector passing through the terrain center.\\
 \item \textit{a$_{m}$} is the rotation angle calculated using equation \ref{eq:rotation_angle_calculation} .\\
 \item \textit{R(V$_{a}$,\textit{a},V$_{b}$}) is the resulting vector after rotating V$_{a}$ by \textit{a} degrees around V$_{b}$\\
@@ -125,10 +125,10 @@ Similarly to the illumination, a visual presentation of the daily illumination c
 
 Whereas tropical climates often have relatively constant temperatures throughout the year, others, such as the continental climate, are characterized by a strong variation between minimum and maximum annual temperatures. Only plants which are able to survive at both extremes can grow which is why temperature and variation thereof has a big impact on vegetation. For modelling purposes, it is acceptable to assume that the minimum temperature, \textit{T$_{min}$}, occurs in the middle of winter and the maximum temperature, \textit{T$_{max}$}, occurs in the middle of summer. Interpolation can be performed to determine the temperature at any time between these two dates.\\
 
-Properties which affect temperature and are necessary to model temperature in the system are: \textit{Altitude}, \textit{Temp$_{december}$}, \textit{Temp$_{june}$} and \textit{Lapse rate}. The \textit{altitude} of each point on the terrain is calculated automatically based on the loaded height-map. Temp$_{december}$ and Temp$_{june}$ represent both extremes of the temperature spectrum at zero meters of altitude and need to be configured by the user. The \textit{lapse rate} defines the decrease in temperature with altitude. Although this changes depending on atmospheric conditions, the default is configured to be 6.4 °C for each km of altitude gained. This is accepted as the average atmospheric lapse rate under normal atmospheric conditions \protect\footnotemark.
-\footnotetext{\url{http://en.wikipedia.org/wiki/Lapse_rate}}. 
+Properties which affect temperature and are necessary to model temperature in the system are: \textit{Altitude}, \textit{Temp$_{december}$}, \textit{Temp$_{june}$} and \textit{Lapse rate}. The \textit{altitude} of each point on the terrain is calculated automatically based on the loaded height-map. Temp$_{december}$ and Temp$_{june}$ represent both extremes of the temperature spectrum at zero meters of altitude and need to be configured by the user. The \textit{lapse rate} defines the decrease in temperature with altitude. Although this changes depending on atmospheric conditions, the default is configured to be 6.4 degrees Celsius for each km of altitude gained. This is accepted as the average atmospheric lapse rate under normal atmospheric conditions \protect\footnotemark.\\
+\footnotetext{\url{http://en.wikipedia.org/wiki/Lapse_rate}}
 
-Given this information, the temperature is calculated for any point on the terrain at given the month \textit{m} and its altitude \textit{A}, using equation \ref{eq:temp_calculation}.
+Given this information, the temperature is calculated for any point on the terrain given the month and altitude using equation \ref{eq:temp_calculation}. Calculating the temperature for each vertex on a 1024 by 1024 terrain is performed in near real-time (< 3 seconds).
 
 \begin{equation} \label{eq:temp_calculation}
 	T(a,m) = T_{december} + ( \frac{6 - |6-m|}{6} \times (T_{june} - T_{december}))
@@ -143,4 +143,129 @@ where:
 
 \subsubsection{Temperature overlay}
 
-Similarly to the illumination, an overlay can be enabled to illustrate the temperature at different points on the terrain (\ref...
+An overlay can be enabled to get an overview of the temperature at different locations on the terrain (see figure \ref{fig:temp_overlay}).
+
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth]{temp_overlay.png}
+	\caption{ Temperature overlay. Colour spectrum ranging from blue (cold) to red (hot). As can be seen, the temperature drops with altitude.}
+	\label{fig:temp_overlay}
+\end{figure}
+
+\subsection{Precipitation} \label{sec:precipitation}
+
+Precipitation is a core part of climate classification and, consequentially, plant life. Arid climates will have very limited annual precipitation and will be the bottleneck for organic life. Tropical climates, on the other hand, where precipitation is plentiful, has an abundance of vegetation. There are two important properties of precipitation that are modelled: \textit{Quantity} and \textit{Intensity}. The \textit{quantity}, often measured in mm, defines the amount of water which falls. The intensity, often measured in mm/h defines the rate at which it falls.\\
+
+The user must configure \textit{quantity} and \textit{intensity} values for each month of the year. A custom input dialogue was implemented in an attempt to make this as user-friendly as possible (\ref{fig:rainfall_input}).
+
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth]{rainfall_input.png}
+	\caption{ Specifying monthly precipitation and precipitation intensity. The user can enter values manually (using the input fields) or interact directly with the graph.}
+	\label{fig:rainfall_input}
+\end{figure}
+
+\subsection{Soil Humidity}
+
+When rain falls onto the terrain, a certain portion of it is absorbed into the soil to provide the plant's roots with the necessary nutrients. The portion which is absorbed depends on the type of soil. Rocky soils, for example, have limited water retention capabilities and will result in larger water build-up. In this work, the soil humidity is simply a measure, in mm, of the rainfall which is absorbed by the soil. This is determined using the precipitation information outlined above (\ref{sec:precipitation}) along with the \textit{Soil Infiltration Rate}.
+
+\subsubsection{Soil Infiltration Rate}
+
+The \textit{soil infiltration rate} is a measure of the quantity of water which can be absorbed in a given time period. If the rainfall intensity exceeds the soil infiltration rate, it will result in water stagnation (flat surface) or water run-off. This rate is correlated with the type of soil and approximate values for some soil types can be found in table \ref{tab:control_types}.
+
+\begin{table}[h]
+  \centering
+	    \begin{tabular}{|p{5cm}|p{8cm}|}
+  	    \hline	
+  	    \textbf{Soil-type} & \textbf{Infiltration rate (mm/hour)} \\
+		\hline
+		\textbf{sand} & $<$ 30 \\
+		\hline
+		\textbf{sandy loam} & 20-30 \\
+		\hline
+		\textbf{loam} & 10-20 \\
+		\hline
+		\textbf{clay loam} & 5-10 \\
+		\hline
+		\textbf{clay} & 1-5 \\
+		\hline
+		\end{tabular}
+		\caption{Soil infiltration rates for different soil types \protect\footnotemark}
+	  \label{tab:control_types}
+\end{table}
+\footnotetext{\url{http://www.fao.org/docrep/s8684e/s8684e0a.htm}}
+
+
+Specifying the soil infiltration rate can be done using three distinct tools: \textit{Filling}, \textit{Slope-based} and through a \textit{Painting interface}.\\
+Using the \textit{filling} tool, the user can fill the entire terrain with a configured infiltration rate.\\
+The \textit{slope-based} tool permits the user to configure a slope above which the soil infiltration rate will be zero. This is an efficient tool for modelling cliff faces or simply areas where water run-off is too severe.\\
+The \textit{painting interface} enables user to paint a soil infiltration on the terrain directly using a common brush tool found in basic paint applications. The size of the brush can be configured using the scroll-wheel and the painted soil-infiltration using a dedicated slider controller (\ref{fig:soil_infiltration_controls}).
+
+These tools can be used interchangeably and users are encouraged to do so. Configuring the soil infiltration of the terrain in figure \ref{fig:soil_infiltration_controls}, for example, was performed in approximately three minutes using all three tools as follows:
+\begin{enumerate}
+\item The filling tool was used to fill the entire terrain with an infiltration rate of 25.\\
+\item The slope-based tool was used to set to zero the infiltration rate of all areas with a slope above 30 degrees.\\
+\item The painting-tool was used to paint an infiltration rate of zero on the flat area to the right to cater for a water build-up (reservoir, lake, ocean, etc.).\\
+\end{enumerate}
+
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth]{soil_infiltration_rate_controls.png}
+	\caption{ Editing the soil infiltration rate on the terrain. Top left are the controllers for the \textit{filling} and \textit{slope-based} tools. On the right is the slider to configure the soil infiltration rate of the \textit{paint brush}. }
+	\label{fig:soil_infiltration_controls}
+\end{figure}
+
+\subsubsection{Monthly Soil Humidity Calculation}
+
+Given the \textit{soil infiltration rate}, \textit{monthly precipitation} and \textit{monthly average precipitation intensity} for each vertex on the terrain, it is possible to calculate the quantity of the rainfall which is actually absorbed by the soil for each month. This represents the soil humidity in our system and is calculating using equation \ref{eq:monthly_soil_humidity}. The soil humidity is calculated for each terrain vertex in parallel on the GPU, enabling real-time computation thereof.
+
+\begin{equation} \label{eq:monthly_soil_humidity}
+	S_{h}(R_{q},R_{i},S_{ir}) = 
+	\frac{S_{ir}}{R_{i}} \times R_{q}
+\end{equation}
+where:
+\begin{itemize}
+\item \textit{$S_{h}$} is the soil humidity, in mm.\\
+\item \textit{$R_{q}$} is the monthly rainfall quantity, in mm. \\
+\item \textit{$R_{i}$} is the average monthly rainfall intensity, in millimetres per hour.\\
+\item \textit{$S_{ir}$} is the soil infiltration rate, in millimetres per hour.\\
+\end{itemize}
+
+\subsubsection{Weighted Monthly Soil Humidity Calculation}
+
+Monthly soil humidity does not take into account the humidity of previous months and therefore fails to model water retention in the soil. By retaining water in the soil, the drought caused by an arid month can be counteracted to some extent by the precipitation of previous months. To model this, a moving weighted average soil humidity is calculated for each month using equation \ref{eq:weighted_avg_monthly_humidity_calculation}. Similarly to the monthly humidity calculation, the GPU is used to get results in real-time.
+
+\begin{equation} \label{eq:weighted_avg_monthly_humidity_calculation}
+	S_{wh}(m) =  (\frac{1}{2} \times S_{h}(m)) + (\frac{1}{3} \times S_{h}(m-1)) + (\frac{1}{6} \times S_{h}(m-2))
+\end{equation}
+where:
+\begin{itemize}
+\item \textit{$S_{wh}(m)$} is the weighted soil humidity at month \textit{m}, in mm.\\
+\item \textit{$S_{h}(m)$} is the soil humidity at month \textit{m}, in mm. \\
+\end{itemize}
+
+\subsubsection{Soil Humidity Overlays}
+
+A visual overlay can be displayed to give an overview of both the monthly soil humidity and the weighted average monthly soil humidity on the terrain (see figure \ref{fig:soil_humidity}).
+
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth]{soil_humidity_overlay.png}
+	\caption{ Soil humidity terrain overlay. Colour spectrum ranging from black (zero humidity) to blue (standing water). }
+	\label{fig:soil_humidity overlay}
+\end{figure}
+
+\subsection{Slope}
+
+Some plants, especially those with a big biomass, can struggle to grow on steep slopes. This is clearly visible in nature, where only smaller plants (shrub, grass, etc.) grow on steeper landscapes. To determine suitable vegetation given the terrain relief, it is therefore important to model slope. This is done automatically by using the terrain normals calculated for shading purposes when the terrain is loaded.
+
+\subsubsection{Slope Overlay}
+
+To better visualize the slope throughout the terrain, a \textit{slope overlay} can be enabled (see figure \ref{fig:slope overlay}).
+
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth]{slope_overlay.png}
+	\caption{ Slope visual overlay. Colour spectrum ranging from black (zero degree slope) to white (90 degree slope). }
+	\label{fig:slope overlay}
+\end{figure}
