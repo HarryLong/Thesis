@@ -93,7 +93,14 @@ where:
 \subsubsection{Calculating Illumination}
 
 A point on the terrain is illuminated if there is a direct path from it to the sun with no intersections with other points on the terrain. To test for this on the terrain ray casting is performed from each vertex position towards the sun to check whether or not it intersects with other points on the terrain.\\
-A spherical hierarchical acceleration structure is used to accelerate the ray casting process. This hierarchical acceleration structure acts as a tree structure to iteratively search for smaller intersection areas. Calculating the illumination for each vertex on a 1024 by 1024 terrain takes less than 5 seconds.
+A spherical hierarchical acceleration structure is used to accelerate the ray casting process. This hierarchical acceleration structure acts as a tree structure to iteratively search for smaller intersection areas. Using this acceleration structure, illumination can be calculated for 4 million vertices (2048 by 2048 terrain) in just over 2 seconds (figure \ref{fig:illumination_calculation_time}). As shown in figure \ref{fig:illumination_calculation_time}, There is a linear relationship between vertex count and calculation time. (i.e vertex count).
+
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth]{illumination_calculation_time.png}
+	\caption{ Illumination calculation time based on vertex count. Analysis performed for terrains with dimensions: 256 by 256, 512 by 512, 1024 by 1024 and 2048 by 2048. }
+	\label{fig:illumination_calculation_time}
+\end{figure}
 
 \subsubsection{Illumination overlay} \label{subsub:illumination}
 
@@ -128,7 +135,7 @@ Whereas tropical climates often have relatively constant temperatures throughout
 Properties which affect temperature and are necessary to model temperature in the system are: \textit{Altitude}, \textit{Temp$_{december}$}, \textit{Temp$_{june}$} and \textit{Lapse rate}. The \textit{altitude} of each point on the terrain is calculated automatically based on the loaded height-map. Temp$_{december}$ and Temp$_{june}$ represent both extremes of the temperature spectrum at zero meters of altitude and need to be configured by the user. The \textit{lapse rate} defines the decrease in temperature with altitude. Although this changes depending on atmospheric conditions, the default is configured to be 6.4 degrees Celsius for each km of altitude gained. This is accepted as the average atmospheric lapse rate under normal atmospheric conditions \protect\footnotemark.\\
 \footnotetext{\url{http://en.wikipedia.org/wiki/Lapse_rate}}
 
-Given this information, the temperature is calculated for any point on the terrain given the month and altitude using equation \ref{eq:temp_calculation}. Calculating the temperature for each vertex on a 1024 by 1024 terrain is performed in near real-time (< 3 seconds).
+Given this information, the temperature is calculated for any point on the terrain given the month and altitude using equation \ref{eq:temp_calculation}. 
 
 \begin{equation} \label{eq:temp_calculation}
 	T(a,m) = T_{december} + ( \frac{6 - |6-m|}{6} \times (T_{june} - T_{december}))
@@ -140,6 +147,15 @@ where:
 \item \textit{$T_{december}$} is the temperature at zero meters in December.
 \item \textit{$T_{june}$} is the temperature at zero meters in June.
 \end{itemize}
+
+Calculating the temperature for 4 million vertices (2048 by 2048 terrain ) terrain takes approximately 2 seconds. Figure \ref{fig:temperature_calculation_time} points towards a linear relationship between vertex count and temperature calculation time.
+
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth]{temperature_calculation_time.png}
+	\caption{ Temperature calculation time based on vertex count. Analysis performed for terrains with dimensions: 256 by 256, 512 by 512, 1024 by 1024 and 2048 by 2048. }
+	\label{fig:temperature_calculation_time}
+\end{figure}
 
 \subsubsection{Temperature overlay}
 
@@ -217,7 +233,7 @@ These tools can be used interchangeably and users are encouraged to do so. Confi
 
 \subsubsection{Monthly Soil Humidity Calculation}
 
-Given the \textit{soil infiltration rate}, \textit{monthly precipitation} and \textit{monthly average precipitation intensity} for each vertex on the terrain, it is possible to calculate the quantity of the rainfall which is actually absorbed by the soil for each month. This represents the soil humidity in our system and is calculating using equation \ref{eq:monthly_soil_humidity}. The soil humidity is calculated for each terrain vertex in parallel on the GPU, enabling real-time computation thereof.
+Given the \textit{soil infiltration rate}, \textit{monthly precipitation} and \textit{monthly average precipitation intensity} for each vertex on the terrain, it is possible to calculate the quantity of the rainfall which is actually absorbed by the soil for each month. This represents the soil humidity in our system and is calculating using equation \ref{eq:monthly_soil_humidity}. 
 
 \begin{equation} \label{eq:monthly_soil_humidity}
 	S_{h}(R_{q},R_{i},S_{ir}) = 
@@ -231,9 +247,19 @@ where:
 \item \textit{$S_{ir}$} is the soil infiltration rate, in millimetres per hour.\\
 \end{itemize}
 
+To accelerate the process, the soil humidity is calculated in parallel for each vertex on the GPU. By doing so, 4 million vertices (2048 by 2048 terrain) can be processed in 158 milliseconds (\ref{fig:soil_humidity_calculation_time}). There is a linear relationship between vertex count and calculation time (\ref{fig:soil_humidity_calculation_time}).
+
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth]{soil_humidity_calculation_time.png}
+	\caption{ Soil humidity calculation time based on vertex count. Analysis performed for terrains with dimensions: 256 by 256, 512 by 512, 1024 by 1024 and 2048 by 2048. }
+	\label{fig:soil_humidity_calculation_time}
+\end{figure}
+
+
 \subsubsection{Weighted Monthly Soil Humidity Calculation}
 
-Monthly soil humidity does not take into account the humidity of previous months and therefore fails to model water retention in the soil. By retaining water in the soil, the drought caused by an arid month can be counteracted to some extent by the precipitation of previous months. To model this, a moving weighted average soil humidity is calculated for each month using equation \ref{eq:weighted_avg_monthly_humidity_calculation}. Similarly to the monthly humidity calculation, the GPU is used to get results in real-time.
+Monthly soil humidity does not take into account the humidity of previous months and therefore fails to model water retention in the soil. By retaining water in the soil, the drought caused by an arid month can be counteracted to some extent by the precipitation of previous months. To model this, a moving weighted average soil humidity is calculated for each month using equation \ref{eq:weighted_avg_monthly_humidity_calculation}.
 
 \begin{equation} \label{eq:weighted_avg_monthly_humidity_calculation}
 	S_{wh}(m) =  (\frac{1}{2} \times S_{h}(m)) + (\frac{1}{3} \times S_{h}(m-1)) + (\frac{1}{6} \times S_{h}(m-2))
@@ -243,6 +269,15 @@ where:
 \item \textit{$S_{wh}(m)$} is the weighted soil humidity at month \textit{m}, in mm.\\
 \item \textit{$S_{h}(m)$} is the soil humidity at month \textit{m}, in mm. \\
 \end{itemize}
+
+Similarly to the monthly humidity, the GPU is used to accelerate the calculation process. By doing so, 4 million vertices (2048 by 2048 terrain) can be processed in 285 milliseconds (\ref{fig:weighted_soil_humidity_calculation_time}). There is a linear relationship between vertex count and calculation time (\ref{fig:weighted_soil_humidity_calculation_time}).
+
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth]{weighted_soil_humidity_calculation_time.png}
+	\caption{ Weighted soil humidity calculation time based on vertex count. Analysis performed for terrains with dimensions: 256 by 256, 512 by 512, 1024 by 1024 and 2048 by 2048. }
+	\label{fig:weighted_soil_humidity_calculation_time}
+\end{figure}
 
 \subsubsection{Soil Humidity Overlays}
 
@@ -257,7 +292,16 @@ A visual overlay can be displayed to give an overview of both the monthly soil h
 
 \subsection{Slope}
 
-Some plants, especially those with a big biomass, can struggle to grow on steep slopes. This is clearly visible in nature, where only smaller plants (shrub, grass, etc.) grow on steeper landscapes. To determine suitable vegetation given the terrain relief, it is therefore important to model slope. This is done automatically by using the terrain normals calculated for shading purposes when the terrain is loaded.
+Some plants, especially those with a big biomass, can struggle to grow on steep slopes. This is clearly visible in nature, where only smaller plants (shrub, grass, etc.) grow on steeper landscapes. To determine suitable vegetation given the terrain relief, it is therefore important to model slope.\\
+
+This is calculated in real-time using the GPU (34 milliseconds for 4 million vertices) and the relation between vertex count and calculation time is linear (\ref.
+
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth]{slope_calculation_time.png}
+	\caption{ Slope calculation time based on vertex count. Analysis performed for terrains with dimensions: 256 by 256, 512 by 512, 1024 by 1024 and 2048 by 2048.  }
+	\label{fig:slope_calculation_time}
+\end{figure}
 
 \subsubsection{Slope Overlay}
 
