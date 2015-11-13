@@ -1,10 +1,10 @@
 \section{Rivers \& Streams}
 
-Essential to the realism of virtual rural terrains are water networks which take the form of rivers and streams. These rivers form as run-off water is being transported by gravity from higher to lower grounds. In this section is  The algorithm used to model gravity and therefore the evacuation of water on any terrain is outlined below along with details on the GPU implementation used to accelerate the process.
+Essential to the realism of virtual rural terrains are water networks. These water networks are constituted of rivers and streams and are the consequence of water being transported by gravity from higher to lower grounds. The algorithm used to model water movement on the terrain is outlined below along with details concerning the GPU implementation.
 
-\subsection{Water Evacuation Algorithm} 
+\subsection{Algorithm Overview}
 
-Precipitation, precipitation intensity and soil infiltration are used to calculate the soil humidity, $S_{h}$, which equates to the quantity of water, in millimetres, absorbed by the soil. The standing water, \textit{W$_{standing}$}, equated to the quantity of water which wasn't absorbed by the soil. It can be calculated using equation \ref{eq:standing_water_calculation}.
+Precipitation, precipitation intensity and soil infiltration is used to calculate the soil humidity, $S_{h}$ (see equation \ref{eq:monthly_soil_humidity}). The value of which equates to the quantity of water, in millimetres, absorbed by the soil. The standing water, \textit{W$_{standing}$}, is the quantity of water which isn't absorbed by the soil and can be calculated using equation \ref{eq:standing_water_calculation}.\\
 
 \begin{equation} \label{eq:standing_water_calculation}
 	W_{standing} = R_{q} - S_{h}
@@ -16,87 +16,112 @@ where:
 \item \textit{S$_{h}$} is the quantity of water absorbed by the soil, in millimetres.\\
 \end{itemize}
 
-Given the quantity of standing water, W$_{standing}$, for each vertex, a hydrostatic pipe-model similar to that of Stava et al. \cite{StAva2008} is used to determine the movement and build-up of water on the terrain. The hydrostatic pipe-model works by iteratively attempting to evacuate water from each vertex \textit{V} to any of it's eight surrounding vertices.\\
+Given the quantity of standing water, W$_{standing}$, for each vertex, a hydrostatic pipe-model similar to that of Stava et al. \cite{StAva2008} is used to determine water movement and build-up on the terrain. The hydrostatic pipe-model works by iteratively attempting to evacuate water from source vertex \textit{V} to any of it's eight surrounding vertices.\\
 
-Although the algorithm is implemented to work in three dimensions where each vertex can evacuate water content to 8 surrounding vertices, it also works in a two-dimensional space. With this reduced dimensionality, each vertex \textit{V$_{n}$} has only two surrounding vertices (\textit{V$_{n-1}$} and \textit{V$_{n+1}$) in which water can be placed. To simplify the description of this algorithm, it will be described for two dimensions. \\
+Although the algorithm is implemented to work in three dimensions where each vertex can evacuate water content to eight surrounding vertices, it also works in a two-dimensional space. With this reduced dimensionality, each vertex \textit{V$_{n}$} has only two surrounding vertices (\textit{V$_{n-1}$} and \textit{V$_{n+1}$}) in which water can be placed. To better grasp the algorithm, it is described for a two-dimensional space. The concept is identical when ported it to a third dimension.  \\
 
-The following abbreviations will be used in this section:
-\begin{itemize}
-\item \textit{TerrainHeight$_{n}$}: The terrain height at vertex \textit{V$_{n}$}.
-\item \textit{WaterHeight$_{n}$}: The water height at vertex \textit{V$_{n}$}.
-\item \textit{AggregateHeight$_{n}$ = TerrainHeight$_{n}$ + WaterHeight$_{n}$}.
-\end{itemize}
-
-Depending on the water evacuation capacity, \textit{WEC} (see \ref{eq:water_evacuation_capacity}), of vertex V$_{n}$, one of three scenarios can occur: \textit{all water can be evacuated}, \textit{a portion of the water can be evacuated} and \textit{no water can be evacuated}. Each scenario is treated separately below.\\
+Each vertex \textit{V$_{n}$}, is characterised by it's position (\textit{n}), terrain height (\textit{TerrainHeight$_{n}$}), water height (\textit{WaterHeight$_{n}$}) and absolute height (\textit{AbsoluteHeight$_{n}$} = \textit{TerrainHeight$_{n}$} + \textit{WaterHeight$_{n}$}). Using this data it is possible to calculate the water evacuation capacity, \textit{WEC}, of each terrain vertex (see equation \ref{eq:water_evacuation_capacity}). The value of which effects how much water is evacuated and how it is split amongst surrounding vertices (\ref{subsec:evacuation_approaches}).
 
 \begin{equation} \label{eq:water_evacuation_capacity}
-	WEC = 2 \times TerrainHeight_{n} - AggregateHeight_{n-1} - AggregateHeight_{n+1} > WaterHeight_{n}
+	WEC = 2 \times TerrainHeight_{n} - AbsoluteHeight_{n-1} - AbsoluteHeight_{n+1}
 \end{equation}
 
-\textbf{ALL WATER CAN BE EVACUATED}\\
 
-This holds true when:
+\subsection{Water Evacuation Approaches} \label{subsec:evacuation_approaches}
 
-\begin{equation}
-	WEC >= WaterHeight_{n}
+Using the water evacuation capacity \textit{WEC} along with table \ref{tab:scenario_based_on_wec}, one of three evacuation approaches are used:  \textit{all water is evacuated}, \textit{a portion of the water is evacuated} or \textit{no water is evacuated}. Each approach is discussed in detail here. \\
+
+\begin{table}[h]
+  \centering
+	    \begin{tabular}{|p{6cm}|p{3cm}|p{3cm}|p{3cm}|}
+		\hline	
+  	     &  WEC $>=$ WaterHeight$_{n}$ & 0 $<$ WEC $<$ WaterHeight$_{n}$ & WEC $<$ 0 \\
+  	    \hline	
+  	    All water can be evacuated & X & - & - \\
+		\hline
+  	    A portion of water can be evacuated & - & X & - \\
+		\hline
+  	    No water can be evacuated & - & - & X \\
+		\hline
+		\end{tabular}
+		\caption{Evacuation approach based on water evacuation capacity (\textit{WEC})}
+	  \label{tab:scenario_based_on_wec}
+\end{table}
+
+\subsubsection{All water is evacuated}
+
+When all water can be evacuated, it is split to surrounding vertices proportionally to their height. This is to model water flowing more intensely on steeper slopes. The quantity of water \textit{W$_{n-1}$} and \textit{W$_{n+1}$} to be evacuated to vertices \textit{V$_{n-1}$} and \textit{V$_{n+1}$} is calculated using equations \ref{eq:all_water_evac_n_minus_one} and \ref{eq:all_water_evac_n_plus_one}. Examples of such situations are illustrated in figure \ref{fig:evacuation_all}. \\
+
+\begin{equation}\label{eq:all_water_evac_n_minus_one}
+W_{n-1} = \frac{TerrainHeight_{n} - AbsoluteHeight_{n-1}}{WEC} \times WaterHeight_{n}
 \end{equation}
 
-In this situation, water is split to surrounding vertices proportionally to their height. This is to model the fact that water flows more intensely on steeper slopes. The quantity of water \textit{W$_{n-1}$} and \textit{W$_{n+1}$} to be placed on vertices \textit{V$_{n-1}$} and \textit{V$_{n+1}$} respectively is calculated as follows:
-
-\begin{equation}
-\textit{W_{n-1}} = \frac{TerrainHeight_{n} - AggregateHeight_{n-1}}{WEC} \times WaterHeight_{n}
+\begin{equation}\label{eq:all_water_evac_n_plus_one}
+W_{n+1} = \frac{TerrainHeight_{n} - AbsoluteHeight_{n+1}}{WEC} \times WaterHeight_{n}
 \end{equation}
-
-\begin{equation}
-\textit{W_{n+1}} = \frac{TerrainHeight_{n} - AggregateHeight_{n+1}}{WEC} \times WaterHeight_{n}
-\end{equation}
-
-Examples such situations are illustrated in figure \ref{fig:evacuation_all}.
 
 \begin{figure}
 \center
-	\includegraphics[width=\textwidth]{water_evacuation_all.png}
-	\caption{ Example water evacuation scenarios where all water can be evacuated from source vertex (middle).}
+	\includegraphics[width=\textwidth/4]{water_evacuation_all.png}
+	\caption{ Example water-evacuation scenarios where all water can be evacuated from source vertex (middle).}
 	\label{fig:evacuation_all}
 \end{figure}
 
-\textbf{A PORTION OF THE WATER CAN BE EVACUATED}\\
+\subsubsection{A portion of water is evacuated}
 
-This scenario occurs when the following holds true:
-
-\begin{equation}
-	0 < WEC < WaterHeight_{n}
-\end{equation}
-
-The portion of water which can be evacuate, \textit{W$_{evacuate}$} is calculated using \ref{eq:evacuate_calc}. 
+This approach is used when the water evacuation capacity, \textit{WEC}, is not large enough to purge all water but sufficient to purge a subset thereof. The portion of water which can be evacuated, \textit{W$_{evacuate}$} is calculated using equation \ref{eq:evacuate_calc}. Examples such scenarios are illustrated in figure \ref{fig:evacuation_portion}.
 
 \begin{equation}\label{eq:evacuate_calc}
-	W_{evacuate} = AggregateHeight_{n} - W_{level}
+	W_{evacuate} = AbsoluteHeight_{n} - W_{level}
 \end{equation}
 
 Where:
 \begin{itemize}
- \item W$_{level}$ is the water level to which water must be evacuated (see \ref{eq:water_level_calc}).
+ \item W$_{level}$ is the water level to which water can be evacuated (see equation \ref{eq:water_level_calc}).
 \end{itemize}
 
 \begin{equation} \label{eq:water_level_calc}
-	W_{level} = \frac{AggregateHeight_{n-1} + AggregateHeight_{n} + AggregateHeight_{n+1}}{3}
+	W_{level} = \frac{AbsoluteHeight_{n-1} + AbsoluteHeight_{n} + AbsoluteHeight_{n+1}}{3}
 \end{equation}
-
-Examples such situations are illustrated in figure \ref{fig:evacuation_portion}.
 
 \begin{figure}
 \center
-	\includegraphics[width=\textwidth]{water_evacuation_portion.png}
+	\includegraphics[width=\textwidth/4]{water_evacuation_portion.png}
 	\caption{ Example water evacuation scenarios when only a portion of water can be evacuated from the source vertex (middle).}
 	\label{fig:evacuation_portion}
 \end{figure}
 
-// Talk about terrain extremeties
+\subsubsection{No water is evacuated}
 
-Similarly to the work by , a water evacuation algorithm is used where water is iteratively evacuated from source to destination vertex. 
+This situation occurs when there is no capacity for water evacuation and therefore no water can be transported to surrounding vertices. Examples of such scenarios are illustrated in figure \ref{fig:evacuation_all}.
+
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth/4]{water_evacuation_none.png}
+	\caption{ Example water evacuation scenarios where no water can be evacuated from the source vertex (middle).}
+	\label{fig:evacuation_none}
+\end{figure}
+
+\subsection{Terrain Extremities}
+
+When attempting to evacuate water from vertices on the terrain extremities, one or multiple vertices are missing. One way to deal with this would be to discard those vertices and permit water to flow only to existing surrounding vertices. By employing this approach, however, water would never leave the terrain and could build-up unrealistically. To overcome this, a one vertex thick border is generated around the terrain as illustrated in figure \ref{fig:evacuation_border}. The height of each border vertex is calculated such that the slope remains unchanged. During the water-flow simulation, water is permitted to evacuate to border vertices but water cannot build-up on them.
+
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth]{water_evacuation_border.png}
+	\caption{ Border of vertices generated around the terrain to cater for water evacuation at the extremities. Orange vertices form the border. }
+	\label{fig:evacuation_border}
+\end{figure}
+
+\subsection{Stopping the simulation}
+
+The flow of water on the terrain can be measured by keeping track of the number of vertices which were completely purged at a given iteration of the simulation. This flow will tend to be much larger at the start of the simulation when water is being evacuated from higher grounds and will gradually decrease as water starts to build up and less vertices are able to purge their water content entirely. By also keeping track of the aggregated water flow of all previous iterations of the simulation, it is possible to analyse the evolution of water-flow. The system automatically stops the simulation when the water-flow calculated at iteration \textit{n} is less than one thousandth of the total aggregated water flow during the course of the simulation. \\
+
+The user is able to override this, however, if he wishes to model a different water network which requires a shorter or longer water-flow simulation. 
 
 \subsection{GPU Implementation}
+
+Processing the water flow on the terrain is computationally expensive as the amount of water to evacuate needs to be calculated iteratively for all terrain vertices. To accelerate this process and  process a parallel implement
 
 When processing a single vertex, water can not be removed from surrounding vertices
 
