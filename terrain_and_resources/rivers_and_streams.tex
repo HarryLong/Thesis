@@ -1,4 +1,4 @@
-\section{Rivers \& Streams}
+\section{Rivers \& Streams} \label{sec:rivers_and_streams}
 
 Essential to the realism of virtual rural terrains are water networks. These water networks are constituted of rivers and streams and are the consequence of water being transported by gravity from higher to lower grounds. The algorithm used to model water movement on the terrain is outlined below along with details concerning the GPU implementation.
 
@@ -186,24 +186,72 @@ Because local memory cannot be shared amongst work-groups, a problem arises when
 
 \begin{figure}
 \center
-	\includegraphics[width=\textwidth]{inter_work_group_reduction_textures_horizontal.jpg}
+	\includegraphics[width=\textwidth/2]{inter_work_group_reduction_textures_horizontal.jpg}
 	\caption{ Global memory allocation requirement (green) to cater for inter work group memory access in the horizontal direction. \textit{WG} = work group}
 	\label{fig:water_flow_inter_wg_reduc_horiz}
 \end{figure}
 
 \begin{figure}
 \center
-	\includegraphics[width=\textwidth]{inter_work_group_reduction_textures_vertical.jpg}
+	\includegraphics[width=\textwidth/2]{inter_work_group_reduction_textures_vertical.jpg}
 	\caption{ Global memory allocation requirement (green) to cater for inter work group memory access in the vertical direction. \textit{WG} = work group}
 	\label{fig:water_flow_inter_wg_reduc_vert}
 \end{figure}
 
 \begin{figure}
 \center
-	\includegraphics[width=\textwidth]{inter_work_group_reduction_textures_diagonal.jpg}
+	\includegraphics[width=\textwidth/2]{inter_work_group_reduction_textures_diagonal.jpg}
 	\caption{ Global memory allocation requirement (green) to cater for inter work group memory access in the diagonal direction. \textit{WG} = work group}
 	\label{fig:water_flow_inter_wg_reduc_diag}
 \end{figure}
 
 \subsection{Performance}
 
+Due to limited scope, a CPU version of this algorithm was not implemented and therefore, calculating GPU speed-up is not possible. The section focuses on the processing time to complete the water-flow simulation and the average time per single-iteration of the simulation for terrains varying in size. \\
+In order to ensure consistency between the tests:
+\begin{itemize}
+\item The different terrains used are all scaled-down versions of the same seed terrain. This ensures the terrain relief, and therefore water-flow capacity, is the same.\\
+\item The amount of water to evacuate at time \textit{t$_{0}$} on each terrain vertex is the same for all simulation runs (100 millimetres). \\
+\end{itemize}
+
+As can be seen in the results summarised in figure \ref{fig:water_flow_processing_time_total}, the water-flow simulation takes approximately 22 seconds to complete for a terrain with over one million vertices (1024 $\times$ 1024 terrain). The simulation time decreases linearly with the vertex count of the terrain. A similar pattern emerges when analysing the average processing time for a single iteration of the simulation (see figure \ref{fig:water_flow_processing_time_per_iteration}).
+
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth]{water_flow_processing_time_total.png}
+	\caption{ Total water-flow simulation time for 100 millimetres per terrain vertex. Analysis performed for terrains with dimensions: 128 by 128, 256 by 256, 512 by 512 and 1024 by 1024.}
+	\label{fig:water_flow_processing_time_total}
+\end{figure}
+
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth]{water_flow_processing_time_per_iteration.png}
+	\caption{ Average time for a single iteration of the water-flow for 100 millimetres per terrain vertex. Analysis performed for terrains with dimensions: 128 by 128, 256 by 256, 512 by 512 and 1024 by 1024.}
+	\label{fig:water_flow_processing_time_per_iteration}
+\end{figure}
+
+\subsection{Results}
+
+The U.S. Geological Survey \protect\footnotemark \footnotetext{\url{http://www.usgs.gov}}  freely provides detailed elevation data for the north American continent. Google-Earth \protect\footnotemark \footnotetext{\url{http://www.google.com/earth/}} provides detailed satellite images of the same locations. To test the water-flow simulation, it is run on actual terrains generated using data from the U.S. Geological Survey. The resulting rivers and streams which form are compared with corresponding satellite images to see if the main water bodies match. For the tests to be as accurate as possible, nothing other than the water-flow simulation is performed on the terrains. \\
+The results illustrated in figures \ref{fig:water_flow_test_1}, \ref{fig:water_flow_test_2} and \ref{fig:water_flow_test_3} show that the simulation successfully reproduces core water networks. Note that the replicated terrains also include water bodies and rivers which aren't present in the corresponding satellite image. The purpose of the test is not to reproduce an exact match but rather ensure that, by running only the water-flow simulation, the core water networks are reproduced. Better results could be achieved by fine-tuning the soil infiltration rates but this would bias the test as it would influence the flow of water on the terrain.
+
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth]{water_flow_test_1.png}
+	\caption{ Comparison of real world water-networks (bottom) with those produced using only the water-flow simulation (top).}
+	\label{fig:water_flow_test_1}
+\end{figure}
+
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth]{water_flow_test_2.png}
+	\caption{ Comparison of real world water-networks (bottom) with those produced using only the water-flow simulation (top).}
+	\label{fig:water_flow_test_2}
+\end{figure}
+
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth]{water_flow_test_3.png}
+	\caption{ Comparison of real world water-networks (bottom) with those produced using only the water-flow simulation (top).}
+	\label{fig:water_flow_test_3}
+\end{figure}
