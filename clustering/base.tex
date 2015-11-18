@@ -1,0 +1,25 @@
+\chapter{Clustering}
+
+Each point on the terrain has a number of associated resource properties (summarised in table \ref{tab:point_resources}). These properties are used as input to an ecosystem simulator to determine vegetation and vegetation density. Running an ecosystem simulation for each point on the terrain would be excessive, however, both in terms of computation time and data overlap. The data overlap would be the result of simulations being run for points with very similar resource properties.\\
+
+\begin{table}[h]
+  \centering
+	    \begin{tabular}{|p{6cm}|p{3cm}|p{6cm}|}
+		\hline	
+  	    \textbf{Resource} & \textbf{Count} & \textbf{Comments} \\
+  	    \hline	
+  	    Slope & 1 & - \\
+		\hline
+  	    Temperature & 12 & Temperature for each month \\
+		\hline
+  	    Illumination & 12 & Illumination for each month \\
+		\hline
+  	    Soil Humidity & 12 & Soil humidity for each month \\
+		\hline
+		\end{tabular}
+		\caption{Resource properties associated with a single point on the terrain.}
+	  \label{tab:point_resources}
+\end{table}
+
+To make the number of ecosystem simulations which need to be run manageable and ensure each one generates distinct distribution data, clustering is performed on the terrain based on the resources of individual points. The type of clustering algorithm used is \textit{K-Means Clustering}, discussed in the dedicated \textit{K-Means Clustering} section. To accelerate the clustering algorithm and strive for real-time results, a GPU implementation was made. Details of which can be found in the \textit{GPU Implementation} section. To conclude the chapter, performance and results are analysed in sections \textit{Performance} and \textit{Results} respectively.
+
