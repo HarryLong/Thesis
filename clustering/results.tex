@@ -40,29 +40,29 @@ The resulting terrain clusters that form are displayed in figure \ref{fig:cluste
 		\hline
   	    Slope & 6.65549 & 15.5914 & 16.2722 & 19.8204 & 46.483 \\
 		\hline
-  	    Temp (Jan) & 19 & 23 & 21 & 25 & 23 \\
+  	    Temperature (Jan) & 19 & 23 & 21 & 25 & 23 \\
 		\hline
-  	    Temp (Feb) & 17 & 21 & 19 & 23 & 21 \\
+  	    Temperature (Feb) & 17 & 21 & 19 & 23 & 21 \\
 		\hline
-  	    Temp (Mar) & 14 & 18 & 16 & 20 & 18 \\
+  	    Temperature (Mar) & 14 & 18 & 16 & 20 & 18 \\
 		\hline
-  	    Temp (Apr) & 12 & 16 & 14 & 18 & 16 \\
+  	    Temperature (Apr) & 12 & 16 & 14 & 18 & 16 \\
 		\hline
-  	    Temp (May) & 9 & 13 & 11 & 15 & 13 \\
+  	    Temperature (May) & 9 & 13 & 11 & 15 & 13 \\
 		\hline
-		Temp (Jun) & 7 & 11 & 9 & 13 & 11 \\
+		Temperature (Jun) & 7 & 11 & 9 & 13 & 11 \\
 		\hline
-		Temp (Jul) & 9 & 13 & 11 & 15 & 13 \\
+		Temperature (Jul) & 9 & 13 & 11 & 15 & 13 \\
 		\hline
-		Temp (Aug) & 12 & 16 & 14 & 18 & 16 \\
+		Temperature (Aug) & 12 & 16 & 14 & 18 & 16 \\
 		\hline
-		Temp (Sep) & 14 & 18 & 16 & 20 & 18 \\
+		Temperature (Sep) & 14 & 18 & 16 & 20 & 18 \\
 		\hline
-		Temp (Oct) & 17 & 21 & 19 & 23 & 21 \\
+		Temperature (Oct) & 17 & 21 & 19 & 23 & 21 \\
 		\hline
-		Temp (Nov) & 19 & 23 & 21 & 25 & 23 \\
+		Temperature (Nov) & 19 & 23 & 21 & 25 & 23 \\
 		\hline
-		Temp (Dec) & 22 & 26 & 24 & 28 & 26 \\
+		Temperature (Dec) & 22 & 26 & 24 & 28 & 26 \\
 		\hline
   	    Illumination (Jan) & 8 & 5 & 6 & 3 & 4 \\
 		\hline
@@ -145,26 +145,25 @@ The resulting terrain clusters that form are displayed in figure \ref{fig:cluste
 	\label{fig:clustering_graph_slope}
 \end{figure}
 
-Figures \ref{fig:clustering_graph_illumination}, \ref{fig:clustering_graph_temp}, \ref{fig:clustering_graph_humidity} and \ref{fig:clustering_graph_slope} show the cluster values along with the terrain average for illumination, temperature, soil humidity and slope respectively. Using these figures, it is possible to analytically determine the principle cluster feature(s) (see table{\ref{tab:clustering_test_cluster_analysis}). 
+Figures \ref{fig:clustering_graph_illumination}, \ref{fig:clustering_graph_temp}, \ref{fig:clustering_graph_humidity} and \ref{fig:clustering_graph_slope} show how much each cluster's illumination, temperature, soil humidity and slope vary from the terrain's average. Using this, is is possible to determine the key feature(s) of each individual cluster (summarized in table \ref{tab:clustering_test_cluster_variance}).
 
 \begin{table}[]
   \centering
 	    \begin{tabular}{|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|}
 		\hline	
-  	    Cluster & Illumination &  Temperature & Soil Humidity & Slope \\
-		\hline	
-		1 & High & Low & Avg & Very Low\\
+  	    \textbf{Cluster} &  \textbf{Illumination} & \textbf{Temperature} & \textbf{Soil Humidity} & \textbf{Slope} \\
 		\hline
-		2 & Avg & High & Avg & Avg \\
+		\textbf{1} & \textuparrow & \textdownarrow & \textrightarrow & \textdownarrow \textdownarrow \\
 		\hline
-		3 & Avg & Avg & Avg & Avg \\
-		\hline	
-		4 & Low & High & Very High & Avg \\
-		\hline	
-		5 & Low & Avg & Very High & Avg \\
-		\hline	
+		\textbf{2} & \textrightarrow & \textuparrow & \textrightarrow & \textuparrow \\
+		\hline
+		\textbf{3} & \textrightarrow & \textrightarrow & \textrightarrow & \textuparrow \textuparrow \textuparrow \\
+		\hline
+		\textbf{4} & \textdownarrow \textdownarrow & \textuparrow \textuparrow & \textuparrow \textuparrow \textuparrow & \textrightarrow \\
+		\hline
+		\textbf{5} & \textdownarrow & \textuparrow & \textdownarrow \textdownarrow & \textuparrow \\
+		\hline
 		\end{tabular}
-		\caption{Cluster comparison analysis}
-	  \label{tab:clustering_test_cluster_analysis}
+		\caption{Summary of cluster feature variance from terrain average.}
+	  \label{tab:clustering_test_cluster_variance}
 \end{table}
-
