@@ -1,0 +1,10 @@
+\chapter{Vegetation}
+
+An essential part of rural terrains is vegetation. Available resources determine which plant species are able to grow and to what extent they strive in a given environment. Reproducing this link between species and climate is essential to determine suitable vegetation and subsequently generate plausible terrains. \\
+
+To be able to determine environments suited for given plants, new plants are specified with associated resource requirement properties. Details of which can be found in the \textit{Plant Species} section below.\\
+Given these properties, it is possible to automatically filter out ill-suited plants from being suggested to the user. Information about this automatic filtering feature is outlined in the \textit{Resource-based plant filtering} section below.\\
+
+Although a multitude of plants can grow in a given environment, some will naturally strive more than others. This can be because resources are more adequate or they have a faster, more aggressive growth rate. To model this intra-specie battle for resources and  determine a suitable vegetative state, an ecosystem simulator is used. Details of which can be found in the dedicated \textit{Ecosystem Simulator} section below.\\
+
+The ecosystem simulator is computationally expensive and can take some time to determine a valid distribution. The time is dependent on the number of plant instances in the simulation along with the simulation area. To accelerate the process, the ecosystem simulator is run on a small area and the resulting distribution analysed in order to reproduce it on larger area. Information about the distribution analysis and reproduction algorithms can be found in the dedicated \textit{Plant Distribution Analysis and Reproduction} section below.
