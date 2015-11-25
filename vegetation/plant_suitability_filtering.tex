@@ -41,9 +41,9 @@ Because the illumination varies on a monthly basis, to calculate the aggregate i
 IllumScore_{S}(x) = 
 \begin{cases}
     0, & \text{if } x \leq min \text{ or } x \geq max \\
-    \frac{x - min}{prime_{start} - min} \times 100, & \text{if } x > min \text{ and } x < prime_{start} \\
-    100, & \text{if } x \geq prime_{start} \text{ and } x \leq prime_{end} \\
-    (1 - \frac{x - prime_{end}}{max-prime_{end}}) \times 100, & \text{if } x > prime_{end} \text{ and } x < max \\
+    \frac{x - min}{prime_{start} - min} \times 100, & \text{if } x \in ]min,prime_{start}[ \\
+    100, & \text{if } x \in [prime_{start},prime_{end}] \\
+    (1 - \frac{x - prime_{end}}{max-prime_{end}}) \times 100, & \text{if } x \in ]prime_{end},max[ \\
 \end{cases}
 \label{eq:monthly_illumination_score}
 \end{equation}
@@ -76,9 +76,9 @@ The humidity also varies on a monthly basis and, as such, it is also necessary t
 HumScore_{S}(x) = 
 \begin{cases}
     0, & \text{if } x \leq min \text{ or } x \geq max \\
-    \frac{x - min}{prime_{start} - min} \times 100, & \text{if } x > min \text{ and } x < prime_{start} \\
-    100, & \text{if } x \geq prime_{start} \text{ and } x \leq prime_{end} \\
-    (1 - \frac{x - prime_{end}}{max-prime_{end}}) \times 100, & \text{if } x > prime_{end} \text{ and } x < max \\
+    \frac{x - min}{prime_{start} - min} \times 100, & \text{if } x \in ]min,prime_{start}[ \\
+    100, & \text{if } x \in [prime_{start},prime_{end}] \\
+    (1 - \frac{x - prime_{end}}{max-prime_{end}}) \times 100, & \text{if } x \in ]prime_{end},max[ \\
 \end{cases}
 \label{eq:monthly_humidity_score}
 \end{equation}
@@ -111,9 +111,9 @@ Temperature also varies on a monthly basis and, as such, it is also necessary to
 TempScore_{S}(x) = 
 \begin{cases}
     0, & \text{if } x \leq min \text{ or } x \geq max \\
-    \frac{x - min}{prime_{start} - min} \times 100, & \text{if } x > min \text{ and } x < prime_{start} \\
-    100, & \text{if } x \geq prime_{start} \text{ and } x \leq prime_{end} \\
-    (1 - \frac{x - prime_{end}}{max-prime_{end}}) \times 100, & \text{if } x > prime_{end} \text{ and } x < max \\
+    \frac{x - min}{prime_{start} - min} \times 100, & \text{if } x \in ]min,prime_{start}[ \\
+    100, & \text{if } x \in [prime_{start},prime_{end}] \\
+    (1 - \frac{x - prime_{end}}{max-prime_{end}}) \times 100, & \text{if } x \in ]prime_{end},max[ \\
 \end{cases}
 \label{eq:monthly_temp_score}
 \end{equation}
