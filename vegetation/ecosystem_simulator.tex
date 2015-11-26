@@ -2,11 +2,15 @@
 
 Once the user selects the union of all species that must appear in all clusters of the terrain, it is necessary to determine a valid vegetation distribution for each cluster. To do so, an ecosystem simulator is used similarly to that in the work by Deussen et al \cite{Deussen1998} and Lane and Przemyslaw \cite{Lane2002}. Unlike these other ecosystem simulators, however, it isn't based on L-Systems and models both resource requirements and resource availability in greater detail. The purpose of ecosystem simulator is to determine, given a vegetative state, \textit{S$_{t}$} at time \textit{t}, the vegetative state \textit{S$_{t+n}$} at time \textit{t+n}, for any value of n.  \\
 
-To do so, the simulation advances through time in monthly intervals and the strength of all plant instances are re-calculated at each iteration. Their strength depend not only on resource properties of the given month but also surrounding plants as they battle for these resources. Determining the set S = {P$_{1}$, P$_{2}$, P$_{3}$, ...} of plants which compete for resources with plant \textit{P$_{n}$} depends on the spatial reach of \textit{P$_{n}$}. Spatial awareness is therefore a key requirement of the simulation which is achieved by splitting the simulation area into a grid of cells as described in \textit{Gridded Simulation Area}.
+To do so, the simulation advances through time in monthly intervals and the strength of all plant instances are re-calculated at each iteration. Their strength depend not only on resource properties of the given month but also surrounding plants as they battle for these resources. Determining the set S = \{P$_{1}$, P$_{2}$, P$_{3}$, ...\} of plants which compete for resources with plant \textit{P$_{n}$} depends on the spatial reach of \textit{P$_{n}$}. Spatial awareness is therefore a key requirement of the simulation which is achieved by splitting the simulation area into a grid of cells as described in \textit{Gridded Simulation Area}.
 
 Within each cell of the gridded simulation area, resources must be distributed to the different plant instances present. How this is done is described in \textit{Resource Distribution}. \\
 
-Given the resources allocated to each plant instance, it is possible to calculate their strength. This is used as a representation of the plant's health and, consequentially, it's ability to survive and grow. Details about the plant's strength calculation and it's usage is discussed in \textit{Plant Strength} and \textit{Plant Strength Usage} respectively
+Given the resources allocated to each plant instance, it is possible to calculate their strength. This is used as a representation of the plant's health and, consequentially, it's ability to survive and grow. Details about the plant's strength calculation and it's usage is discussed in \textit{Plant Strength Calculation} and \textit{Plant Strength Usage} respectively.
+
+On an annual basis, new plant instances are spawned based on species seeding properties. How this is done is discussed in \textit{Spawning Plants}.\\
+
+To conclude the discussion on the ecosystem simulator, it's performance will be analysed in \textit{Performance} and results discussed in \textit{Results}.
 
 \subsection{Gridded Simulation Area}
 
@@ -27,9 +31,9 @@ The strength of each plant in the simulation must be recalculated on a monthly b
 
 \subsubsection{Illumination Distribution}
 
-Plants which are heavily dependent on illumination will often grow a large canopy in order to maximize the leaf coverage area which receives direct sunlight. In the process this will restrict the illumination received by smaller plants in the undergrowth. To model the shade projection of larger plants illumination is distributed in each cell depending on the plants height and canopy width. 
+Plants which are heavily dependent on illumination will often grow a large canopy in order to maximize the leaf coverage area which receives direct sunlight. In the process this will restrict the illumination received by smaller plants in the undergrowth. To model the shade projection of larger plants, illumination is distributed in each cell depending on the plants height and canopy width. 
 
-Equation \ref{eq:illum_distribution} is used to allocation illumination amongst the set \textit{S} = {P$_{1}$, P$_{2}$, P$_{3}$, ...} of plants which canopy intersect with cell \textit{C$_{xy}$}.
+Equation \ref{eq:illum_distribution} is used to allocation illumination amongst the set \textit{S} = \{P$_{1}$, P$_{2}$, P$_{3}$, ...\} of plants which canopy intersect with cell \textit{C$_{xy}$}.
 
 \begin{equation}
 \centering
@@ -43,12 +47,244 @@ Illumination(P_{n}) =
 \end{equation}
 Where:
 \begin{itemize}
-\item \textit{Illumination($P_{n}$)} is the illumination allocated to plant \textit{P$_{n}$}.
+\item \textit{Illumination($P_{n}$)} is the illumination allocated to plant \textit{P$_{n}$} whose canopy overlaps with current grid cell.
 \item \textit{C$_{illumination}$} is the monthly illumination of the cell.
 \item \textit{CanopyWidth(P$_{n}$)} is the canopy width of plant P$_{n}$.
 \item \textit{Height(P$_{n}$)} is the height of plant P$_{n}$.
+\item \textit{S} is the set of plants whose canopy intersects with the given grid cell.
 \end{itemize}
 
-Intuitively, if all plants present in the given cell are canopy-free (i.e no shade projection), the equation allocates them all available illumination. If not all plants are canopy-free, the equation allocated all illumination to the tallest canopy plant leaving all others with zero illumination.
+Intuitively, if all plants present in the given cell are canopy-free (i.e no shade projection), the equation allocates them all the available illumination. If not all plants are canopy-free, the equation allocates illumination only to the tallest canopy plant.
 
+\subsubsection{Humidity Distribution}
+
+Plants grow there roots in order to access the nutrients and moisture available in the surrounding soil. As roots of different plants overlap, they start to compete for these soil resources.\\
+
+When distributing the soil humidity of a given grid cell \textit{C$_{xy}$} to the set \textit{S} = \{P$_{1}$, P$_{2}$, P$_{3}$, ...\} of plants which roots intersect the cell, one of three distinct scenarios can occur depending on the total available humidity of the cell: \textit{Abundant humidity}, \textit{sufficient humidity} and \textit{insufficient humidity}.\\
+
+The humidity is deemed abundant if the available humidity, \textit{H$_{available}$}, surpasses 300 millimetres. In this situation, the humidity is deemed to be enough for there to be standing water and therefore all plants of \textit{S} are allocated \textit{H$_{available}$}. \\
+
+If \textit{H$_{available}$} is less than 300 millimetres, it is necessary to determine whether the humidity is sufficient or insufficient by calculating the requested humidity \textit{H$_{requested}$} as outlined in equation \ref{eq:humidity_requested_calc}. 
+
+\begin{equation}
+H_{requested} = \sum MinHumidity(P_{n}) \text{ for } n \in S
+\label{eq:humidity_requested_calc}
+\end{equation}
+Where:
+\begin{itemize}
+\item \textit{MinHumidity(P$_{n}$)} is the minimum humidity requirement of the specie to which plant \textit{P$_{n}$} belongs.
+\item \textit{S} is the set of plants whose roots intersect with the given grid cell.
+\end{itemize}
+
+If \textit{H$_{requested}$} is less than \textit{H$_{available}$}, the humidity is deemed sufficient and the amount allocated to each plant is calculated as described in equation \ref{eq:humidity_allocation_sufficient_calc}. If \textit{H$_{requested}$} is more than \textit{H$_{available}$}, however, the humidity is deemed insufficient and the allocation is done following equation ...
+
+\begin{equation}
+\begin{split}
+H_{allocated}(P_{n}) = MinHumidity(P_{n}) + OverFlow \\
+OverFlow = H_{available} - \sum MinHumidity(P_{n}) \text{ for } n \in S
+\end{split}
+\label{eq:humidity_allocation_sufficient_calc}
+\end{equation}
+Where:
+\begin{itemize}
+\item \textit{H$_{allocated}$(P$_{n}$)} is the humidity allocated to plant \textit{P$_{n}$}.
+\item \textit{MinHumidity(P$_{n}$)} is the minimum humidity requirement of the specie to which plant \textit{P$_{n}$} belongs.
+\item \textit{S} is the set of plants whose roots intersect with the given grid cell.
+\end{itemize}
+
+Intuitively, it allocates each plant with the minimum amount of humidity it requires to survive plus the resulting overflow.
+
+\begin{equation}
+\begin{split}
+H_{allocated}(P_{n}) = min(MinHumidity(P_{n}), Vigor(P_{n}) \times H_{remaining}) \\
+Vigour(P_{n}) =  \frac{RootSize(P_{n})}{\sum RootSize(P_{x}) \text{ for } x \in S}\\
+H_{remaining} = H_{available} - (\sum H_{allocated}(P_{x})  \text{ for } x \in S_{processed})\\
+\end{split}
+\label{eq:humidity_allocation_insufficient_calc}
+\end{equation}
+Where:
+\begin{itemize}
+\item The plants of \textit{S} \textbf{must} be iterated over in decrementing order of their vigor as this will affect the water they are allocated.
+\item \textit{H$_{allocated}$(P$_{n}$)} is the humidity allocated to plant \textit{P$_{n}$}.
+\item \textit{MinHumidity(P$_{n}$)} is the minimum humidity requirement of the specie to which plant \textit{P$_{n}$} belongs.
+\item \textit{Vigour(P$_{n}$)} is the vigor of plant \textit{P$_{n}$} in comparison to other plants present in the cell. It is estimated based on root size.
+\item \textit{RootSize(P$_{n}$)} is the root size of plant \textit{P$_{n}$}.
+\item S$_{processed}$) is the set of plants from \textit{S} whose water allocation has already been calculated.
+\item \textit{S} is the set of plants whose roots intersect with the given grid cell.
+\end{itemize}
+
+Intuitively, this algorithm prioritises water distribution to more vigorous plant's.
+
+\subsubsection{Plant Humidity Allocation}
+
+To calculate the humidity allocated to plant \textit{P$_{n}$}, it is first necessary to determine the set of grid cells \textit{S} = \{C$_{1}$, C$_{2}$, C$_{3}$, ...\} which it's roots intersect. Given this, the plants humidity allocation is calculated using equation \ref{eq:plant_humidity_allocation}. The humidity allocated to a given plant is simply the average of the humidity allocated to it in all grid cells it's roots intersect.
+
+\begin{equation}
+H_{n} = \frac{\sum H_{allocated}(C_{x}) \text{ for } x \in S}{| S |}
+\label{eq:plant_humidity_allocation}
+\end{equation}
+Where:
+\begin{itemize}
+\item \textit{H$_{n}$} is the humidity allocated to plant \textit{P$_{n}$}. 
+\item \textit{H$_{allocated}$(C$_{n}$)} is the humidity allocated to plant \textit{P$_{n}$} in grid cell C$_{n}$.
+\item \textit{$|$ S $|$} is the number of cells in the set \textit{S}.
+\end{itemize}
+
+
+\subsubsection{Plant Illumination Allocation}
+
+Calculating the illumination allocated to a plant \textit{P$_{n}$} is very similar to calculating the humidity allocation only the set of grid cells \textit{S} = \{C$_{1}$, C$_{2}$, C$_{3}$, ...\} are those which the plants canopy intersects. Given \textit{S}, the plant illumination is calculated using equation \ref{eq:plant_illumination_allocation}.
+
+\begin{equation}
+I_{n} = \frac{\sum I_{allocated}(C_{x}) \text{ for } x \in S}{| S |}
+\label{eq:plant_illumination_allocation}
+\end{equation}
+Where:
+\begin{itemize}
+\item \textit{I$_{n}$} is the illumination allocated to plant \textit{P$_{n}$}. 
+\item \textit{I$_{allocated}$(C$_{n}$)} is the illumination allocated to plant \textit{P$_{n}$} in grid cell C$_{n}$.
+\item \textit{$|$ S $|$ } is the number of cells in the set \textit{S}.
+\end{itemize}
+
+\subsection{Plant Strength Calculation}
+
+The strength of plant \textit{P$_{n}$} is the minimum of \textit{S$_{age}$}, \textit{S$_{temperature}$}, \textit{S$_{illumination}$} and \textit{S$_{humidity}$} which represent the strength of the plant in terms of it's age, temperature, illumination and humidity respectively. Each strength is a value ranging form negative to positive one hundred. How each individual strength is calculated is discussed below.
+
+\subsubsection{Age Strength}
+
+A graph as illustrated in figure \ref{fig:strength_calc_age} is generated for each specie using it's associated ageing properties. This graph is used to determine the age strength \textit{S$_{age}$} of any plant \textit{P$_{n}$}.
+
+\begin{figure}
+\center
+	\includegraphics[scale=0.7]{age_strength.jpg}
+	\caption{ Graph used to calculate the age strength of any plant. \textbf{P$_{1}$} is the age of \textit{start of decline} configured for the given specie. \textbf{P$_{2}$} is the \textit{maximum age} configured for the given specie. }	
+	\label{fig:strength_calc_age}
+\end{figure}
+
+\subsubsection{Temperature Strength}
+
+A graph as illustrated in figure \ref{fig:strength_calc_temp} is generated for each specie using it's associated temperature requirement properties. This graph is used to determine the temperature strength \textit{S$_{temperature}$} of any plant \textit{P$_{n}$}.
+
+\begin{figure}
+\center
+	\includegraphics[scale=0.7]{temperature_strength.jpg}
+	\caption{ Graph used to calculate the temperature strength of any plant. \textbf{P$_{1}$} and \textbf{P$_{4}$} are the \textit{minimum} and \textit{maximum temperature} configured for the given specie. \textbf{P$_{2}$} and \textbf{P$_{3}$} form the \textit{prime temperature range} configured for the given specie.  }	
+	\label{fig:strength_calc_temp}
+\end{figure}
+
+\subsubsection{Illumination Strength}
+
+A graph as illustrated in figure \ref{fig:illumination_strength} is generated for each specie using it's associated illumination requirement properties. This graph is used to determine the illumination strength \textit{S$_{illumination}$} of any plant \textit{P$_{n}$}.
+
+\begin{figure}
+\center
+	\includegraphics[scale=0.7]{illumination_strength.jpg}
+	\caption{ Graph used to calculate the illumination strength of any plant. \textbf{P$_{1}$} and \textbf{P$_{4}$} are the \textit{minimum} and \textit{maximum illumination} configured for the given specie. \textbf{P$_{2}$} and \textbf{P$_{3}$} form the \textit{prime illumination range} configured for the given specie.  }	
+	\label{fig:illumination_strength}
+\end{figure}
+	
+\subsubsection{Humidity Strength}
+
+A graph as illustrated in figure \ref{fig:humidity_strength} is generated for each specie using it's associated humidity requirement properties. This graph is used to determine the humidity strength \textit{S$_{humidity}$} of any plant \textit{P$_{n}$}.
+
+\begin{figure}
+\center
+	\includegraphics[scale=0.7]{humidity_strength.jpg}
+	\caption{ Graph used to calculate the humidity strength of any plant. \textbf{P$_{1}$} and \textbf{P$_{4}$} are the \textit{minimum} and \textit{maximum humidity} configured for the given specie. \textbf{P$_{2}$} and \textbf{P$_{3}$} form the \textit{prime humidity range} configured for the given specie.  }	
+	\label{fig:humidity_strength}
+\end{figure}
+
+
+\subsection{Plant Strength Usage}
+
+The strength of each plant is recalculated on a monthly basis as available resources change and other plants spawn and grow. The strength of a plant is used to determine its growth potential and probability of death as discussed below.
+
+\subsubsection{Growth Potential}
+
+In the simulation, each plant \textit{P} attempts to grow its roots, its canopy and it's height on a monthly basis. Each specie has a maximum root growth \textit{MaxGrowth$_{root}$}, canopy growth \textit{MaxGrowth$_{canopy}$} and height growth \textit{MaxGrowth$_{height}$} which is calculated based on the growth and ageing properties using equations \ref{eq:max_root_growth}, \ref{eq:max_canopy_growth} and \ref{eq:max_height_growth} respectively.
+
+\begin{equation}
+MaxGrowth_{root}(S) = \frac{MaxRoot(S)}{Age_{StartOfDecline}(S)}
+\label{eq:max_root_growth}
+\end{equation}
+Where:
+\begin{itemize}
+\item \textit{MaxGrowth$_{root}$(S)} is the maximum monthly root growth of specie \textit{S}.
+\item \textit{MaxRoot(S)} is the configured maximum root size of the specie \textit{S}.
+\item \textit{Age$_{StartOfDecline}$(S)} is the age of start of decline configured for specie \textit{S}.
+\end{itemize}
+
+\begin{equation}
+MaxGrowth_{canopy}(S) = \frac{MaxCanopy(S)}{Age_{StartOfDecline}(S)}
+\label{eq:max_canopy_growth}
+\end{equation}
+Where:
+\begin{itemize}
+\item \textit{MaxGrowth$_{canopy}$(S)} is the maximum monthly canopy growth of specie \textit{S}.
+\item \textit{MaxCanopy(S)} is the configured maximum canopy size of specie \textit{S}.
+\item \textit{Age$_{StartOfDecline}$(S)} is the age of start of decline configured for specie \textit{S}.
+\end{itemize}
+
+\begin{equation}
+MaxGrowth_{height}(S) = \frac{MaxHeight(S)}{Age_{StartOfDecline}(S)}
+\label{eq:max_height_growth}
+\end{equation}
+Where:
+\begin{itemize}
+\item \textit{MaxGrowth$_{height}$(S)} is the maximum monthly height growth of specie \textit{S}.
+\item \textit{MaxHeight(S)} is the configured maximum height of specie \textit{S}.
+\item \textit{Age$_{StartOfDecline}$(S)} is the age of start of decline configured for specie \textit{S}.
+\end{itemize}
+
+The actual root growth \textit{Growth$_{root}$}, canopy growth \textit{Growth$_{canopy}$} and height growth \textit{Growth$_{height}$} is directly dependent on the plant's strength, however, and this maximum is achieved only if the plant is at its full strength. The actual monthly root, canopy and height growth is calculated using equations \ref{eq:actual_root_growth}, \ref{eq:actual_canopy_growth} and \ref{eq:actual_height_growth} respectively. Note that no plants grow if there current strength is negative as they are deemed in a \textit{survival state}.
+
+\begin{equation}
+Growth_{root}(\textit{P},S) = max(0, Strength(\textit{P}) \times  MaxGrowth_{root}(S)
+\label{eq:actual_root_growth}
+\end{equation}
+Where:
+\begin{itemize}
+\item \textit{Growth$_{root}$(S)} is the monthly root growth of plant \textit{P} of specie \textit{S}.
+\item \textit{Strength(\textit{P}} is the current strength of \textit{P}.
+\item \textit{MaxGrowth$_{root}$(S)} is the maximum monthly root growth calculated for specie \textit{S}.
+\end{itemize}
+
+\begin{equation}
+Growth_{canopy}(\textit{P},S) = max(0, Strength(\textit{P}) \times  MaxGrowth_{canopy}(S)
+\label{eq:actual_canopy_growth}
+\end{equation}
+Where:
+\begin{itemize}
+\item \textit{Growth$_{canopy}$(S)} is the monthly canopy growth of plant \textit{P} of specie \textit{S}.
+\item \textit{Strength(\textit{P}} is the current strength of \textit{P}.
+\item \textit{MaxGrowth$_{canopy}$(S)} is the maximum monthly canopy growth calculated for specie \textit{S}.
+\end{itemize}
+
+\begin{equation}
+Growth_{height}(\textit{P},S) = max(0, Strength(\textit{P}) \times  MaxGrowth_{height}(S)
+\label{eq:actual_height_growth}
+\end{equation}
+Where:
+\begin{itemize}
+\item \textit{Growth$_{height}$(S)} is the monthly height growth of plant \textit{P} of specie \textit{S}.
+\item \textit{Strength(\textit{P}} is the current strength of \textit{P}.
+\item \textit{MaxGrowth$_{height}$(S)} is the maximum monthly height growth calculated for specie \textit{S}.
+\end{itemize}
+
+\subsubsection{Probability of Death}
+
+On a monthly basis, the probability of death of each plant is calculated based on it's strength using equation \ref{eq:probability_of_death} and the plant killed with the said probability. Note that a plant \textit{P} will only be susceptible to be killed off if it's strength is negative. 
+
+\begin{equation}
+Probability_{death}(P) = max(0, \frac{-1 \times Strength(P) + counter}{100})
+\label{eq:probability_of_death}
+\end{equation}
+Where:
+\begin{itemize}
+\item \textit{Probability{death}(P)} is the probability of death of plant \textit{P}.
+\item \textit{Strength(\textit{P}} is the current strength of \textit{P}.
+\item \textit{counter} is a value which increases by ten each month the plant's strength is negative and resets to zero when it becomes positive. This is to prevent plant's from surviving with a continuous negative strength for too long.
+\end{itemize}
+
+\subsection{Spawning Plants}
 
