@@ -194,7 +194,6 @@ A graph as illustrated in figure \ref{fig:humidity_strength} is generated for ea
 	\label{fig:humidity_strength}
 \end{figure}
 
-
 \subsection{Plant Strength Usage}
 
 The strength of each plant is recalculated on a monthly basis as available resources change and other plants spawn and grow. The strength of a plant is used to determine its growth potential and probability of death as discussed below.
@@ -288,3 +287,22 @@ Where:
 
 \subsection{Spawning Plants}
 
+In nature, the spawning of new plants ensures specie \textit{succession} and \textit{propagation}. In order to accurately model the evolution of an ecosystem it is essential to replicate this spawning mechanism. To do so, seeds are produced annually for each specie and are positioned either randomly or at predefined positions. The number of seeds that are produced for a given specie is determined by the specie's \textit{annual seed count} configuration.\\
+
+Different seeding mechanisms are used in the simulator depending on the number of plant's of the given specie present in the simulation, \textit{S$_{count}$}, and it's illumination properties.\\
+If \textit{S$_{count}$} is greater than zero, existing plant instances are used to determine the location of new plants, irrespective of it's illumination requirements, as described in \textit{Spawning from Existing Plants}.\\
+If \textit{S$_{count}$} is zero, the seeding mechanism depends on the specie's illumination requirements. If the specie is shade loving, \textit{canopy seeding} is employed, else \textit{random seeding}. Both are discussed below.
+
+\subsubsection{Spawning from Existing Plants}
+
+To ensure specie propagation, when plant's of the given specie are already present in the simulation window, they are used to determine the location for new plant instances. To do so, \textit{n} of these plants are selected at random and seeds placed at random within an annular radius \textit{r} of each. The value of \textit{n} is the \textit{annual seed count} configured for the current specie. The value of \textit{r} is the configured \textit{maximum seeding distance} of the specie. Note that if the number of plants of the given specie is less than the number of seeds to produce, a single plant is used to produce multiple seed locations. \\
+
+This technique effectively ensures \textit{propagation} until the number of plant instances present is larger than the number of seeds to produce. At which point, the \textit{propagation} potential decreases as the plant count increases. This is because as the selection pool for the random plants increases in size, the probability of selecting a plant at a location which will permit propagation decreases. To overcome this and ensure the initial seeding plants that are selected span a wide area of the simulation window, they are selected at from individual simulation grid cells.\\
+
+\subsubsection{Canopy Seeding}
+
+Shade-loving plants strive in the shaded undergrowth. If shade-loving plants are spawned at random locations in the simulation, the probability of them landing under the canopy of an existing plant is extremely low. To overcome this, shade-loving plants are not spawned at random but under the canopy of randomly selected plants.
+
+\subsubsection{Random Seeding}
+
+This is the most simple form of seeding and is used when no plants of the given specie are present in the simulation and the specie is not shade-loving. The set of locations for new plants to spawn is selected at random within the simulation window.
