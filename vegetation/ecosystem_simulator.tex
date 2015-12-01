@@ -14,7 +14,7 @@ To conclude the discussion on the ecosystem simulator, it's performance will be 
 
 \subsection{Gridded Simulation Area}
 
-The simulation window used is one hundred by one hundred meters, accurate to the nearest centimetre. To easily model plant's interacting and battling for resources, the simulation window is split into cells to form a grid as illustrated in figure \ref{fig:simulation_grid}. 
+The simulation window used is one hundred by one hundred meters, accurate to the nearest centimetre. To easily model plant's interacting and battling for resources, the window is split into cells to form a grid as illustrated in figure \ref{fig:simulation_grid}. One hundred metres was chosen as the simulation window size it is deemed large enough to model the interaction of any type of plant specie.
 
 \begin{figure}
 \center
@@ -306,3 +306,68 @@ Shade-loving plants strive in the shaded undergrowth. If shade-loving plants are
 \subsubsection{Random Seeding}
 
 This is the most simple form of seeding and is used when no plants of the given specie are present in the simulation and the specie is not shade-loving. The set of locations for new plants to spawn is selected at random within the simulation window.
+
+\subsection{Performance}
+
+The number of plants present in the simulation will heavily influence it's performance as the strength of each plant needs to be recalculated on a monthly basis. To test the influence of plant count on simulation time, a simulation is run with a single specie of plant and the monthly processing time analysed alongside the number of plants present. The plant used is grass at is has no canopy and very minimal root coverage, permitting a large number of instances to grow simultaneously (see appendix \ref{AppendixA} for properties of specie). The resources were set to be optimal for maximizing plant count and minimizing intra-plant competition. The simulation is started with only a single instance and, as the simulation progresses and seeding is performed, the number of instances increase. The results are summarized in Figure \ref{fig:ecosimulator_test_plant_count} and show that the processing time increases linearly with plant count. \\
+
+\begin{figure}
+\center
+	\includegraphics[scale=0.7]{ecosimulator_test_plant_count.png}
+	\caption{ Processing time based on plant count. Total simulation time for 100 years: 271 seconds}	
+	\label{fig:ecosimulator_test_plant_count}
+\end{figure}
+
+Another simulation property which heavily impacts performance is the root and canopy growth of plant species present. The reason for this is that, as plant's roots and canopy grow, they will cover more simulation grid cells and more calculations will be required per individual cell when the contained resources are distributed. To analyse the impact of plant growth, a base specie \textit{S$_{base}$} is created with a given root and canopy growth rate. Then, two species are created \textit{S$_{X2}$} and \textit{S$_{X3}$} with twice and thrice the growth rates of \textit{S$_{base}$} respectively (see appendix \ref{AppendixA} for specie details). An identical simulation is run on each specie in terms of available resources and, on a monthly basis, the number of plants present in the simulation along with the monthly processing time analysed. Given this information, it is possible to track the average monthly processing time per plant throughout the simulation. It is important to normalise based on the number of plants as the faster growing plants will permit less plants to survive for the simple reason that they will require and be able to access resources from a larger amount of grid cells. As can be seen in the results plotted in figure \ref{fig:ecosimulator_test_per_plant}, the processing times are similar to start and then increase proportionally to the species growth rate.
+
+\begin{figure}
+\center
+	\includegraphics[scale=0.7]{ecosimulator_test_per_plant.png}
+	\caption{ Evolution of the monthly processing time normalised based on plant count. The processing time increases as the plant's grow larger as they cover more grid cells. Total simulation time for one hundred years: ~49 seconds for \textit{S$_{base}$}, ~122 seconds for \textit{S$_{X2}$} and 166 seconds for \textit{S$_{X3}$}}
+	\label{fig:ecosimulator_test_per_plant}
+\end{figure}
+
+\subsection{Results}
+
+To test the resulting spatial distribution of plant communities in their work, Lane and and Przemyslaw \cite{Lane2002} attempt to reproduce three important properties of nature: \textit{Self-thinning}, \textit{succession} and \textit{propagation}.\\
+As plants grow, their resource requirements increase and, as a direct consequence, inter-plant competition for resources increases. Eventually, the competition becomes too intense and resources too scarce leading to more vigorous plants starving smaller plants. At this point, \textit{self-thinning} begins and plant densities decrease.\\
+Given plant specie A with a fast growth rate and specie B with a slower growth rate but higher shade tolerance. At first, the faster growing specie A will dominate and flourish but, with time, the slower growing but more shade tolerant specie B will flourish and dominate. This is the \textit{succession} property.\\
+Plants \textit{propagate} in clusters surrounding the seeding plant.\\
+
+To test the ecosystem simulator, we will first employ the same methodology as Lane and and Przemyslaw \cite{Lane2002} and attempt to reproduce \textit{self-thinning}, \textit{succession} and \textit{propagation}.
+
+To ensure a given plant specie strives better in its optimal environment, the same simulation will be run using a single plant specie with varying resource properties and the resulting plant distribution analysed. This test is discussed in \textit{Varying Resources Test} below.\\
+
+A \textit{shade-simulation test} is performed to ensure plants which depend on direct illumination strive less in the shaded undergrowth of larger plants.\\ 
+
+To ensure shade-loving plants are able to propagate and strive under the canopies of larger plants, a \textit{shade-loving plant test} is also performed.
+
+\subsubsection{Self-thinning Test}
+
+\textit{Self-thinning} occurs when the plant biomass surpasses a given tipping point where available resources become insufficient to permit further plant growth. At this point, larger plants start to kill off smaller, weaker plants by stealing their resources.\\
+
+To test whether self-thinning is successfully modelled in the ecosystem simulator, three simulations are run as described in table \ref{tab:self_thinning_test_simulations} and the plant count tracked throughout. As described previously, self-thinning occurs because of insufficient resources. By modifying only available humidity in each simulation, it's effect on self-thinning becomes apparent. As can be seen in the results summarized in figure \ref{fig:self_thinning_test_results}, the plant count increases at first, reaches a maximum and decreases thereafter. This is the exact behaviour of self-thinning. Furthermore, it is apparent that the maximum plant count increases with the humidity available, therefore showing that self-thinning is sensitive to available resources.
+
+\begin{table}[]
+  \centering
+	    \begin{tabular}{|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|}
+		\hline
+		\textbf{Simulation} & \textbf{Simulation time (years)} & \textbf{Humidity} & \textbf{Illumination} & \textbf{Temperature}\\
+		\hline       
+		1 & 100 & 25 & 10 & 15\\           
+		\hline       
+		2 & 100 & 30 & 10 & 15\\   
+		\hline       
+		3 & 100 & 35 & 10 & 15\\              
+		\hline       
+		\end{tabular}
+		\caption{Self-thinning test simulation configurations. For simplicity, monthly resources are kept constant.}
+		\label{tab:self_thinning_test_simulations}
+\end{table}
+
+\begin{figure}
+\center
+	\includegraphics[scale=0.7]{self_thinning.png}
+	\caption{ Plant count tracked throughout three separate simulations differing only in available humidity. }
+	\label{fig:self_thinning_test_results}
+\end{figure}
