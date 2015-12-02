@@ -371,3 +371,94 @@ To test whether self-thinning is successfully modelled in the ecosystem simulato
 	\caption{ Plant count tracked throughout three separate simulations differing only in available humidity. }
 	\label{fig:self_thinning_test_results}
 \end{figure}
+
+\subsubsection{Succession Test}
+
+Succession occurs in an ecosystem due to the different growth rates of the species it contains. To test \textit{succession} in the ecosystem simulator, two plant species \textit{S$_{fast}$} and \textit{S$_{slow}$} are created differing only in their growth rate and illumination properties (see appendix \ref{AppendixA} for details) and a simulation run with these two species under optimal conditions. During the simulation, the appearance and average size of the two plant species are monitored to determine the dominating specie. The analytical results illustrated in figure \ref{fig:succession_plants_avg_size} along with the appearance at ten year intervals displayed in figure \ref{fig:succession_plants_render} shows that \textit{S$_{fast}$} dominates at first (~300 months in) followed by \textit{S$_{slow}$} (~500 months in). A balance is found thereafter.
+
+\begin{figure}
+\center
+	\includegraphics[scale=0.7]{succession_plant_avg_size.png}
+	\caption{ Succession Test: Average size of the slow growing S$_{slow}$ (red) and fast growing S$_{fast}$ (blue) throughout a simulation run in optimal conditions. }
+	\label{fig:succession_plants_avg_size}
+\end{figure}
+
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth]{succession_plants_render.png}
+	\caption{ Succession Test: Appearance of the slow growing S$_{slow}$ (white) and fast growing S$_{red}$ (blue) at different times during the simulation. From left-to-right, top-top-bottom: 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100 years.}
+	\label{fig:succession_plants_render}
+\end{figure}
+
+\subsubsection{Propagation Test}
+
+To ensure propagation is modelled in the ecosystem simulator a simulation is run with a single starting grass seed (see appendix \ref{AppendixA} for specie details) and it's evolution tracked throughout. Figure \ref{fig:propagation_test_render} shows that iterative propagation through annual seeding enables a single seed plant to colonize the entirety of the terrain. 
+
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth]{propagation_test_render.png}
+	\caption{ Propagation Test: Evolution through time of a simulation starting from a single seed plant of grass. From left-to-right, top-to-bottom: 2, 10, 20, 30, 40, 50, 60, 70 years in.}
+	\label{fig:propagation_test_render}
+\end{figure}
+
+\subsubsection{Varying Resource Test}
+
+To ensure a given plant specie strives better when it's habitat is more suited, multiple simulations are run with only specie \textit{S$_{base}$} (see appendix \ref{AppendixA} for specie properties) present. As outlined in table \ref{tab:varying_resource_test_simulations}, the simulations vary only in their configured humidity. As seen by the results plotted in figure \ref{fig:varying_resource_test}, illustrating the average canopy width for a single plant instance throughout the simulations, plants strive better in environments better suited to their resource requirements.
+
+\begin{table}[]
+  \centering
+	    \begin{tabular}{|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|}
+		\hline
+		\textbf{Simulation} & \textbf{Simulation time (years)} & \textbf{Humidity} & \textbf{Illumination} & \textbf{Temperature}\\
+		\hline         
+		1 & 100 & 22 & 10 & 20\\           
+		\hline       
+		2 & 100 & 24 & 10 & 20\\
+		\hline       
+		3 & 100 & 26 & 10 & 20\\           
+		\hline     
+		4 & 100 & 28 & 10 & 20\\           
+		\hline     
+		5 & 100 & 30 & 10 & 20\\           
+		\hline       
+		6 & 100 & 32 & 10 & 20\\           
+		\hline       
+		7 & 100 & 34 & 10 & 20\\           
+		\hline      
+		8 & 100 & 36 & 10 & 20\\           
+		\hline       
+		9 & 100 & 38 & 10 & 20\\           
+		\hline     
+		\end{tabular}
+		\caption{Varying resource rest simulation configurations. For simplicity, monthly resources are kept constant.}
+		\label{tab:varying_resource_test_simulations}
+\end{table}
+
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth]{varying_resource_test.png}
+	\caption{ Varying Resource Test: Average canopy width of a single plant throughout the simulations outlined in table \ref{tab:varying_resource_test_simulations}. }
+	\label{fig:varying_resource_test}
+\end{figure}
+
+\subsubsection{Shade Test} \label{subsubsec:shade_test}
+
+Plant's that are heavily dependent on illumination struggle to grow in areas shaded by the canopy of larger plants. To test this is modelled in the ecosystem simulator, a simulation is run with two species: \textit{S$_{smallroots}$} and grass (see appendix \ref{AppendixA} for specie details).  \textit{S$_{smallroots}$} is a custom specie created for the purpose of this test which has very small roots growth. This is important so as to focus on the effects of illumination and minimize the influence of drought. Figure \ref{fig:shade_test}, which illustrates the state of the simulation after fifty years, shows the grass struggling to grow in areas directly below the canopies of \textit{S$_{smallroots}$}.
+
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth]{shade_propagation_test.png}
+	\caption{ Shade Test: Simulation with \textit{S$_{smallroots}$} (red), grass (white) after fifty years. Left without rendering instances of \textit{S$_{smallroots}$} to visualise the effects of the shade}
+	\label{fig:shade_test}
+\end{figure}
+
+\subsubsection{Shade-loving Test}
+
+Species which strive in shaded areas and struggle to survive in open spaces directly illuminated by the sun are deemed to be shade-loving. The shade can be caused by the terrain relief or by the shadow cast by the canopy of taller plants. To test whether the ecosystem simulator successfully caters for such plant species, a simulation is run identical to that done in the shade test (section \ref{subsubsec:shade_test}) but with shade-loving specie \textit{S$_{shadeloving}$} added (see appendix \ref{AppendixA} for specie details). As seen by the snapshot of the simulation after fifty years illustrated in figure .., instances of \textit{S$_{shadeloving}$} only appear in areas directly covered by the canopies of \textit{S$_{smallroots}$}.
+
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth]{shade_loving_test.png}
+	\caption{ Shade Loving Test: Simulation with \textit{S$_{smallroots}$} (green), grass (white) and \textit{S$_{shadeloving}$} after fifty years. From left-to-right: All species, excluding grass and only \textit{S$_{shadeloving}$}. As can be seen, \textit{S$_{shadeloving}$} strive in the canopies of \textit{S$_{smallroots}$}.}
+	\label{fig:shade_loving_test}
+\end{figure}
