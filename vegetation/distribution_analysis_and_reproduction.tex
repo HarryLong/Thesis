@@ -1,0 +1,45 @@
+\section{Plant Distribution Analysis and Reproduction}
+
+As mentioned previously, running a simulation using the ecosystem simulator to generate valid plant distributions can be a lengthy process (see section \ref{subsec:ecosytem_performance}). This processing time depends on the plant count and the resolution of the simulation window. The simulation illustrated in figure \ref{fig:ecosimulator_test_plant_count}, for example, took four and a half minutes to run.\\
+
+The area to be covered by vegetation on the terrain, and therefore for which valid plant distributions created, is much larger than the hundred by hundred metre simulation window used in the ecosystem simulator. There are three obvious ways the ecosystem simulator could be used to generate vegetation for larger areas: \textit{Setting the simulation window to the area which must be covered}, \textit{decreasing the resolution of the simulation window} and by \textit{repeating the output of the hundred by hundred metre distribution (tiling)}. Each come with major setbacks, however, as \textit{increasing the simulation} window will further increase the processing time, \textit{decreasing the resolution} would impact the resulting realism and \textit{tiling} would create repetitive vegetation.\\
+
+To attempt to generate vegetation which is coherent with that produced with the ecosystem but on a larger scale whilst minimizing impacts on performance and realism, the plant distribution output by the ecosystem simulator is analysed for later reproduction. The analysis and reproduction process are discussed in \textit{Analysis} and \textit{Reproduction} respectively.\\
+
+The analysed distribution data, as well as permitting larger scale reproduction, can also be used as a cache mechanism to bypass future runs of the same ecosystem simulator run. Details on how this is implemented are discussed in \textit{Caching Distribution Data}.
+
+To conclude this section, input exemplars will be analysed and the resulting reproduction(s) evaluated.
+
+\subsection{Distribution Analysis}
+
+\textit{Radial distribution analysis}, as described in section \ref{subsubsec:radial_distribution_analysis}, is performed on the output of the ecosystem simulator to grasp its core characteristics. Each plant instance acts as a single point and the different species represent the individual categories when performing the analysis. Customizations to the generic analysis algorithm are performed, however, to better suit the purpose of analysing plant distributions. Each are discussed separately below in: \textit{Generating the category hierarchy}, \textit{Category Dependency Analysis} and \textit{Point-size Analysis}. In \textit{Configuration Parameters} are discussed the parameters used. To conclude, the performance of the distribution will be discussed in \textit{Performance}.
+
+\subsubsection{Generating the category hierarchy} \label{subsubsec:generating_cat_hierarchy}
+
+During the reproduction phase, distributions for each category are created sequentially. One a valid distribution is created for a given category, it is static and \textbf{does not} change whilst points of other categories are being plotted. For this reason, the category hierarchy plays a vital role and has a big impact on the final distribution. A side effect of this hierarchical approach is that pair-correlation histograms do not need to be generated for each category pair combinations but only for combinations for which the target category is under or equal to the source category in the hierarchy.\\
+
+Because taller plants will potentially have a canopy which shades and influences the position of smaller plants, it is important these be generated first during reproduction. For this reason, the hierarchy is generated according to the average height of the represented plant specie in descending order.
+
+\subsubsection{Category Dependency Analysis}
+
+Shade-loving plants will appear under the the shaded canopies of taller plants (see section \ref{subsubsec:shade_loving_test}). When analysing the distance of these shade-loving plants to the plant's which shade them during the analysis phase, a new \textit{negative-bin} is created.\\
+
+During reproduction, the taller plants will be generated first because they are classed higher in the hierarchy (see section \refsubsubsec:generating_cat_hierarchy}). However, this does not guarantee all shade-loving plants will be placed in the shaded canopy of other plants as if a shade-loving plant is placed at a distance larger than \textit{R$_{max}$} to any other plant instance, it is attributed a strength of one and is therefore deemed valid. It is essential to attribute a strength of one in such condition to permit plant propagation. A solution to this problem would be to make \textit{R$_{max}$} large enough to cover the entire simulation window. This is extremely wasteful in terms of computational resources however and, as such, another solution is used here; When the pairwise histograms have been generated for a given category \textit{A}, they are analysed sequentially to check whether or not all instances appear within the \textit{negative-bin} of the other category (specie). The specie \textit{A} is deemed \textbf{dependent} on all categories for which this is true and, during reproduction, will have to be placed within the radius of one of them to be deemed valid.
+
+\subsubsection{Point-size Analysis}
+
+As well as the position of individual plants, an important property of the ecosystem simulator output is plant size. In order to reproduce appropriately sized plants, this must also be analysed. To do so, the \textit{minimum} and \textit{maximum} canopy radius and height for each category are also analysed.
+
+\subsubsection{Configuration Parameters}
+
+The \textit{radial distribution analysis} requires the following configuration parameters: \textit{R$_{min}$}, \textit{R$_{min}$} and \textit{bin-size}. Details on each parameter can be found in section \ref{subsubsec:radial_distribution_analysis}.\\
+
+Increasing the analysis range [\textit{R$_{min}$}, \textit{R$_{min}$}] and decreasing the \textit{bin-size} will have a negative impact on performance but potentially increase the accuracy of the analysis. Good values for these parameters depend on the properties of the points being analysed.\\
+Although plants have a big impact on their direct surroundings, their radius of impact has a limit. As such, the disadvantage of setting a very large analysis range starts to outweigh the advantages after a certain distance. The distance chosen here is \textbf{five metres}.\\
+Similarly, analysing the density variation at distances (bin size) to the nearest centimetre is excessively accurate and the negative impact on performance would far outweigh the positive impact on overall accuracy. As such, the bin-size configured here is of \textbf{twenty centimetres}.
+
+\subsubsection{Performance}
+
+During the analysis stage, the distance must be measured from each source point to 
+Because each point needs to be analysed 
+The number of points analyse will heavily impact

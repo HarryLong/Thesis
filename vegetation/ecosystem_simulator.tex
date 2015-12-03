@@ -307,7 +307,7 @@ Shade-loving plants strive in the shaded undergrowth. If shade-loving plants are
 
 This is the most simple form of seeding and is used when no plants of the given specie are present in the simulation and the specie is not shade-loving. The set of locations for new plants to spawn is selected at random within the simulation window.
 
-\subsection{Performance}
+\subsection{Performance} \label{subsec:ecosytem_performance}
 
 The number of plants present in the simulation will heavily influence it's performance as the strength of each plant needs to be recalculated on a monthly basis. To test the influence of plant count on simulation time, a simulation is run with a single specie of plant and the monthly processing time analysed alongside the number of plants present. The plant used is grass at is has no canopy and very minimal root coverage, permitting a large number of instances to grow simultaneously (see appendix \ref{AppendixA} for properties of specie). The resources were set to be optimal for maximizing plant count and minimizing intra-plant competition. The simulation is started with only a single instance and, as the simulation progresses and seeding is performed, the number of instances increase. The results are summarized in Figure \ref{fig:ecosimulator_test_plant_count} and show that the processing time increases linearly with plant count. \\
 
@@ -452,13 +452,13 @@ Plant's that are heavily dependent on illumination struggle to grow in areas sha
 	\label{fig:shade_test}
 \end{figure}
 
-\subsubsection{Shade-loving Test}
+\subsubsection{Shade-loving Test} \label{subsubsec:shade_loving_test}
 
 Species which strive in shaded areas and struggle to survive in open spaces directly illuminated by the sun are deemed to be shade-loving. The shade can be caused by the terrain relief or by the shadow cast by the canopy of taller plants. To test whether the ecosystem simulator successfully caters for such plant species, a simulation is run identical to that done in the shade test (section \ref{subsubsec:shade_test}) but with shade-loving specie \textit{S$_{shadeloving}$} added (see appendix \ref{AppendixA} for specie details). As seen by the snapshot of the simulation after fifty years illustrated in figure .., instances of \textit{S$_{shadeloving}$} only appear in areas directly covered by the canopies of \textit{S$_{smallroots}$}.
 
 \begin{figure}
 \center
 	\includegraphics[width=\textwidth]{shade_loving_test.png}
-	\caption{ Shade Loving Test: Simulation with \textit{S$_{smallroots}$} (green), grass (white) and \textit{S$_{shadeloving}$} after fifty years. From left-to-right: All species, excluding grass and only \textit{S$_{shadeloving}$}. As can be seen, \textit{S$_{shadeloving}$} strive in the canopies of \textit{S$_{smallroots}$}.}
+	\caption{ Shade Loving Test: Simulation with \textit{S$_{smallroots}$} (green), grass (white) and \textit{S$_{shadeloving}$} after fifty years. From left-to-right: All species, excluding grass and only \textit{S$_{shadeloving}$}. As can be seen, \textit{S$_{shadeloving}$} strive under the canopies of \textit{S$_{smallroots}$}.}
 	\label{fig:shade_loving_test}
 \end{figure}
