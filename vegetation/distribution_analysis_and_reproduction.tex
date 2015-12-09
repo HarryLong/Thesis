@@ -20,11 +20,11 @@ During the reproduction phase, distributions for each category are created seque
 
 Because taller plants will potentially have a canopy which shades and influences the position of smaller plants, it is important these be generated first during reproduction. For this reason, the hierarchy is generated according to the average height of the represented plant specie in descending order.
 
-\subsubsection{Category Dependency Analysis}
+\subsubsection{Category Dependency Analysis} \label{subsubsec:category_dependency_analysis}
 
 Shade-loving plants will appear under the the shaded canopies of taller plants (see section \ref{subsubsec:shade_loving_test}). When analysing the distance of these shade-loving plants to the plant's which shade them during the analysis phase, a new \textit{negative-bin} is created.\\
 
-During reproduction, the taller plants will be generated first because they are classed higher in the hierarchy (see section \refsubsubsec:generating_cat_hierarchy}). However, this does not guarantee all shade-loving plants will be placed in the shaded canopy of other plants as if a shade-loving plant is placed at a distance larger than \textit{R$_{max}$} to any other plant instance, it is attributed a strength of one and is therefore deemed valid. It is essential to attribute a strength of one in such condition to permit plant propagation. A solution to this problem would be to make \textit{R$_{max}$} large enough to cover the entire simulation window. This is extremely wasteful in terms of computational resources however and, as such, another solution is used here; When the pairwise histograms have been generated for a given category \textit{A}, they are analysed sequentially to check whether or not all instances appear within the \textit{negative-bin} of the other category (specie). The specie \textit{A} is deemed \textbf{dependent} on all categories for which this is true and, during reproduction, will have to be placed within the radius of one of them to be deemed valid.
+During reproduction, the taller plants will be generated first because they are classed higher in the hierarchy (see section \ref{subsubsec:generating_cat_hierarchy}). However, this does not guarantee all shade-loving plants will be placed in the shaded canopy of other plants as if a shade-loving plant is placed at a distance larger than \textit{R$_{max}$} to any other plant instance, it is attributed a strength of one and is therefore deemed valid. It is essential to attribute a strength of one in such condition to permit plant propagation. A solution to this problem would be to make \textit{R$_{max}$} large enough to cover the entire simulation window. This is extremely wasteful in terms of computational resources however and, as such, another solution is used here; When the pairwise histograms have been generated for a given category \textit{A}, they are analysed sequentially to check whether or not all instances appear within the \textit{negative-bin} of the other category (specie). The specie \textit{A} is deemed \textbf{dependent} on all categories for which this is true and, during reproduction, will have to be placed within the radius of one of them to be deemed valid.
 
 \subsubsection{Point-size Analysis}
 
@@ -35,11 +35,130 @@ As well as the position of individual plants, an important property of the ecosy
 The \textit{radial distribution analysis} requires the following configuration parameters: \textit{R$_{min}$}, \textit{R$_{min}$} and \textit{bin-size}. Details on each parameter can be found in section \ref{subsubsec:radial_distribution_analysis}.\\
 
 Increasing the analysis range [\textit{R$_{min}$}, \textit{R$_{min}$}] and decreasing the \textit{bin-size} will have a negative impact on performance but potentially increase the accuracy of the analysis. Good values for these parameters depend on the properties of the points being analysed.\\
-Although plants have a big impact on their direct surroundings, their radius of impact has a limit. As such, the disadvantage of setting a very large analysis range starts to outweigh the advantages after a certain distance. The distance chosen here is \textbf{five metres}.\\
+Although plants have a big impact on their direct surroundings, their radius of impact has a limit. As such, the disadvantage of setting a very large analysis range starts to outweigh the advantages after a certain distance. The distance chosen here is \textbf{two metres}.\\
 Similarly, analysing the density variation at distances (bin size) to the nearest centimetre is excessively accurate and the negative impact on performance would far outweigh the positive impact on overall accuracy. As such, the bin-size configured here is of \textbf{twenty centimetres}.
+
+\subsubsection{Performance} \label{subsubsec:analysis_performance}
+
+In order to generate the necessary analysis data, each point (plant) must be iterated over and the distance measured from it to all other points within a radius of \textit{R$_{max}$}. As a consequence, the analysis time is directly correlated to plant density and, therefore, plant count within the hundred metre analysis window. To determine the correlation between plant density and analysis time, test distributions are generated of various densities using the ecosystem simulator which are subsequently analysed and the time to do so, measured. Because the number of histograms that need to be generated depends on the number of categories to be analysed, one would easily assume that the processing time is also correlated to the category count. This is \textbf{not} the case however and only point density influences analysis performance. To demonstrate this, the various plant densities are generated containing one, two and three distinct categories.The results plotted in figure \ref{fig:analysis_perf} indicate an exponential correlation between plant count and processing time and a quicker analysis time when points are split into multiple categories. Although the correlation is exponential, the most extreme scenario (over ninety thousand points of a single category) is processed in a manageable time of just under two seconds. 
+
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth]{radial_distribution_analysis_performance.png}
+	\caption{ Distribution analysis time based on aggregate plant density for single category (blue), two categories (red) and three categories (yellow).}	
+	\label{fig:analysis_perf}
+\end{figure}
+
+\subsection{Reproduction}
+
+The purpose of the analysed radial distribution data is to later use it to reproduce similar distributions on larger scales. To do so, the same reproduction technique described in section \ref{subsubsec:radial_distribution_analysis} is employed with slight nuances described below, namely: \textit{Matched-density initialization} and \textit{Iterative point moving}.\\
+
+The radial distribution data generated to test the analysis performance above (section \ref{{subsubsec:analysis_performance}) is used to test the reproduction performance.
+
+\subsubsection{Matched Density Initialization}
+
+Rather than employ a birth-and-death technique like that described in section \ref{subsubsec:radial_distribution_analysis}, where a point is added, the aggregate strength of the distribution calculated and the new point accepted with a calculated probability, matched-density initialization is employed. This involved generating a fixed number of points for each category so that their density matches that of the analysed density. The only requirement is for the aggregate strength of the distribution to be non-zero. In other words, the distribution does not need to be strongly matched, but valid.
+
+\subsubsection{Iterative Point Moving}
+
+When points of a given category have been initialized and the required density reached, iterative point-moving is performed where each added point is iterated over and moved to ten random locations. The new distribution strength is calculated at after each move and the best scoring move is accepted with probability \textit{P$_{acceptance}$}, calculated using equation \ref{eq:reproduction_probability_acceptance}. 
+
+\begin{equation}
+\centering
+P_{acceptance} = \frac{Strength_{n+1}}{Strength_{n}}
+\label{eq:reproduction_probability_acceptance}
+\end{equation}
+Where:
+\begin{itemize}
+\item \textit{Strength$_{n+1}$} is the aggregated distribution strength after the move.
+\item \textit{Strength$_{n}$} is the aggregated distribution strength before the move.
+\end{itemize}
 
 \subsubsection{Performance}
 
-During the analysis stage, the distance must be measured from each source point to 
-Because each point needs to be analysed 
-The number of points analyse will heavily impact
+The reproduction area and point density are two properties which greatly affect performance. Although both effect the number of points to reproduce and, therefore, the reproduction time, because an increase in density will lead to more points within R$_{max}$ of any given source point, given a fixed plant count, performance should increase with area. To determine to what extent and the correlation between plant density, reproduction area and performance, test reproductions are performed using the analysis data generated when performance testing the analysis stage (section \label{subsubsec:analysis_performance}).
+
+As seen in figure \ref{fig:reproduction_density_area_perf} which plots the reproduction performance based on point density for various reproduction areas, the correlation between plant density and reproduction time is exponential. It also shows the increase to be more accentuated when reproducing larger areas. This is expected, however, as larger areas will require more points to be added in order to meet the required density.\\
+
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth]{radial_distribution_reproduction_area_and_density_perf.png}
+	\caption{ Reproduction time based on point density for various reproduction areas.}	
+	\label{fig:reproduction_density_area_perf}
+\end{figure}
+
+Using the test data generated for figure \ref{fig:reproduction_density_area_perf}, it is possible to plot the reproduction time based solely on plant count for various densities (see figure \ref{fig:reproduction_plant_count_perf}). It shows the correlation between plant count and reproduction time to be exponential and, importantly, independent of plant density. In order to keep reproduction times manageable, the reproduced plant count is limited to a quarter of a million. If large areas need to be reproduced with a plant count over this limit, repeating/tiling is performed. Table \ref{tab:maximum_reproduction_areas} shows the maximum reproduction areas that can be achieved for different plant densities.
+
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth]{radial_distribution_reproduction_plant_count_perf.png}
+	\caption{ Reproduction time based on point count for various densities.}	
+	\label{fig:reproduction_plant_count_perf}
+\end{figure}
+
+\begin{table}[]
+  \centering
+	    \begin{tabular}{|p{7cm}|p{8cm}|}
+		\hline
+		\textbf{Points per 10000m^2} & \textbf{Maximum reproduction area (m^2)}\\
+		\hline
+		5000	  &  500000\\
+		\hline
+		10000 &	250000\\
+		\hline
+		15000 &	166666\\
+		\hline
+		20000 &	125000\\
+		\hline
+		25000 &	100000\\
+		\hline
+		30000 &	83333\\
+		\hline
+		35000 &	71428\\
+		\hline
+		40000 &	62500\\
+		\hline
+		45000 &	55555\\
+		\hline
+		50000 &	50000\\
+		\hline
+		55000 &	45454\\
+		\hline
+		60000 &	41666\\
+		\hline
+		65000 &	38461\\
+		\hline
+		70000 &	35714\\
+		\hline
+		75000 &	33333\\
+		\hline
+		80000 &	31250\\
+		\hline
+		85000 &	29411\\
+		\hline
+		90000 &	27777\\
+		\hline
+		95000 &	26315\\
+		\hline
+		100000 & 25000 \\ 
+		\hline
+		\end{tabular}
+		\caption{Maximum reproduction area for given plant densities}
+	  \label{tab:maximum_reproduction_areas}
+\end{table}
+
+\subsection{Caching Distribution Data}
+
+In order to prevent repeated costly runs of the ecosystem simulator for identical resource parameters, the analysed distribution data is stored and tracked in a database. This way, if a plant distribution is requested for a simulation which has already been run, the ecosystem simulator is bypassed entirely and the stored distribution data used. A custom binary file format is used in order to save space when storing the necessary analysed distribution data.
+
+\subsection{Results}
+
+In order to test the analysis and reproduction mechanism, the ecosystem simulator is used to generate generic plant distributions along with some containing unique features, notably: \textit{shaded} and \textit{shade-loving} plants. The generated plant distributions will then be reproduced and compared to ensure they accurately reproduce the characteristics of the input exemplars.
+
+\subsubsection{Generic plant distributions}
+
+Figure ... show the reproduction of various plant distributions
+
+\subsubsection{Shaded}
+
+\subsubsection{Shade-loving}
