@@ -34,9 +34,9 @@ As well as the position of individual plants, an important property of the ecosy
 
 The \textit{radial distribution analysis} requires the following configuration parameters: \textit{R$_{min}$}, \textit{R$_{min}$} and \textit{bin-size}. Details on each parameter can be found in section \ref{subsubsec:radial_distribution_analysis}.\\
 
-Increasing the analysis range [\textit{R$_{min}$}, \textit{R$_{min}$}] and decreasing the \textit{bin-size} will have a negative impact on performance but potentially increase the accuracy of the analysis. Good values for these parameters depend on the properties of the points being analysed.\\
-Although plants have a big impact on their direct surroundings, their radius of impact has a limit. As such, the disadvantage of setting a very large analysis range starts to outweigh the advantages after a certain distance. The distance chosen here is \textbf{two metres}.\\
-Similarly, analysing the density variation at distances (bin size) to the nearest centimetre is excessively accurate and the negative impact on performance would far outweigh the positive impact on overall accuracy. As such, the bin-size configured here is of \textbf{twenty centimetres}.
+Increasing the analysis range [\textit{R$_{min}$}, \textit{R$_{max}$}] and decreasing the \textit{bin-size} will impact performance but potentially increase the accuracy of the analysis and finding optimal values for these parameters depends on the properties of the points being analysed.\\
+It is unnecessary to have too large of an analysis range as the impact a plant has on it's surrounding is finite. This impact radius varies however and is dependent on specie size. In order to cater for different species of different sizes and therefore with different impact radii, R$_{max}$ is dynamic and limited to \textbf{two metres} passed the extremity of the plant's canopy.\\
+The bin-size doesn't influence performance as severely as the analysis range, however, as it has no impact on the number of points that need to be processed. Smaller bin sizes will result in less points being processed per bin and, therefore, a less accurate representation of the distribution variation with distance. Because smaller bins will result in a smaller number of points, also, the analysis will be more sensitive to noise. A bin size of \textbf{twenty centimetres} is used as it strikes a good balance between accuracy and point count per bin. \\
 
 \subsubsection{Performance} \label{subsubsec:analysis_performance}
 
@@ -53,15 +53,15 @@ In order to generate the necessary analysis data, each point (plant) must be ite
 
 The purpose of the analysed radial distribution data is to later use it to reproduce similar distributions on larger scales. To do so, the same reproduction technique described in section \ref{subsubsec:radial_distribution_analysis} is employed with slight nuances described below, namely: \textit{Matched-density initialization} and \textit{Iterative point moving}.\\
 
-The radial distribution data generated to test the analysis performance above (section \ref{{subsubsec:analysis_performance}) is used to test the reproduction performance.
+The radial distribution data generated to test the analysis performance above (section \ref{subsubsec:analysis_performance}) is used to test the reproduction performance.
 
 \subsubsection{Matched Density Initialization}
 
 Rather than employ a birth-and-death technique like that described in section \ref{subsubsec:radial_distribution_analysis}, where a point is added, the aggregate strength of the distribution calculated and the new point accepted with a calculated probability, matched-density initialization is employed. This involved generating a fixed number of points for each category so that their density matches that of the analysed density. The only requirement is for the aggregate strength of the distribution to be non-zero. In other words, the distribution does not need to be strongly matched, but valid.
 
-\subsubsection{Iterative Point Moving}
+\subsubsection{Iterative Point Moving} \label{subsubsec:iterative_point_moving}
 
-When points of a given category have been initialized and the required density reached, iterative point-moving is performed where each added point is iterated over and moved to ten random locations. The new distribution strength is calculated at after each move and the best scoring move is accepted with probability \textit{P$_{acceptance}$}, calculated using equation \ref{eq:reproduction_probability_acceptance}. 
+When points of a given category have been initialized and the required density reached, iterative point-moving is performed where each added point is iterated over and moved to two random locations. The new distribution strength is calculated after each move and the best scoring move is accepted with probability \textit{P$_{acceptance}$}, calculated using equation \ref{eq:reproduction_probability_acceptance}. 
 
 \begin{equation}
 \centering
@@ -83,16 +83,16 @@ As seen in figure \ref{fig:reproduction_density_area_perf} which plots the repro
 \begin{figure}
 \center
 	\includegraphics[width=\textwidth]{radial_distribution_reproduction_area_and_density_perf.png}
-	\caption{ Reproduction time based on point density for various reproduction areas.}	
+	\caption{ Reproduction time based on point density for different reproduction areas.}	
 	\label{fig:reproduction_density_area_perf}
 \end{figure}
 
-Using the test data generated for figure \ref{fig:reproduction_density_area_perf}, it is possible to plot the reproduction time based solely on plant count for various densities (see figure \ref{fig:reproduction_plant_count_perf}). It shows the correlation between plant count and reproduction time to be exponential and, importantly, independent of plant density. In order to keep reproduction times manageable, the reproduced plant count is limited to a quarter of a million. If large areas need to be reproduced with a plant count over this limit, repeating/tiling is performed. Table \ref{tab:maximum_reproduction_areas} shows the maximum reproduction areas that can be achieved for different plant densities.
+Using the test data generated for figure \ref{fig:reproduction_density_area_perf}, it is possible to plot the reproduction time based solely on plant count for various densities (see figure \ref{fig:reproduction_plant_count_perf}). It shows the correlation between plant count and reproduction time to be linear and dependent on point density. The reason it is sensitive to plant density is because the denser the points are the the more of them will be within a distance of R$_{max}$ and therefore need ot be taken into consideration when calculating the strength of the distribution. In order to keep reproduction times manageable, the reproduced plant count is limited to half a million. If large areas need to be reproduced with a plant count higher than this limit, repeating/tiling is performed. Table \ref{tab:maximum_reproduction_areas} shows the maximum reproduction areas that can be achieved for different plant densities. Although the repetition (tiling) performed will increase for denser distributions, it will not necessarily be more noticeable as denser distributions will tend to have less distinct patterns and be more closely correlated to random.\\
 
 \begin{figure}
 \center
 	\includegraphics[width=\textwidth]{radial_distribution_reproduction_plant_count_perf.png}
-	\caption{ Reproduction time based on point count for various densities.}	
+	\caption{ Reproduction time based on point count for different densities.}	
 	\label{fig:reproduction_plant_count_perf}
 \end{figure}
 
@@ -100,47 +100,47 @@ Using the test data generated for figure \ref{fig:reproduction_density_area_perf
   \centering
 	    \begin{tabular}{|p{7cm}|p{8cm}|}
 		\hline
-		\textbf{Points per 10000m^2} & \textbf{Maximum reproduction area (m^2)}\\
+		\textbf{Points per 10000m$^{2}$} & \textbf{Maximum reproduction area (m$^{2}$)}\\
 		\hline
-		5000	  &  500000\\
+		5000	  &  1000000\\
 		\hline
-		10000 &	250000\\
+		10000	  &  500000\\
 		\hline
-		15000 &	166666\\
+		15000 &	333333\\
 		\hline
-		20000 &	125000\\
+		20000 &	250000\\
 		\hline
-		25000 &	100000\\
+		25000 &	200000\\
 		\hline
-		30000 &	83333\\
+		30000 &	166666\\
 		\hline
-		35000 &	71428\\
+		35000 &	142857\\
 		\hline
-		40000 &	62500\\
+		40000 &	125000\\
 		\hline
-		45000 &	55555\\
+		45000 &	111111\\
 		\hline
-		50000 &	50000\\
+		50000 &	100000\\
 		\hline
-		55000 &	45454\\
+		55000 &	90909\\
 		\hline
-		60000 &	41666\\
+		60000 &	83333\\
 		\hline
-		65000 &	38461\\
+		65000 &	76923\\
 		\hline
-		70000 &	35714\\
+		70000 &	71428\\
 		\hline
-		75000 &	33333\\
+		75000 &	66666\\
 		\hline
-		80000 &	31250\\
+		80000 &	62500\\
 		\hline
-		85000 &	29411\\
+		85000 &	58823\\
 		\hline
-		90000 &	27777\\
+		90000 &	55555\\
 		\hline
-		95000 &	26315\\
+		95000 &	52631\\
 		\hline
-		100000 & 25000 \\ 
+		100000 & 50000\\
 		\hline
 		\end{tabular}
 		\caption{Maximum reproduction area for given plant densities}
@@ -153,12 +153,26 @@ In order to prevent repeated costly runs of the ecosystem simulator for identica
 
 \subsection{Results}
 
-In order to test the analysis and reproduction mechanism, the ecosystem simulator is used to generate generic plant distributions along with some containing unique features, notably: \textit{shaded} and \textit{shade-loving} plants. The generated plant distributions will then be reproduced and compared to ensure they accurately reproduce the characteristics of the input exemplars.
+The important properties of the input exemplars which must be reproduced are: \textit{inter and intra specie separation}, \textit{plant size} and \textit{specie densities}. To ensure these are accurately reproduced, an ecosystem simulator run is performed containing \textit{shade-loving}, \textit{shade intolerant} and \textit{canopy plants}. The resulting plant distribution is subsequently used as input exemplar to stress test the distribution analyser and reproducer. Figure \ref{fig:radial_dist_test} shows an overview and zoomed subsection of the input exemplar along with it's associated reproduction. From this, along with the point count of individual species, it is possible to conclude that point density and point size is accurately replicated. To determine whether intra and inter-specie spacing is accurately reproduced, the reproduction distribution is re-analysed in order to produce the pair correlation histograms of the reproduced distribution. The original and reproduced histograms are then compared to ensure they follow similar trends (see figure \ref{fig:hisogram_comp}). Important properties to note which are accurately reproduced are:
+\begin{itemize}
+\item No plants appear within the radius of the shade-loving (category 6) and shade-intolerant plants (category 5)
+\item The density of shade-intolerant plants (category 5) drastically decreases within the radius of canopy plants (category 9).
+\item The density of shade-loving plants (category 6) drastically decreases within the radius of canopy plants (category 9). Note that in both the original and reproduction, all shade-loving plants appear within the radius of a canopy plants as the categories are dependent (see section \ref{subsubsec:category_dependency_analysis}). The variation in histogram values between the two is caused by the positioning of other nearby canopy plants.
+\item The density decreases drastically for canopy plants within the canopy of other canopy plants (category 9) as it blocks access to available illumination.
+\end{itemize}
 
-\subsubsection{Generic plant distributions}
+Note that the pair correlation histogram of the shade-loving specie with itself (category 6 and 6) is substantially different between original and reproduction. The reason for this is because during the ecosystem simulator, seeding is performed from existing plant instances which will lead to the clustering of plants under the same canopy. During iterative point-moving (see section \ref{subsubsec:iterative_point_moving}, the probability of shade-loving plants to cluster under neighbouring canopy plants is very slim, however, and dispersion under all present canopy plants is much more likely.
 
-Figure ... show the reproduction of various plant distributions
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth]{radial_distribution_test_general_comp.png}
+	\caption{ Distribution analysis and reproduction test: Input exemplar overview (top-left), reproduction overview (top right), zoomed input exemplar (x 10), zoomed reproduction (x 10). }	
+	\label{fig:radial_dist_test}
+\end{figure}
 
-\subsubsection{Shaded}
-
-\subsubsection{Shade-loving}
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth]{radial_dis_reprod_test_hist_aggregated.png}
+	\caption{ Original (blue) and reproduced (red) pair correlation histograms for different bins where category 6 is a shade-loving, category 5 is shade intolerant and category 9 is a canopy specie. Bin sizes of -1 signify the target category is within the radius of the source.}	
+	\label{fig:hisogram_comp}
+\end{figure}
