@@ -87,7 +87,7 @@ As seen in figure \ref{fig:reproduction_density_area_perf} which plots the repro
 	\label{fig:reproduction_density_area_perf}
 \end{figure}
 
-Using the test data generated for figure \ref{fig:reproduction_density_area_perf}, it is possible to plot the reproduction time based solely on plant count for various densities (see figure \ref{fig:reproduction_plant_count_perf}). It shows the correlation between plant count and reproduction time to be linear and dependent on point density. The reason it is sensitive to plant density is because the denser the points are the the more of them will be within a distance of R$_{max}$ and therefore need ot be taken into consideration when calculating the strength of the distribution. In order to keep reproduction times manageable, the reproduced plant count is limited to half a million. If large areas need to be reproduced with a plant count higher than this limit, repeating/tiling is performed. Table \ref{tab:maximum_reproduction_areas} shows the maximum reproduction areas that can be achieved for different plant densities. Although the repetition (tiling) performed will increase for denser distributions, it will not necessarily be more noticeable as denser distributions will tend to have less distinct patterns and be more closely correlated to random.\\
+Using the test data generated for figure \ref{fig:reproduction_density_area_perf}, it is possible to plot the reproduction time based solely on plant count for various densities (see figure \ref{fig:reproduction_plant_count_perf}). It shows the correlation between plant count and reproduction time to be linear and dependent on point density. The reason it is sensitive to plant density is because the denser the points are the the more of them will be within a distance of R$_{max}$ and therefore need ot be taken into consideration when calculating the strength of the distribution. In order to keep reproduction times manageable, the reproduced plant count is limited to half a million. If large areas need to be reproduced with a plant count higher than this limit, repeating/tiling is performed. Appendix \ref{AppendixC} outlines the maximum reproduction areas that can be achieved for different plant densities. Although the repetition (tiling) performed will increase for denser distributions, it will not necessarily be more noticeable as denser distributions will tend to have less distinct patterns and be more closely correlated to random.\\
 
 \begin{figure}
 \center
@@ -95,57 +95,6 @@ Using the test data generated for figure \ref{fig:reproduction_density_area_perf
 	\caption{ Reproduction time based on point count for different densities.}	
 	\label{fig:reproduction_plant_count_perf}
 \end{figure}
-
-\begin{table}[]
-  \centering
-	    \begin{tabular}{|p{7cm}|p{8cm}|}
-		\hline
-		\textbf{Points per 10000m$^{2}$} & \textbf{Maximum reproduction area (m$^{2}$)}\\
-		\hline
-		5000	  &  1000000\\
-		\hline
-		10000	  &  500000\\
-		\hline
-		15000 &	333333\\
-		\hline
-		20000 &	250000\\
-		\hline
-		25000 &	200000\\
-		\hline
-		30000 &	166666\\
-		\hline
-		35000 &	142857\\
-		\hline
-		40000 &	125000\\
-		\hline
-		45000 &	111111\\
-		\hline
-		50000 &	100000\\
-		\hline
-		55000 &	90909\\
-		\hline
-		60000 &	83333\\
-		\hline
-		65000 &	76923\\
-		\hline
-		70000 &	71428\\
-		\hline
-		75000 &	66666\\
-		\hline
-		80000 &	62500\\
-		\hline
-		85000 &	58823\\
-		\hline
-		90000 &	55555\\
-		\hline
-		95000 &	52631\\
-		\hline
-		100000 & 50000\\
-		\hline
-		\end{tabular}
-		\caption{Maximum reproduction area for given plant densities}
-	  \label{tab:maximum_reproduction_areas}
-\end{table}
 
 \subsection{Caching Distribution Data}
 
