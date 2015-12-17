@@ -2,14 +2,14 @@
 
 As mentioned previously, the user must specify the requested cluster count \textit{k}. In order to find a suitable value for \textit{k}, the user will need to trial a number of different values. To minimize any negative effect on user-experience, therefore, it is important the clustering performs in near real-time, irrespective of terrain size and cluster count.\\
 
-The performance of the CPU and GPU clustering implementations are analysed below along with an evaluation of the GPU speed-up. In order to evaluate the performance of the different implementations, the clustering time is analysed in relation to terrain size and cluster count. In order to accurately compare their performance, the same terrains are used with identical resources specified. 
+The performance of the CPU and GPU clustering implementations are analysed below along with an evaluation of the GPU speed-up. In order to evaluate the performance of the different implementations, the clustering time is analysed in relation to terrain size and cluster count. In order to accurately compare their performance, the same terrains are used with identical resources specified. All tests were performed on a machine with specifications outlined in appendix \ref{AppendixD}.
 
 \subsection{CPU Performance}
 
-Figure \ref{fig:cpu_clustering_performance} shows the time it takes for the clustering to run with different terrain sizes and number of clusters. Notable results from this data are:
+Figure \ref{fig:cpu_clustering_performance} shows the clustering time achieved on the CPU for different terrain sizes and number of clusters. From this data, it is possible to conclude that:
 \begin{itemize}
-\item Ten clusters take on average five times longer to generate than a single cluster.
-\item The same number of clusters take on average four times longer to generate for a terrain of size 512 by 512 than for terrain of size 256 by 256. This increases to six when comparing a terrain of size 512 by 512 with one of size 1024 by 1024.
+\item The clustering time increases linearly with the number of clusters to produce.
+\item The clustering time is proportional to terrain area.
 \end{itemize}
 
 \begin{figure}
@@ -23,11 +23,10 @@ Although the clustering time is reasonable for smaller terrains, this processing
 
 \subsection{GPU Performance}
 
-The same tests run using the GPU implementation are displayed in figure \ref{fig:gpu_clustering_performance}. Notable results are:
-
+Figure \ref{fig:gpu_clustering_performance} illustrates the performance of the same tests run on the GPU. The following conclusions can be made from this data::
 \begin{itemize}
-\item Ten clusters take on average twice the time of a single cluster to generate.
-\item The processing time increases proportionally with the number of terrain vertices.
+\item The processing time increases linearly with cluster count but at a significantly slower rate than on the CPU. This is because individual clusters are managed in parallel on the GPU.
+\item Similarly to the CPU implementation, the processing time increases linearly with terrain area. Unlike the cluster count, however, the rate of increase is comparable to that of CPU implementation. The reason for this is because, although individual terrain vertices are managed in parallel on the GPU implementation, the number of vertices far outweigh the number of GPU cores. 
 \end{itemize}
 
 \begin{figure}
@@ -37,14 +36,9 @@ The same tests run using the GPU implementation are displayed in figure \ref{fig
 	\label{fig:gpu_clustering_performance}
 \end{figure}
 
-Because different clusters are managed in parallel on the GPU, increasing the cluster count has a much smaller impact on performance than for the CPU implementation.\\
-
-Individual terrain vertices are managed in parallel on the GPU. Although this greatly speeds up the clustering process, because the number of terrain vertices far outnumber the number of GPU cores, the clustering time is still heavily impacted by increases in terrain size.
-
-
 \subsection{GPU Speed-up}
 
-Figures \ref{fig:clustering_cpu_v_gpu_256}, \ref{fig:clustering_cpu_v_gpu_512} and \ref{fig:clustering_cpu_v_gpu_1024} compare the CPU and GPU clustering processing time for square terrains of size 256, 512 and 1024 respectively. These graphics show that the GPU greatly outperforms the CPU, irrespective of terrain size and cluster count. Also visible in these graphics is the increased sensitivity to the cluster count of the CPU implementation where the clustering time increases much more rapidly. \\
+Figures \ref{fig:clustering_cpu_v_gpu_256}, \ref{fig:clustering_cpu_v_gpu_512} and \ref{fig:clustering_cpu_v_gpu_1024} compare the CPU and GPU clustering processing time for square terrains of size 256, 512 and 1024 respectively. These histograms show that the GPU greatly outperforms the CPU, irrespective of terrain size and cluster count. Also visible in these graphics is the increased sensitivity to the cluster count of the CPU implementation over the GPU one. \\
 
 \begin{figure}
 \center
@@ -67,7 +61,7 @@ Figures \ref{fig:clustering_cpu_v_gpu_256}, \ref{fig:clustering_cpu_v_gpu_512} a
 	\label{fig:clustering_cpu_v_gpu_1024}
 \end{figure}
 
-As well as confirming the increased sensitivity to cluster count of the CPU implementation, figure \ref{fig:clustering_cpu_v_gpu_speedup} which plots the GPU speed-up for each terrain size and cluster count, shows that this speed-up also increases with terrain size. 
+As well as confirming the increased sensitivity to cluster count of the CPU implementation, figure \ref{fig:clustering_cpu_v_gpu_speedup} which plots the GPU speed-up for each terrain size and cluster count, shows the speed-up also increases with terrain size. 
 
 \begin{figure}
 \center
