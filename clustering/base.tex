@@ -1,6 +1,6 @@
 \chapter{Clustering}
 
-Each point on the terrain has a number of associated resource properties (summarised in table \ref{tab:point_resources}). These properties are used as input to an ecosystem simulator to determine vegetation and vegetation density. Running an ecosystem simulation for each point on the terrain would be excessive, however, both in terms of computation time and data overlap. The data overlap would be the result of simulations being run for points with very similar resource properties.\\
+Each point on the terrain has a number of associated resource properties (summarised in table \ref{tab:point_resources}) which are used to depict suitable vegetation and, using an ecosystem simulator, a distribution of said vegetation. This simulator is computationally expensive, however, and running it for each terrain vertex is infeasible. As such, to make the number of ecosystem simulations which need to be run manageable, clustering is performed on the terrain based on the resources associated to the individual points. The type of clustering algorithm used is \textit{K-Means Clustering}, discussed in the dedicated \textit{K-Means Clustering} section. To accelerate the clustering algorithm and strive for real-time results, it is implemented to run on the GPU, details of which can be found in the \textit{GPU Implementation} section. To conclude, the performance and results of the clustering algorithm is discussed.
 
 \begin{table}[h]
   \centering
@@ -21,5 +21,5 @@ Each point on the terrain has a number of associated resource properties (summar
 	  \label{tab:point_resources}
 \end{table}
 
-To make the number of ecosystem simulations which need to be run manageable and ensure each one generates distinct distribution data, clustering is performed on the terrain based on the resources of individual points. The type of clustering algorithm used is \textit{K-Means Clustering}, discussed in the dedicated \textit{K-Means Clustering} section. To accelerate the clustering algorithm and strive for real-time results, a GPU implementation was made. Details of which can be found in the \textit{GPU Implementation} section. To conclude the chapter, performance and results are analysed in sections \textit{Performance} and \textit{Results} respectively.
+
 
