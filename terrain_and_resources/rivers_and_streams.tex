@@ -1,35 +1,33 @@
 \section{Rivers \& Streams} \label{sec:rivers_and_streams}
 
-Essential to the realism of virtual rural terrains are water networks. These water networks are constituted of rivers and streams and are the consequence of water being transported by gravity from higher to lower grounds. The algorithm used to model water movement on the terrain is outlined below along with details concerning the GPU implementation.
+Water networks are essential to the realism of virtual rural terrains. These water networks are constituted of rivers and streams and are the consequence of water being transported by gravity from higher to lower elevation. The algorithm used to model water movement on the terrain is outlined below, along with details concerning the GPU implementation.\\
+Unlike work by \cite{Kelley1988} and Št'Ava et al. \cite{StAva2008}, this work does not simulate hydraulic erosion. That is, there is no feedback loop between water movement and the terrain to model changes in terrain relief.
 
 \subsection{Algorithm Overview}
 
-Precipitation, precipitation intensity and soil infiltration is used to calculate the soil humidity, $S_{h}$ (see equation \ref{eq:monthly_soil_humidity}). The value of which equates to the quantity of water, in millimetres, absorbed by the soil. The standing water, \textit{W$_{standing}$}, is the quantity of water which isn't absorbed by the soil and can be calculated using equation \ref{eq:standing_water_calculation}.\\
+Precipitation, precipitation intensity and soil infiltration are used to calculate the soil humidity, $S_{h}$ (see equation \ref{eq:monthly_soil_humidity}). This equates to the quantity of water, in millimetres, absorbed by the soil. The standing water, \textit{W$_{standing}$}, is the remaining water that is not absorbed by the soil and can be calculated using equation \ref{eq:standing_water_calculation}.\\
 
 \begin{equation} \label{eq:standing_water_calculation}
 	W_{standing} = R_{q} - S_{h}
 \end{equation}
-where:
-\begin{itemize}
-\item \textit{W$_{standing}$} is the standing water, in millimetres.\\
-\item \textit{R$_{q}$} is the monthly rainfall quantity, in millimetres.\\
-\item \textit{S$_{h}$} is the quantity of water absorbed by the soil, in millimetres.\\
-\end{itemize}
+where:\textit{W$_{standing}$} is the standing water, in millimetres;\textit{R$_{q}$} is the monthly rainfall quantity, in millimetres;\textit{S$_{h}$} is the quantity of water absorbed by the soil, in millimetres.\\
 
-Given the quantity of standing water, W$_{standing}$, for each vertex, a hydrostatic pipe-model similar to that of Stava et al. \cite{StAva2008} is used to determine water movement and build-up on the terrain. The hydrostatic pipe-model works by iteratively attempting to evacuate water from source vertex \textit{V} to any of it's eight surrounding vertices.\\
+Given the quantity of standing water, W$_{standing}$, for each vertex, a hydrostatic pipe-model similar to that of Stava et al. \cite{StAva2008} is used to determine water movement and build-up on the terrain. This works by iteratively evacuating water from each terrain source vertex \textit{V} to it's eight directly surrounding vertices when possible. The amount of water evacuated to individual surrounding vertices depends on slope and existing water content. During the water evacuation process, Stava et al. \cite{StAva2008} also model the effects of force-based and dissolution-based erosion by modifying the terrain relief depending on calculated forces. This is not simulated in our work however, and the terrain relief remains fixed throughout the simulation. For this reason, our system works best with terrains with pre-existing erosion lines (e.g obtained from real world cartographic data). \\
 
-Although the algorithm is implemented to work in three dimensions where each vertex can evacuate water content to eight surrounding vertices, it also works in a two-dimensional space. With this reduced dimensionality, each vertex \textit{V$_{n}$} has only two surrounding vertices (\textit{V$_{n-1}$} and \textit{V$_{n+1}$}) in which water can be placed. To better grasp the algorithm, it is described for a two-dimensional space. The concept is identical when ported it to a third dimension.  \\
+Although the algorithm is implemented to work in three dimensions where each vertex can evacuate water content to eight surrounding vertices, it also works in a two-dimensional space. With this reduced dimensionality, each vertex \textit{V$_{n}$} has only two neighbouring vertices (\textit{V$_{n-1}$} and \textit{V$_{n+1}$}) in which water can be placed. To better grasp the algorithm, it is described for a two-dimensional space. The concepts are identical when generalised to three dimensions.  \\
 
-Each vertex \textit{V$_{n}$}, is characterised by it's position (\textit{n}), terrain height (\textit{TerrainHeight$_{n}$}), water height (\textit{WaterHeight$_{n}$}) and absolute height (\textit{AbsoluteHeight$_{n}$} = \textit{TerrainHeight$_{n}$} + \textit{WaterHeight$_{n}$}). Using this data it is possible to calculate the water evacuation capacity, \textit{WEC}, of each terrain vertex (see equation \ref{eq:water_evacuation_capacity}). The value of which effects how much water is evacuated and how it is split amongst surrounding vertices (\ref{subsec:evacuation_approaches}).
+Each vertex \textit{V$_{n}$}, is characterised by its position (\textit{n}), terrain height (\textit{TH$_{n}$}), water height (\textit{WH$_{n}$}) and absolute height (\textit{AH$_{n}$} = \textit{TH$_{n}$} + \textit{WH$_{n}$}). Using this data it is possible to calculate the water evacuation capacity, \textit{WEC$_{n}$}, of each terrain vertex (see equation \ref{eq:water_evacuation_capacity}). The value of which effects how much water is evacuated and how it is split amongst surrounding vertices (section \ref{subsec:evacuation_approaches}).
 
 \begin{equation} \label{eq:water_evacuation_capacity}
-	WEC = 2 \times TerrainHeight_{n} - AbsoluteHeight_{n-1} - AbsoluteHeight_{n+1}
+	WEC_{n} = 2 \times TH_{n} - AH_{n-1} - AH_{n+1}
 \end{equation}
+Where: \textit{WEC$_{n}$} is the water evacuation capacity of vertex V$_{n}$; \textit{TH$_{n}$} is the terrain height at vertex V$_{n}$, \textit{WH$_{n}$} is the water height at vertex V$_{n}$; \textit{AH$_{n}$} is the absolute height at vertex V$_{n}$.\\
 
+Intuitively, this equation calculates the maximum water quantity which can be evacuated to neighbouring vertices of source vertex \textit{V$_{n}$} whilst ensuring that once the water is added, the aggregate height of these neighbouring vertices does not surpass the terrain height of vertex \textit{V$_{n}$}.\\
 
 \subsection{Water Evacuation Approaches} \label{subsec:evacuation_approaches}
 
-Using the water evacuation capacity \textit{WEC} along with table \ref{tab:scenario_based_on_wec}, one of three evacuation approaches are used:  \textit{all water is evacuated}, \textit{a portion of the water is evacuated} or \textit{no water is evacuated}. Each approach is discussed in detail here. \\
+Using the water evacuation capacity \textit{WEC} along with table \ref{tab:scenario_based_on_wec}, one of three evacuation approaches are used:  \textit{all water is evacuated}, \textit{a portion of the water is evacuated} or \textit{no water is evacuated}. Examples scenarios for each approach are illustrated in figure \ref{fig:evacuation_scenarios}. \\
 
 \begin{table}[h]
   \centering
@@ -48,9 +46,7 @@ Using the water evacuation capacity \textit{WEC} along with table \ref{tab:scena
 	  \label{tab:scenario_based_on_wec}
 \end{table}
 
-\subsubsection{All water is evacuated}
-
-When all water can be evacuated, it is split to surrounding vertices proportionally to their height. This is to model water flowing more intensely on steeper slopes. The quantity of water \textit{W$_{n-1}$} and \textit{W$_{n+1}$} to be evacuated to vertices \textit{V$_{n-1}$} and \textit{V$_{n+1}$} is calculated using equations \ref{eq:all_water_evac_n_minus_one} and \ref{eq:all_water_evac_n_plus_one}. Examples of such situations are illustrated in figure \ref{fig:evacuation_all}. \\
+When all water can be evacuated, it is split to surrounding vertices proportionally to their height. This is to model water flowing more intensely on steeper slopes. The quantity of water \textit{W$_{n-1}$} and \textit{W$_{n+1}$} to be evacuated to vertices \textit{V$_{n-1}$} and \textit{V$_{n+1}$} is calculated using equations \ref{eq:all_water_evac_n_minus_one} and \ref{eq:all_water_evac_n_plus_one} . \\
 
 \begin{equation}\label{eq:all_water_evac_n_minus_one}
 W_{n-1} = \frac{TerrainHeight_{n} - AbsoluteHeight_{n-1}}{WEC} \times WaterHeight_{n}
@@ -60,64 +56,41 @@ W_{n-1} = \frac{TerrainHeight_{n} - AbsoluteHeight_{n-1}}{WEC} \times WaterHeigh
 W_{n+1} = \frac{TerrainHeight_{n} - AbsoluteHeight_{n+1}}{WEC} \times WaterHeight_{n}
 \end{equation}
 
-\begin{figure}
-\center
-	\includegraphics[width=\textwidth/4]{water_evacuation_all.png}
-	\caption{ Example water-evacuation scenarios where all water can be evacuated from source vertex (middle).}
-	\label{fig:evacuation_all}
-\end{figure}
-
-\subsubsection{A portion of water is evacuated}
-
-This approach is used when the water evacuation capacity, \textit{WEC}, is not large enough to purge all water but sufficient to purge a subset thereof. The portion of water which can be evacuated, \textit{W$_{evacuate}$} is calculated using equation \ref{eq:evacuate_calc}. Examples such scenarios are illustrated in figure \ref{fig:evacuation_portion}.
+When the water evacuation capacity, \textit{WEC}, does not permit all water to be purged but is sufficient to purge a subset, the amount of water to be evacuated, \textit{W$_{evacuate}$} need to be calculated using equation \ref{eq:evacuate_calc}. \\
 
 \begin{equation}\label{eq:evacuate_calc}
 	W_{evacuate} = AbsoluteHeight_{n} - W_{level}
 \end{equation}
 
-Where:
-\begin{itemize}
- \item W$_{level}$ is the water level to which water can be evacuated (see equation \ref{eq:water_level_calc}).
-\end{itemize}
+Where: W$_{level}$ is the water level to which water can be evacuated (see equation \ref{eq:water_level_calc}).
 
 \begin{equation} \label{eq:water_level_calc}
 	W_{level} = \frac{AbsoluteHeight_{n-1} + AbsoluteHeight_{n} + AbsoluteHeight_{n+1}}{3}
 \end{equation}
 
-\begin{figure}
-\center
-	\includegraphics[width=\textwidth/4]{water_evacuation_portion.png}
-	\caption{ Example water evacuation scenarios when only a portion of water can be evacuated from the source vertex (middle).}
-	\label{fig:evacuation_portion}
-\end{figure}
-
-\subsubsection{No water is evacuated}
-
-This situation occurs when there is no capacity for water evacuation and therefore no water can be transported to surrounding vertices. Examples of such scenarios are illustrated in figure \ref{fig:evacuation_all}.
+When calculated value of \textit{WEC} is less than or equal to zero, no water can be evacuated and therefore no water is purged to neighbouring vertices.
 
 \begin{figure}
 \center
-	\includegraphics[width=\textwidth/4]{water_evacuation_none.png}
-	\caption{ Example water evacuation scenarios where no water can be evacuated from the source vertex (middle).}
-	\label{fig:evacuation_none}
+	\includegraphics[width=\textwidth]{water_evacuation_all_examples.jpg}
+	\caption{ Example water-evacuation scenarios. Left: All water can be evacuated from source vertex (middle). Middle: A portion of water can be evacuated from source vertex (middle). Right: No water can be evacuated from source vertex (middle).}
+	\label{fig:evacuation_scenarios}
 \end{figure}
 
 \subsection{Terrain Extremities} \label{subsec:terrain_extremeties}
 
-When attempting to evacuate water from vertices on the terrain extremities, one or multiple vertices are missing. One way to deal with this would be to discard those vertices and permit water to flow only to existing surrounding vertices. By employing this approach, however, water would never leave the terrain and could build-up unrealistically. To overcome this, a one vertex thick border is generated around the terrain as illustrated in figure \ref{fig:evacuation_border}. The height of each border vertex is calculated such that the slope remains unchanged. During the water-flow simulation, water is permitted to evacuate to border vertices but water cannot build-up on them.
+When attempting to evacuate water from vertices on the terrain extremities, one or more vertices will be absent. One way to deal with this would be to discard those vertices and permit water to flow only to existing surrounding vertices. By employing this approach, however, water would never leave the terrain and could build-up unrealistically. To overcome this, a one vertex thick border is generated around the terrain as illustrated in figure \ref{fig:evacuation_border}. The height of each border vertex is calculated such that the slope matches that of it's neighbouring vertices. During the water-flow simulation, water is permitted to evacuate to border vertices but water cannot build-up on them.
 
 \begin{figure}
 \center
-	\includegraphics[width=\textwidth]{water_evacuation_border.png}
+	\includegraphics[width=\textwidth/2]{water_evacuation_border.png}
 	\caption{ Border of vertices generated around the terrain to cater for water evacuation at the extremities. Orange vertices form the border. }
 	\label{fig:evacuation_border}
 \end{figure}
 
 \subsection{Stopping the simulation} \label{subsec:stopping_water_flow}
 
-The flow of water on the terrain can be measured by keeping track of the number of vertices which were completely purged at a given iteration of the simulation. This flow will tend to be much larger at the start of the simulation when water is being evacuated from higher grounds and will gradually decrease as water starts to build up and less vertices are able to purge their water content entirely. By also keeping track of the aggregated water flow of all previous iterations of the simulation, it is possible to analyse the evolution of water-flow. The system automatically stops the simulation when the water-flow calculated at iteration \textit{n} is less than one thousandth of the total aggregated water flow during the course of the simulation. \\
-
-The user is able to override this, however, if he wishes to model a different water network which requires a shorter or longer water-flow simulation. 
+The flow of water on the terrain can be measured by keeping track of the number of vertices that are completely purged at a given iteration of the simulation. This flow will tend to be much larger at the start of the simulation when water is being evacuated from higher ground and will gradually decrease as water starts to build up and less vertices are able to purge their water content entirely. By also keeping track of the aggregated water flow of all previous iterations of the simulation, it is possible to analyse the evolution of water-flow. The system automatically stops the simulation when the water-flow calculated at iteration \textit{n} is less than one thousandth of the total aggregated water which has flowed during the course of the simulation. This value was selected after a large number of trial runs and is deemed conservative as it very often leaves a significant amount of standing water on the terrain. If the user is not satisfied with the formed water network upon completion of the water-flow simulation, he is then able to manually continue the simulation for as long as necessary.
 
 \subsection{GPU Implementation}
 
@@ -125,13 +98,11 @@ Processing water flow on the terrain is computationally expensive as the amount 
 
 GPU's have a single-core multiple thread (SIMT) architecture meaning each operation is performed simultaneously by a large number of threads on different input data. A \textit{work-group} is a grouping of threads within the GPU architecture which are guaranteed to run in parallel and which share local memory with very fast access speeds. One or more work-groups can execute at the same time.\\
 
-Below are discussed the challenges faced when implementing the water-flow algorithm to run on this heavily parallel architecture: \textit{Memory management}, \textit{Intra work-group data consistency management} and \textit{Inter work-group data consistency management}. 
-
-\subsubsection{Memory management}
+Below are discussed the challenges faced when implementing the water-flow algorithm to run on this heavily parallel architecture.
 
 Copying data from CPU to GPU and vice versa is a costly process and, if substantial, can often be the bottleneck to the GPU optimisation. To prevent this, all data is copied to the GPU at the start of the simulation and only when the simulation is complete is the resulting data copied back to the CPU. The only piece of data which is copied back to the CPU between each iteration of the simulation is the aggregated water-flow in order to automatically stop the simulation when suited (see \ref{subsec:stopping_water_flow}).\\
 
-To better fit into the \textit{openGL} pipeline used in this system, GPU implementations are done using \textit{compute shaders}. Compute shaders are a feature of \textit{openGL} since version 4.3 and permit the use the GPU's acceleration potential for tasks not directly linked to rendering. One of the main incentives to use compute shaders is the ability to use existing openGL data storages, notably pre-existing height-map and water-height textures used for rendering. Table \ref{tab:water_flow_simul_mem_allocs} summarizes the global memory allocations necessary for the GPU implementation of the water-flow simulation.
+To better fit into the \textit{openGL} pipeline used in this system, GPU implementations are done using \textit{compute shaders}. Compute shaders are a feature of \textit{openGL} since version 4.3 and permit the use the GPU's acceleration potential for tasks not directly linked to rendering. One of the main incentives to use compute shaders is the ability to use existing openGL data storages, notably pre-existing height-map and water-height textures used for rendering. Table \ref{tab:water_flow_simul_mem_allocs} summarizes the global memory allocations necessary for the GPU implementation of the water-flow simulation.\\
 
 \begin{table}[]
   \centering
@@ -158,8 +129,6 @@ To better fit into the \textit{openGL} pipeline used in this system, GPU impleme
 	  \label{tab:water_flow_simul_mem_allocs}
 \end{table}
 
-\subsubsection{Intra work-group data consistency management}
-
 Each thread within a work-group relates to a unique vertex on the terrain from which water must be evacuated. Water evacuated from source vertex must be added to one or many of its eight surrounding vertex/vertices by incrementing it's value within the water height-map data structure. Memory conflicts can arise, however, when multiple threads attempt to evacuate water to the same location within this water height-map. Given a destination location \textit{D}, up to eight threads can attempt to write to it simultaneously (see figure \ref{fig:water_flow_dest_conflicts}).\\ 
 
 \begin{figure}
@@ -178,9 +147,7 @@ To prevent such memory conflicts, a temporary three-dimensional array is allocat
 	\label{fig:water_flow_dest_conflict_prevent}
 \end{figure}
 
-When water movement is complete for the given iteration, each thread \textit{T$_{xy}$} within a work group reduces the third dimension of it's associated aggregate array index [x,y] by adding all values to the respective location within the water height-map.
-
-\subsubsection{Inter work-group data consistency management}
+When water movement is complete for the given iteration, each thread \textit{T$_{xy}$} within a work group reduces the third dimension of it's associated aggregate array index [x,y] by adding all values to the respective location within the water height-map.\\
 
 Because local memory cannot be shared amongst work-groups, a problem arises when threads on the extremities need to place water on vertices managed by threads from a separate work-group. A work group \textit{WG$_{xy}$} at index [x,y] may need access to neighbouring work groups in the horizontal direction (figure \ref{fig:water_flow_inter_wg_reduc_horiz}), vertical direction (figure \ref{fig:water_flow_inter_wg_reduc_vert}) and diagonal direction (figure \ref{fig:water_flow_inter_wg_reduc_diag}). Global memory is allocated (2-D textures) to aggregate the data to be written to these locations. When water-flow for the given iteration is complete, this data is then reduced by selected threads and written back to the water height-map.
 
@@ -232,8 +199,8 @@ As can be seen in the results summarised in figure \ref{fig:water_flow_processin
 
 \subsection{Results}
 
-The U.S. Geological Survey \protect\footnotemark \footnotetext{\url{http://www.usgs.gov}}  freely provides detailed elevation data for the north American continent. Google-Earth \protect\footnotemark \footnotetext{\url{http://www.google.com/earth/}} provides detailed satellite images of the same locations. To test the water-flow simulation, it is run on actual terrains generated using data from the U.S. Geological Survey. The resulting rivers and streams which form are compared with corresponding satellite images to see if the main water bodies match. For the tests to be as accurate as possible, nothing other than the water-flow simulation is performed on the terrains. \\
-The results illustrated in figures \ref{fig:water_flow_test_1}, \ref{fig:water_flow_test_2} and \ref{fig:water_flow_test_3} show that the simulation successfully reproduces core water networks. Note that the replicated terrains also include water bodies and rivers which aren't present in the corresponding satellite image. The purpose of the test is not to reproduce an exact match but rather ensure that, by running only the water-flow simulation, the core water networks are reproduced. Better results could be achieved by fine-tuning the soil infiltration rates but this would bias the test as it would influence the flow of water on the terrain.
+The U.S. Geological Survey \protect\footnotemark \footnotetext{\url{http://www.usgs.gov}}  freely provides detailed elevation data for the north American continent. Also, Google-Earth \protect\footnotemark \footnotetext{\url{http://www.google.com/earth/}} provides detailed satellite images of the same locations. To test the water-flow simulation, we use terrains downloaded from the U.S. Geological Survey. The resulting rivers and streams which are then compared with corresponding satellite images to see if the main water bodies match. For the tests to be as accurate as possible, only the water-flow simulation is performed on the terrains with not fine-tuning of soil infiltration rates. \\
+The results illustrated in figures \ref{fig:water_flow_test_1}, \ref{fig:water_flow_test_2} and \ref{fig:water_flow_test_3} show that the simulation successfully reproduces core water networks. Note that the replicated terrains also contain water bodies and rivers which are not present in the corresponding satellite image. The purpose of the test is not to reproduce an exact match but rather ensure that, by running only the water-flow simulation, the core water networks are reproduced. Better results could be achieved by fine-tuning the soil infiltration rates but this would bias the test as it would influence the flow of water on the terrain.
 
 \begin{figure}
 \center
