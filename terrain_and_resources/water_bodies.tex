@@ -4,18 +4,11 @@ Water bodies refers here to static water build-ups such as seas, oceans and lake
 
 Flood-filling uses a single seed point, \textit{P$_{seed}$}, to determine the height, \textit{H$_{level}$}, at which to set the water-level. This seed point then iteratively propagates to all surrounding points which have height \textit{H} equal or lower than \textit{H$_{level}$} using a flood-fill approach. The process continues until there are no more valid destination points or the terrain extremity is reached. When flood-filling is activated, the user specifies the seed point by simply clicking on it with the mouse pointer. The flood-filling algorithm produces water bodies in real-time even for large terrains and large water-bodies. It is possible to undo an unlimited stack of water body placements added with the flood-filling tool (Ctrl+Z). This is deemed important in case the user mistakenly specifies an incorrect seed point. \\
 
-Figures \ref{fig:flood_fill_lake} and \ref{fig:flood_fill_test_ocean} show that the tool can be used to successfully place different types of water bodies on terrains.
-
-\begin{figure}
-\center
-	\includegraphics[width=\textwidth]{flood_fill_test_lake.png}
-	\caption{ Terrain before (top) and after (top) using the flood-fill tool to place a lake. }	
-	\label{fig:flood_fill_lake}
-\end{figure}
+Figure \ref{fig:flood_fill_test} shows that the tool can be used to successfully place water bodies on the terrain.
 
 \begin{figure}
 \center
 	\includegraphics[width=\textwidth]{flood_fill_test_ocean.png}
-	\caption{ Terrain before (top) and after (top) using the flood-fill tool to place a large water body (sea/ocean). }	
-	\label{fig:flood_fill_test_ocean}
+	\caption{ Terrain before (top) and after (top) using the flood-fill tool to place a large water body (e.g sea or ocean). }	
+	\label{fig:flood_fill_test}
 \end{figure}

@@ -1,10 +1,21 @@
 \chapter{System Overview}
 
-Multiple confined components serving specific purposes constitute the building blocks of the overall system, notably: \textit{the resource gatherer}, \textit{the resource clusterer}, \textit{the plant selector}, \textit{the ecosystem simulator} and \textit{the distribution analyser and reproducer}. The purpose of this chapter is to give an overview of the system, each component and how they fit together. To do so, an overview of each component is given separately. Each clearly stating the components purpose, required inputs and what it outputs. To conclude, figure \ref{fig:system_overview} gives an overview of the system, illustrating how the individual components fit together. \\
+\begin{figure}
+\center
+	\includegraphics[width=\textwidth]{system_overview.png}
+	\caption{ System overview}	
+	\label{fig:system_overview}
+\end{figure}
+
+Multiple components serving specific purposes constitute the building blocks of the overall system, notably: \textit{resource gathering}, \textit{resource clustering}, \textit{plant selection}, \textit{ecosystem simulation} and \textit{distribution analysis and reproduction}. The purpose of this chapter is to give an overview of the system, each component and how they fit together (as illustrated in figure \ref{fig:system_overview}). To do so, an overview of each component is provided separately along with it's purpose, required inputs and outputs. To conclude this chapter, the \textit{limitations} of the system will be discussed. \\
 
 \section{Resource Gatherer}
 
-Vegetation requires resources to grow, the amount of which uniquely identifies a given specie and associates it with a given climate and, subsequently, locations on earth. Determining resource data is essential, therefore, to generating realistic virtual worlds as it is vital to determining suitable vegetation and distribution thereof. The purpose of the resource gatherer is to determine, for each terrain vertex: \textit{sun exposure}, \textit{soil humidity}, \textit{temperature} and \textit{slope}. Figure \ref{fig:system_overview_resource_gatherer} illustrates the output of the resource gatherer along with the user inputs required to generate them.
+Vegetation requires resources to grow and the distribution of these resources identifies a given species and associated it with a given climate and, subsequently, location on earth. Determining resource data is essential, therefore, to generating realistic virtual worlds as it is vital to determining vegetation distribution patterns. The purpose of the resource gatherer is to determine, for each terrain vertex: \textit{sun exposure}, \textit{soil humidity}, \textit{temperature} and \textit{slope}. Figure \ref{fig:system_overview_resource_gatherer} illustrates the output of the resource gatherer along with the user inputs required.\\
+The latitude and orientation of the terrain must be specified by the user in order to determine the sun position throughout the year. The \textit{sunlight exposure} calculation then determines, given this information and the terrain relief, the average daily illumination (in hours) received by each terrain vertex for each month of the year. To calculate the average illumination for a given month, the trajectory of the sun is calculated for the fifteenth day. \\
+In order to calculate the \textit{soil humidity} for each month, the soil infiltration rate, monthly rainfall quantity and monthly rainfall intensity must be configured.\\
+To determine the \textit{temperature} of each terrain vertex, the user must specify the temperature at zero metres in June and December along with the associated lapse rate. These temperatures are then considered the annual minimum and maximum and are used to deduce the temperature for any month through linear interpolation. The lapse rate represents the decrease in temperature with altitude and is used to determine the temperature for any terrain vertex given its altitude. \\
+The \textit{slope} is determined automatically from the input terrain.\\
 
 \begin{figure}
 \center
@@ -55,11 +66,4 @@ Because the ecosystem simulator is computationally expensive, the simulation are
 	\includegraphics[scale=0.3]{system_overview_radial_distribution_analyzer_and_reproducer.png}
 	\caption{ Distribution analyser and reproducer overview.}	
 	\label{fig:system_overview_distribution_analyser_and_reproducer}
-\end{figure}
-
-\begin{figure}
-\center
-	\includegraphics[width=\textwidth]{system_overview.png}
-	\caption{ System overview}	
-	\label{fig:system_overview}
 \end{figure}
