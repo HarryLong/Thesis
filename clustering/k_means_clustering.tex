@@ -1,72 +1,47 @@
-\section{K-Means Clustering}
+\section{K-Means Clustering} \label{sec:clustering}
 
-K-means is a well known and broadly used clustering algorithm \cite{Jain2010} which has been used to tackle a wide range of problems including character recognition \cite{Perrone2000}, image segmentation \cite{Bradley1998,Kanungo2002} and compression \cite{Kanungo2002}. The algorithm groups points into clusters based on the euclidean distance from a set of \textit{K} cluster means.\\
+K-means is a well known and broadly used vector-quantization clustering algorithm \cite{Jain2010} which groups points into clusters based on the euclidean distance from a set of \textit{K} cluster means. It has been used to to tackle a wide range of problems including character recognition \cite{Perrone2000}, image segmentation \cite{Bradley1998,Kanungo2002} and compression \cite{Kanungo2002}.\\
+The algorithm is of complexity O(N) and can be optimized to make use of parallel architectures \cite{Xu2005}. Efficiency is a key requirement for the terrain clustering process in order to provide interactive user feedback, irrespective of terrain size.\\
+K-means often fails to produce adequate clusters when dealing with large dimensionality data sets \cite{Sun2012}. Because the data here has only four dimensions (slope, temperature, illumination and soil humidity), it is well-fitted. \\
+Common downsides of K-means clustering, however, is the necessity to configure the number of clusters to produce \textit{K} and the selection of the initial \textit{K} points to act as the cluster seeds. How these are handled are discussed in sections \ref{subsec:n_cluster_conf} and \ref{subsec:init_clusters} respectively.\\
 
 Given a set of data points \textit{P} and a configured value \textit{k}, k-means clustering behaves as follows:
 \begin{enumerate}
-\item Choose \textit{K} points at random to act as the seed cluster means \textit{C$_{mean}$}.
-\item Iterate through every data point \textit{P$_{n}$} from \textit{P} and calculate its Euclidean distance with each cluster mean using equation \ref{eq:cluster_dist_calc}. Point \textit{P} becomes a member of its closest cluster. 
+\item Choose \textit{K} points at random to act as the seed cluster means, \textit{C$_{mean}$}.
+\item Iterate through every data point \textit{P$_{n}$} from \textit{P} and calculate its Euclidean distance from each cluster mean using equation \ref{eq:cluster_dist_calc}. Point \textit{P} becomes a member of its closest cluster. 
 \item Use the members of each cluster to calculate the new cluster means. 
 \item Repeat from step 2. 
 \end{enumerate}
 
 \begin{equation} \label{eq:cluster_dist_calc}
-D(A,B) = \sum_{n=1}^{nvalues} (value_{n}(A) - value_{n}(B)) ^{2}
+D(A,B) = \sum_{n=1}^{m} (A_{n} - B_{n}) ^{2}
 \end{equation}
 
-Where:
-\begin{itemize}
-\item \textbf{A} and \textbf{B} are either data points or a cluster mean.
-\item \textbf{nvalues} are the number of numerical values associated with each data point.
-\item \textbf{value$_{n}$(A)} is the data value \textit{n} of data point A.
-\end{itemize}
+Where: \textbf{A} and \textbf{B} are either data points or a cluster mean; \textbf{n} $\in$ \textbf{$\mathbb{R}_{m}$} is the dimensionality of the data set; \textbf{A$_{n}$} is the value of data point A in dimension \textit{n}.
 
-\subsection{Customising the Euclidean Distance Calculation}
+\subsection{Normalisation}
 
-The Euclidean distance calculation outlined in equation \ref{eq:cluster_dist_calc} works well when all values are in the same dimension. Unfortunately, this is not the case for terrain resource data as illumination, slope, temperature and soil humidity are all measured in different units. This means that a one millimetre change in soil humidity will have as musch of an influence on clustering than a one degree change in temperature. To equalise the effect on clustering across all resources, weighting is performed when calculating the Euclidean distances as illustrated in table \ref{tab:resource_weighting}.
-
-\begin{table}[h]
-  \centering
-	    \begin{tabular}{|p{6cm}|p{3cm}|}
-		\hline	
-  	    \textbf{Value} & \textbf{Weighting} \\
-  	    \hline	
-  	    Slope & 1 \\
-		\hline
-  	    Temperature & 1 \\
-		\hline
-  	    Illumination & 1 \\
-		\hline
-  	    Soil Humidity & 0.1 \\
-		\hline
-		\end{tabular}
-		\caption{Resource weighting when calculating Euclidean distances between.}
-	  \label{tab:resource_weighting}
-\end{table}
-
-Equation \ref{eq:cluster_dist_calc_real} is used to calculate the Euclidean distance between two terrain positions (or cluster means) \textit{A} and \textit{B} for clustering.
+The Euclidean distance calculation outlined in equation \ref{eq:cluster_dist_calc} works well when all values have similar scale. Unfortunately, this is not the case for terrain resource data as illumination, slope, temperature and soil humidity are all measured in different units. This means that a one millimetre change in soil humidity will have as much of an influence on clustering as a one degree change in temperature. To equalise the effect on clustering across all resources, normalisation is performed based on the range of the individual resources. Equation \ref{eq:cluster_dist_calc_real} is used to calculate the Euclidean distance between two terrain positions (or cluster means) \textit{A} and \textit{B} for clustering.
 
 \begin{equation} \label{eq:cluster_dist_calc_real}
-D(A,B) = (\textit{S}(A) - \textit{S}(B))^{2} + 
-\sum_{n=1}^{12} (\textit{T}_{n}(A) - \textit{T}_{n}(B)) ^{2} + 
-(\textit{H}_{n}(A) - \textit{H}_{n}(B)) ^{2} + 
-(0.1 \times (\textit{I}_{n}(A) - \textit{I}_{n}(B)) ^{2})
+D(A,B) = 
+(\frac{\textit{S}(A) - \textit{S}(B)}{R_{S}})^{2} + 
+\sum_{n=1}^{12} 
+(\frac{\textit{T}_{n}(A) - \textit{T}_{n}(B)}{R_{T}}) ^{2} + 
+(\frac{\textit{H}_{n}(A) - \textit{H}_{n}(B)}{R_{H}}) ^{2} + 
+(\frac{\textit{I}_{n}(A) - \textit{I}_{n}(B)}{R_{I}}) ^{2}
 \end{equation}
 
-Where:
-\begin{itemize}
-\item \textit{S(x)} is the slope of point or cluster mean x.
-\item \textit{T$_{n}$(x)} is the temperature of point or cluster mean x at month n.
-\item \textit{H$_{n}$(x)} is the soil humidity of point or cluster mean x at month n.
-\item \textit{I$_{n}$(x)} is the illumination of point or cluster mean x at month n.
-\end{itemize}
+Where:\textit{S(x)} is the slope of a point or cluster mean x; \textit{R$_{T}$(x)} is the slope range; ;\textit{T$_{n}$(x)} is the temperature of point or cluster mean x at month n; \textit{R$_{T}$(x)} is the temperature range; \textit{H$_{n}$(x)} is the soil humidity of point or cluster mean x at month n; \textit{R$_{H}$(x)} is the humidity range; \textit{I$_{n}$(x)} is the illumination of point or cluster mean x at month n; \textit{R$_{I}$(x)} is the illumination range; 
 
-\subsection{Choosing Seed Cluster Means}
+\subsection{Configuring the Number of Clusters} \label{subsec:n_cluster_conf}
+
+The value of \textit{K} will affect the number of ecosystem simulators which need to be run when placing vegetation on the terrain. Although larger values will potentially result in more realistic vegetation distributions, the added simulations will required additional processing time. Choosing a good value for \textit{K} is therefore about finding a balance between realism and processing time and, as such, depends on user requirements. Because of this, the value of \textit{K} is required as input from the user before the clustering is performed.
+
+\subsection{Choosing Seed Cluster Means} \label{subsec:init_clusters}
 
 A downside of classic K-means clustering techniques is that they are non-reproducible. This is because the final clusters depend heavily on the initial points which were chosen to act as the cluster means. As these are selected at random, different runs will result in different clusters. Reproducibility is important here, however, as if the clusters can't be reproduced neither will the final terrain. \\
 
 A solution to this problem is to initialise the cluster means using pre-determined points on the terrain rather than at random. However, it is also good for the initial seed points to contain distinct resource properties in order for the final clusters to form faster. To attempt to fulfil both these requirements, the seed points are selected at equal distances on the terrain's diagonal. This ensures reproducibility as the same seed points will always be selected for a given terrain and attempts to cater for the second by maximizing seed point terrain coverage. 
 
-\subsection{Configuring the Number of Clusters \textit{K}}
 
-The value of \textit{K} will affect the number of ecosystem simulators which need to be run when placing vegetation on the terrain. Although larger values will potentially result in more realistic vegetation distributions, the added simulations will required additional processing time. Choosing a good value for \textit{K} is therefore about finding a balance between realism and processing time and, as such, depends on user requirements. Because of this, the value of \textit{K} is required as input from the user before the clustering is performed.
