@@ -1,4 +1,4 @@
-\section{GPU Implementation}
+\section{GPU Implementation} \label{sec:gpu_clustering}
 
 Performing K-Means clustering is an \textit{O(KN)} problem where K is the number of clusters. As a consequence, given a cluster count, the processing time will increase linearly with terrain area. For large terrains with millions of vertices this could prove time consuming and, consequentially, have a negative effect on user experience. To accelerate the clustering process and maximize user-experience it is implemented to make use of the heavily parallel architecture of the GPU. Below are discussed the details and optimizations of this implementation. \\
 

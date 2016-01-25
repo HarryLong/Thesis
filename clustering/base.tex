@@ -1,6 +1,6 @@
 \chapter{Clustering}
 
-Each point on the terrain has a number of associated resource properties (summarised in table \ref{tab:point_resources}) which are used to depict suitable vegetation and, using an ecosystem simulator, a distribution of said vegetation. This simulator is computationally expensive, however, and running it for each terrain vertex is infeasible. As such, to make the number of ecosystem simulations which need to be run manageable, clustering is performed on the terrain based on the resources associated to the individual points. The type of clustering algorithm used is \textit{K-Means Clustering}, discussed in the dedicated \textit{K-Means Clustering} section. To accelerate the clustering algorithm and strive for real-time results, it is implemented to run on the GPU, details of which can be found in the \textit{GPU Implementation} section. To conclude, the performance and results of the clustering algorithm is discussed.
+Each point on the terrain has a number of associated resource properties (summarised in table \ref{tab:point_resources}), which are used to determine suitable vegetation and, using an ecosystem simulator, a distribution of this vegetation. However, this simulator is computationally expensive and running it for each terrain vertex is infeasible. As such, to make the number of ecosystem simulations manageable, clustering is performed on the terrain based on the resources associated with individual points. The clustering algorithm used is \textit{K-Means Clustering}, discussed in section \ref{sec:clustering}. To accelerate clustering towards interactive feedback, it is implemented to run on the GPU, details of which can be found in section \label{sec:gpu_clustering}. To conclude, the performance and results of the clustering algorithm are discussed.
 
 \begin{table}[h]
   \centering
@@ -17,7 +17,7 @@ Each point on the terrain has a number of associated resource properties (summar
   	    Soil Humidity & 12 & Soil humidity for each month \\
 		\hline
 		\end{tabular}
-		\caption{Resource properties associated with a single point on the terrain.}
+		\caption{Resource properties associated each terrain vertex. Temperature, illumination and soil humidity are monthly values, hence why there are twelve.}
 	  \label{tab:point_resources}
 \end{table}
 

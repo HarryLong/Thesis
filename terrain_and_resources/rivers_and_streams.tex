@@ -5,7 +5,7 @@ Unlike work by \cite{Kelley1988} and Št'Ava et al. \cite{StAva2008}, this work 
 
 \subsection{Algorithm Overview}
 
-Precipitation, precipitation intensity and soil infiltration are used to calculate the soil humidity, $S_{h}$ (see equation \ref{eq:monthly_soil_humidity}). This equates to the quantity of water, in millimetres, absorbed by the soil. The standing water, \textit{W$_{standing}$}, is the remaining water that is not absorbed by the soil and can be calculated using equation \ref{eq:standing_water_calculation}.\\
+Precipitation, precipitation intensity and soil infiltration are used to calculate the soil humidity, $S_{h}$ (see equation \ref{eq:monthly_soil_humidity}). This equates to the quantity of water, in millimetres, absorbed by the soil. The standing water, \textit{W$_{standing}$}, is the remaining water that is not absorbed by the soil and can be calculated using equation \ref{eq:standing_water_calculation}. \\
 
 \begin{equation} \label{eq:standing_water_calculation}
 	W_{standing} = R_{q} - S_{h}
@@ -201,6 +201,8 @@ As can be seen in the results summarised in figure \ref{fig:water_flow_processin
 
 The U.S. Geological Survey \protect\footnotemark \footnotetext{\url{http://www.usgs.gov}}  freely provides detailed elevation data for the north American continent. Also, Google-Earth \protect\footnotemark \footnotetext{\url{http://www.google.com/earth/}} provides detailed satellite images of the same locations. To test the water-flow simulation, we use terrains downloaded from the U.S. Geological Survey. The resulting rivers and streams which are then compared with corresponding satellite images to see if the main water bodies match. For the tests to be as accurate as possible, only the water-flow simulation is performed on the terrains with not fine-tuning of soil infiltration rates. \\
 The results illustrated in figures \ref{fig:water_flow_test_1}, \ref{fig:water_flow_test_2} and \ref{fig:water_flow_test_3} show that the simulation successfully reproduces core water networks. Note that the replicated terrains also contain water bodies and rivers which are not present in the corresponding satellite image. The purpose of the test is not to reproduce an exact match but rather ensure that, by running only the water-flow simulation, the core water networks are reproduced. Better results could be achieved by fine-tuning the soil infiltration rates but this would bias the test as it would influence the flow of water on the terrain.
+
+An important simplification worth noting of the water-flow simulation is that water absorption is not performed whilst it is running. In other words, when water is evacuated from source to destination vertex, no water is then absorbed in the destination vertex. Integrating secondary absorption into the simulation would improve realism as not only would it improve the accuracy of standing water but also of the vegetation as it would lead to more precise soil humidities. This would expensive, however, as similarly to the work by Lau \cite{Lau2010} it would require the calculation of water flow velocities based on relief and soil properties. Because of scope, it was not possible to incorporate this into this water-flow simulation but would form a valuable addition in future work. As shown in the tests below, however, this simulation is still extremely valuable in determining where river networks form on the terrain.
 
 \begin{figure}
 \center
