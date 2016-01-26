@@ -26,22 +26,18 @@ The Euclidean distance calculation outlined in equation \ref{eq:cluster_dist_cal
 \begin{equation} \label{eq:cluster_dist_calc_real}
 D(A,B) = 
 (\frac{\textit{S}(A) - \textit{S}(B)}{R_{S}})^{2} + 
-\sum_{n=1}^{12} 
+\sum_{n=1}^{12}(
 (\frac{\textit{T}_{n}(A) - \textit{T}_{n}(B)}{R_{T}}) ^{2} + 
 (\frac{\textit{H}_{n}(A) - \textit{H}_{n}(B)}{R_{H}}) ^{2} + 
-(\frac{\textit{I}_{n}(A) - \textit{I}_{n}(B)}{R_{I}}) ^{2}
+(\frac{\textit{I}_{n}(A) - \textit{I}_{n}(B)}{R_{I}}) ^{2} )
 \end{equation}
 
 Where:\textit{S(x)} is the slope of a point or cluster mean x; \textit{R$_{T}$(x)} is the slope range; ;\textit{T$_{n}$(x)} is the temperature of point or cluster mean x at month n; \textit{R$_{T}$(x)} is the temperature range; \textit{H$_{n}$(x)} is the soil humidity of point or cluster mean x at month n; \textit{R$_{H}$(x)} is the humidity range; \textit{I$_{n}$(x)} is the illumination of point or cluster mean x at month n; \textit{R$_{I}$(x)} is the illumination range; 
 
-\subsection{Configuring the Number of Clusters} \label{subsec:n_cluster_conf}
+\subsection{Configuring the Number of Clusters, K} \label{subsec:n_cluster_conf}
 
-The value of \textit{K} will affect the number of ecosystem simulators which need to be run when placing vegetation on the terrain. Although larger values will potentially result in more realistic vegetation distributions, the added simulations will required additional processing time. Choosing a good value for \textit{K} is therefore about finding a balance between realism and processing time and, as such, depends on user requirements. Because of this, the value of \textit{K} is required as input from the user before the clustering is performed.
+The value of \textit{K} will affect the number of ecosystem simulators which need to be run when placing vegetation on the terrain. Although larger values will potentially result in more realistic vegetation distributions, the added simulations will require additional processing time. Choosing a good value for \textit{K} is therefore about finding a balance between realism and processing time and, as such, depends on user requirements. Because of this, the value of \textit{K} is required as input from the user before the clustering is performed.
 
 \subsection{Choosing Seed Cluster Means} \label{subsec:init_clusters}
 
-A downside of classic K-means clustering techniques is that they are non-reproducible. This is because the final clusters depend heavily on the initial points which were chosen to act as the cluster means. As these are selected at random, different runs will result in different clusters. Reproducibility is important here, however, as if the clusters can't be reproduced neither will the final terrain. \\
-
-A solution to this problem is to initialise the cluster means using pre-determined points on the terrain rather than at random. However, it is also good for the initial seed points to contain distinct resource properties in order for the final clusters to form faster. To attempt to fulfil both these requirements, the seed points are selected at equal distances on the terrain's diagonal. This ensures reproducibility as the same seed points will always be selected for a given terrain and attempts to cater for the second by maximizing seed point terrain coverage. 
-
-
+A downside of classic K-means clustering techniques is that clusters are non-reproducible. This is because the final clusters depend heavily on the initial seed points which were chosen to act as the cluster means. As these are selected at random, different runs will result in different clusters. Reproducibility is important here, however, as if the clusters cannot be reproduced neither will the final terrain. To ensure reproducibility, the terrain positions to act as the initial clusters are chosen using a pseudo-random number generator with a predefined and fixed seed.
