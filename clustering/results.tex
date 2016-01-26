@@ -9,11 +9,46 @@ The following resource edits were performed on the terrain:
 \begin{itemize}
 \item \textit{Latitude}: Set to zero degrees (equator)
 \item \textit{Soil Infiltration}: 5 millimetres for all terrain points with a slope under 30 degrees. All points with a slope over 30 degrees were set to 0 to simulate a cliff.
-\item \textit{Rainfall}: 25 millimetres for every month.
-\item \textit{Temperature}: 15 degrees at 0 meters in December. 30 degrees at 0 metres in June. 
+\item \textit{Rainfall}: See table \ref{tab:clustering_test_rainfall}.
+\item \textit{Temperature}: 0 degrees at 0 meters in December. 15 degrees at 0 metres in June. Lapse rate at default value of 6.4 degrees per thousand metres.
 \end{itemize}
 
 The resulting terrain clusters that form are displayed in figure \ref{fig:clustering_test_resulting_clusters} and summarized in appendix \ref{AppendixA}.
+
+\begin{table}[]
+  \centering
+	    \begin{tabular}{|p{5cm}|p{5cm}|}
+	    \hline
+	    \textbf{Month} & \textbf{Rainfall (mm)}\\
+		\hline
+	    Jan & 13 \\
+	    \hline
+	    Feb & 15 \\
+	    \hline
+	    Mar & 14 \\
+	    \hline
+	    Apr & 9 \\
+	    \hline
+	    May & 6 \\
+	    \hline
+	    Jun & 18 \\
+	    \hline
+	    Jul & 18 \\
+	    \hline
+	    Aug & 22 \\
+	    \hline
+	    Sep & 15 \\
+	    \hline
+	    Oct & 11 \\
+	    \hline
+	    Nov & 9 \\
+	    \hline
+	    Dec & 16 \\
+	    \hline
+		\end{tabular}
+		\caption{Monthly rainfall configured for the clustering tests.}
+	  \label{tab:clustering_test_rainfall}
+\end{table}
 
 \begin{figure}
 \center
@@ -21,12 +56,6 @@ The resulting terrain clusters that form are displayed in figure \ref{fig:cluste
 	\caption{ Clustering test: Resulting terrain clusters}	
 	\label{fig:clustering_test_resulting_clusters}
 \end{figure}
-
-\definecolor{cluster_1}{rgb}{0.8,0.4,0.0}
-\definecolor{cluster_2}{rgb}{0.6,0.4,0.4}
-\definecolor{cluster_3}{rgb}{0.0,0.2,0.4}
-\definecolor{cluster_4}{rgb}{1.0,1.0,0.4}
-\definecolor{cluster_5}{rgb}{0.0,0.6,1.0}
 
 \begin{figure}
 \center
@@ -49,14 +78,31 @@ The resulting terrain clusters that form are displayed in figure \ref{fig:cluste
 	\label{fig:clustering_graph_humidity}
 \end{figure}
 
-\begin{figure}
-\center
-	\includegraphics[width=\textwidth]{clustering_graph_slope_diff.png}
-	\caption{ Slope for each cluster and the average over the whole terrain.}	
-	\label{fig:clustering_graph_slope}
-\end{figure}
+\begin{table}[]
+  \centering
+	\begin{tabular}{|p{5cm}|p{5cm}|}
+	\hline
+	\textbf{Cluster ID} & \textbf{Slope difference (degrees)}\\
+	\hline
+	1 & -2.5 \\	
+	\hline
+	2 & 36.7\\	
+	\hline
+	3 & 59.5\\	
+	\hline
+	4 & -18\\	
+	\hline
+	5 & -53.5\\		
+	\hline
+	\end{tabular}
+	\caption{ Difference of slope between the means of each cluster and the terrain mean.}
+	\label{tab:clustering_slope_mean}
+\end{table}
 
-Figures \ref{fig:clustering_graph_illumination}, \ref{fig:clustering_graph_temp}, \ref{fig:clustering_graph_humidity} and \ref{fig:clustering_graph_slope} show how much each cluster's illumination, temperature, soil humidity and slope vary from the terrain's average. Using this data, is is possible to find the key feature(s) of each individual cluster summarized in table \ref{tab:clustering_test_cluster_variance}.
+Figures \ref{fig:clustering_graph_illumination}, \ref{fig:clustering_graph_temp}, \ref{fig:clustering_graph_humidity} and table \ref{tab:clustering_slope_mean} show how much each cluster's illumination, temperature, soil humidity and slope vary from the terrain's average.\\ 
+
+From figure \ref{tab:clustering_test_cluster_variance}, which summarises the resource variance of each cluster, it is possible to identify key terrain features the represent, notably:
+\textit{Cluster 1} is formed of the data points within the flat bottom of the canyon where the rivers form. Hence the low altitude causes the temperature to be higher, the canyon walls causes the illumination to be much lower, the river stream causes the soil humidity to be extremely high and the flat bottom causes the slope to be very low. \textit{Cluster 3} contains the data points on the cliffs of the terrain, hence the high slopes, low humidity (water run-off) and low illumination (cliffs often in the shade). \textit{Cluster 4} is formed of the data points most similar to the mean, hence its limited variance. \textit{Cluster 5} is constitutes the areas at high altitudes in the canyon where the surface is flat, illumination is high (nothing to shade it) and temperatures are low.\\
 
 \begin{table}[]
   \centering
@@ -64,17 +110,17 @@ Figures \ref{fig:clustering_graph_illumination}, \ref{fig:clustering_graph_temp}
 		\hline	
   	    \textbf{Cluster} &  \textbf{Illumination} & \textbf{Temperature} & \textbf{Soil Humidity} & \textbf{Slope} \\
 		\hline
-		\textbf{1} & \textuparrow & \textdownarrow & \textrightarrow & \textdownarrow \textdownarrow \\
+		\textbf{1} & 4(-) & 5(+)$^{*}$ & 5(+)$^{*}$ & 1(-) \\
 		\hline
-		\textbf{2} & \textrightarrow & \textuparrow & \textrightarrow & \textuparrow \\
+		\textbf{2} & 2(-) & 4(+) & 3(-) & 3(+) \\
 		\hline
-		\textbf{3} & \textrightarrow & \textrightarrow & \textrightarrow & \textuparrow \textuparrow \textuparrow \\
+		\textbf{3} & 5(-)$^{*}$ & 2(+) & 4(-)$^{*}$ & 5(+)$^{*}$ \\
 		\hline
-		\textbf{4} & \textdownarrow \textdownarrow & \textuparrow \textuparrow & \textuparrow \textuparrow \textuparrow & \textrightarrow \\
+		\textbf{4} & 1(+) & 1(+) & 1(-) & 2(-) \\
 		\hline
-		\textbf{5} & \textdownarrow & \textuparrow & \textdownarrow \textdownarrow & \textuparrow \\
+		\textbf{5} & 3(+)$^{*}$ & 3(-)$^{*}$ & 2(-) & 4(-)$^{*}$ \\
 		\hline
 		\end{tabular}
-		\caption{Summary of cluster feature variance from terrain average.}
+		\caption{Comparison of cluster feature variance from terrain average on a ranking of 1 (least) to 5 (most). The symbol states whether the variance is positive (+) or negative (-). The minimums and maximums for each resource are represented with a $^{*}$. }
 	  \label{tab:clustering_test_cluster_variance}
 \end{table}

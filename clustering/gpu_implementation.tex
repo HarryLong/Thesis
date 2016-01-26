@@ -1,6 +1,6 @@
 \section{GPU Implementation} \label{sec:gpu_clustering}
 
-Performing K-Means clustering is an \textit{O(KN)} problem where K is the number of clusters. As a consequence, given a cluster count, the processing time will increase linearly with terrain area. For large terrains with millions of vertices this could prove time consuming and, consequentially, have a negative effect on user experience. To accelerate the clustering process and maximize user-experience it is implemented to make use of the heavily parallel architecture of the GPU. Below are discussed the details and optimizations of this implementation. \\
+Performing K-Means clustering is an \textit{O(DKN)} problem where K is the number of clusters, N is the number of data points and D is the number of clustering iterations \cite{Xu2005}. As a consequence, given a cluster count, the processing time will increase linearly with terrain area. For large terrains with millions of vertices this could prove time consuming and, consequentially, have a negative effect on user experience. To accelerate the clustering process and improve interaction clustering is implemented to make use of the heavily parallel architecture of the GPU. Below are discussed relevant details and optimizations. \\
 
 \begin{table}[]
   \centering
@@ -23,26 +23,28 @@ Performing K-Means clustering is an \textit{O(KN)} problem where K is the number
 		3-D Texture & Float & $ \textit{K} \times WorkGroups_{x} \times 12 \times WorkGroups_{y} $ & Daily Illumination Reducer \\
 		\hline
 		\end{tabular}
-		\caption{Global memory allocations necessary for the GPU implementation of K-Means clustering. \textit{W} and \textit{H} are the width and height of the terrain respectively. \textit{WorkGroups$_{x}$} and \textit{WorkGroups$_{y}$} are the horizontal and vertical workgroup count respectively.}
+		\caption{Global memory allocations necessary for the GPU implementation of K-Means clustering. \textit{W} and \textit{H} are the width and height of the terrain, respectively. \textit{WorkGroups$_{x}$} and \textit{WorkGroups$_{y}$} are the horizontal and vertical workgroup counts, respectively.}
 	  \label{tab:clustering_mem_allocs}
 \end{table}
 
-\subsection{Calculating cluster membership}
+\subsection{Core Algorithm}
 
-Given the cluster means for iteration \textit{i}, the algorithm must determine to which cluster each terrain vertex belongs. To do so efficiently, each GPU core is associated a unique vertex and is responsible for determining it's cluster membership.
-
-\subsection{Calculating the new cluster means}
+Given the cluster means for iteration \textit{i}, the algorithm must determine to which cluster each terrain vertex belongs. To do so efficiently, each GPU thread is associated with a unique vertex and is responsible for determining its cluster membership.\\
 
 Once all terrain vertices have been assigned to a cluster, they must be iterated over in order to calculate the new means of each cluster.\\
 
-Within a work-group (group of cores which are guaranteed to run in parallel and have access to shared memory), when each core calculates it's distance from individual cluster means, it loads its associated resource data into a unique index of fast-access shared memory. It also stores in shared memory the calculated cluster membership. This data is then used to calculate, within each work-group, \textit{k} new work-group cluster means, in parallel. The \textit{k} work-group cluster means are then stored to global memory along with the member count for each cluster.\\
+Within a work-group (group of cores which are guaranteed to run in parallel and have access to shared memory), when each core calculates its distance from individual cluster means, first it loads its associated resource data into a unique index of local fast-access shared memory. In this memory, it also stores the calculated cluster membership ID. Using reduction techniques, \textit{K} work-group threads calculate the K new work-group cluster means. These \textit{K} threads then write the calculated means to a unique index of global memory along with the number of points belonging to each given cluster.\\
 
-Finally, the global cluster means are calculated by \textit{k} cores in parallel using the means calculated for each individual work group along with their associated member counts.\\
+Once all work-groups have finished calculating their associated cluster means, \textit{K} threads are spawned to calculate the aggregate cluster means as described in equation \ref{eq:cluster_mean_calc}.
 
-\subsection{Storage Optimization}
+\begin{equation} \label{eq:cluster_mean_calc}
+ClusterMean_{k} = \sum_{wg=0}^{n} WGM_{wg}(k) \times \frac{MC_{wg}(k)}{TMC(k)}
+\end{equation}
 
-The temperature on the terrain increases linearly with altitude. As such, even though the temperature changes monthly on the terrain, the temperature difference between two points \textit{P$_{a}$} and \textit{P$_{b}$} will remain constant throughout the year. Calculating the Euclidean distance from a given point \textit{A} to a cluster mean is identical to calculating the difference between two points on the terrain. As a consequence, it is only necessary to use a single months temperature data to establish terrain clusters, saving vital GPU storage space.
+Where: \textit{AggregateMean$_{k}$} is the new mean of cluster \textit{k}; \textit{wg} is the work-group ID; \textit{WGM$_{wg}$(k)} is the work-group mean of cluster \textit{k} in work-group \textit{wg};  \textit{n} is the number of work groups; \textit{MC$_{wg}$(k)} is the member count of cluster \textit{k} in work-group \textit{wg}; \textit{TMC(k)} is the total member count of cluster \textit{k}
 
-\subsection{Minimizing CPU to GPU data transfers}
+\subsection{Optimizations}
 
-As mentioned previously, copying data to and from CPU to GPU is a costly process. To prevent these costly transfer operations, all data required for the clustering algorithm (table \ref{tab:clustering_mem_allocs}) is copied to the GPU at the start of the clustering process and no further transfers are performed until completion. \\
+The temperature on the terrain increases linearly with altitude. As such, even though the temperature changes monthly on the terrain, the temperature difference between two points \textit{P$_{a}$} and \textit{P$_{b}$} will remain constant throughout the year. As a consequence, it is only necessary to use a single months temperature data to establish terrain clusters, saving vital GPU storage space.\\
+
+As mentioned previously, copying data to and from CPU and GPU is a costly process. To prevent such costly transfer operations, all data required for the clustering algorithm (table \ref{tab:clustering_mem_allocs}) is copied to the GPU at the start of the clustering process and no further transfers are performed until completion. \\
