@@ -1,153 +1,89 @@
-\section{Plant Suitability Filtering}
+\section{Plant Suitability Filtering} \label{sec:plant_suitability_filtering}
 
-When the terrain clusters have been generated, the user must specify the plant species to plot. The ecosystem simulator is then used to determine a suitable distribution for the species given the resources associated with the individual clusters.\\
+Once the terrain clusters have been generated, the user must specify the plant species to incorporate. The ecosystem simulator is then used to determine a suitable distribution for the species given the resources associated with the individual clusters.\\
 
-Rather than permit the user to select any plant from the database with which to populate the terrain, a filtering pass is performed in order to suggest only the plants which are able to survive. To determine whether a given specie is suited, a \textit{specie suitability score} is calculated for each specie based on the resources of the given cluster. How this score is calculated is described in \textit{Calculating the Specie Suitability Score} below.\\
+Rather than permit the user to select any plant from the database, including those unable to grow, a filtering pass is performed in order to display only the plants best able to survive. This is useful as it prevents users from triggering an ecosystem simulation run with species that are guaranteed not to survive. To determine whether a given species is suited, a \textit{species suitability score} is calculated for each species based on the resources of each cluster. \\
 
-As well as being used to filter out ill-suited species, this suitability score also highlights the species which strive in the given environment and could, as a consequence, prove to be useful information for the user when selecting the plants species to select. Various methods are used to effectively communicate the suitability score of each specie to the user, details of which are discussed in \textit{Communicating the Suitability Score} below.
+As well as being used to filter out ill-suited species, this suitability score also highlights the species best suited to the given environment and could, as a consequence, prove to be useful information for the user when selecting plant species. Various methods are used to effectively communicate the suitability score, details of which are discussed below.
 
 \subsection{Calculating the Specie Suitability Score}
 
-The specie suitability score associated to a given specie \textit{S} for cluster \textit{C}, \textit{AggregateScore$_{S}$(C)}, illustrates how suited specie \textit{S} is to the environment of cluster \textit{C} on a range of 0 (ill-suited) to 100 (perfect conditions). To calculate it, the resource requirements of specie \textit{S} are matched with the resource availability of cluster \textit{C}.\\
+The species suitability score associated with a given species, \textit{S}, for cluster \textit{C}, illustrates how suited species \textit{S} is to the environment of cluster \textit{C} on a range from 0 (completely ill-suited) to 100 (perfect conditions). To calculate this, the resource requirements of species \textit{S} are matched with the resource availability of cluster \textit{C}. To determine this score, it is first necessary to determine the specie's suitability to the environment in terms of \textit{slope}, \textit{illumination}, \textit{soil humidity} and \textit{temperature}. A separate score is calculated for each as discussed below.\\
 
-To determine this aggregate score, it is first necessary to determine the specie's suitability to the environment in terms of \textit{slope}, \textit{illumination}, \textit{soil humidity} and \textit{temperature}. A separate score is calculated for each and is discussed separately below. 
-
-\subsubsection{Slope Suitability Score}
-
-The slope suitability score determines how well suited the specie is in terms of slope and is calculated as illustrated in equation \ref{eq:slope_suitability_score}.
+The slope suitability score determines how well suited the species is in terms of slope and is calculated as illustrated in equation \ref{eq:slope_suitability_score}.\\
 
 \begin{equation}
 \centering
-SlopeScore_{S}(x) = 
+SS(S,x) = 
 \begin{cases}
-    100, & \text{if } x \leq max \\
-    0,              & \text{otherwise}
+    100, & \text{if } x \leq S_{sod} \\
+    0, & \text{if } x \geq S_{max} \\
+	(1-\frac{x-S_{sod}}{S_{max}-S_{sod}}) \times 100, & \text{otherwise}
 \end{cases}
 \label{eq:slope_suitability_score}
 \end{equation}
+Where: \textit{SS(S,x)} is the slope suitability score for specie \textit{S} given slope \textit{x}; \textit{S$_{sod}$} is slope of start of decline configured for specie \textit{S}; \textit{S$_{max}$} is the maximum slope configured for specie \textit{S}.
 
-Where: \textit{SlopeScore$_{S}$(x)} is the slope suitability score for specie \textit{S} given slope \textit{x}; \textit{max} is the maximum slope configured for specie \textit{S}.
-
-\subsubsection{Illumination Suitability Score}
-
-Because the illumination varies on a monthly basis, to calculate the aggregate illumination score for a given specie is is necessary to calculate the \textit{illumination score} for each month as illustrated in equation \ref{eq:monthly_illumination_score}.
+Because the illumination, soil humidity and temperature vary on a monthly basis, it is necessary to calculate the score for each month as illustrated in equation \ref{eq:monthly_score}. The mean of these twelve months is then calculated as illustrated in equation \ref{eq:avg_score} to represent the overall suitability score for the given resource.
 
 \begin{equation}
 \centering
-IllumScore_{S}(x) = 
+MRS(S,r,x) = 
 \begin{cases}
-    0, & \text{if } x \leq min \text{ or } x \geq max \\
-    \frac{x - min}{prime_{start} - min} \times 100, & \text{if } x \in ]min,prime_{start}[ \\
-    100, & \text{if } x \in [prime_{start},prime_{end}] \\
-    (1 - \frac{x - prime_{end}}{max-prime_{end}}) \times 100, & \text{if } x \in ]prime_{end},max[ \\
+    0, & \text{if } x < S_{min}(r) \text{ or } x > S_{max}(r) \\
+    \frac{x - S_{min}(r)}{S_{ps}(r) - S_{min}(r)} \times 100, & \text{if } x \in [S_{min}(R),S_{ps}(R)] \\
+    100, & \text{if } x \in [S_{prime_start}(r),S_{prime_end}(r)] \\
+    (1 - \frac{x - S_{pe}(r)}{S_{max}(r)-S_{pe}(r)}) \times 100, & \text{if } x \in [S_{pe}(r),S_{max}(r)] \\
 \end{cases}
-\label{eq:monthly_illumination_score}
+\label{eq:monthly_score}
 \end{equation}
-Where: \textit{IllumScore$_{S}$(x)} is the illumination suitability score for specie \textit{S} given illumination \textit{x}; \textit{min} is the minimum illumination configured for specie \textit{S};\textit{max} is the maximum illumination configured for specie \textit{S}; \textit{prime$_{start}$} is the start of the prime illumination range configured for specie \textit{S};\textit{prime$_{end}$} is the end of the prime illumination range configured for specie \textit{S}.
+Where: \textit{MRS(S,r,x)} is the monthly suitability score for specie \textit{S} and resource \textit{r} given resource value \textit{x} at the given month; \textit{S$_{min}$(r)} is the minimum configured for specie \textit{S} and resource \textit{r};\textit{S$_{max}$(r)} is the maximum configured for specie \textit{S} and resource \textit{r}; \textit{S$_{ps}$(r)} and \textit{S$_{pe}$(r)} constitute the start and end of the prime range configured for species \textit{S} and resource \textit{r}, respectively.\\
 
-Given the illumination scores for each month, it is possible to calculate the \textit{average illumination score} using equation \ref{eq:avg_illumination_score}.
 \begin{equation}
 \centering
-AvgIllumScore_{S}(x) =
+RSS(S,r) =
 \begin{cases}
-	\frac{\sum_{m=1}^{m=12} IllumScore_{S}(m)}{12}, & \text{if } IllumScore_{S}(m) > 0 \text{ for } m \in [1,12] \\
+	\frac{\sum_{m=1}^{m=12} MRS(S,r,value(r,m))}{12}, & \text{if } MRS(S,R,rv(m)) > 0 \text{ for } m \in [1,12] \\
     0,              & \text{otherwise}
 \end{cases}
-\label{eq:avg_illumination_score}
+\label{eq:avg_score}
 \end{equation}
+Where: \textit{RSS(S,r)} is the resource suitability score for specie \textit{S} and resource \textit{r}; \textit{value(r,m)} is the value of resource \textit{r} at month \textit{m}; \textit{MRS(S,r,rv)} is the monthly resource score for specie \textit{S}, resource \textit{r} and resource value \textit{rv} (see equation \ref{eq:monthly_score});\\
 
-\subsubsection{Humidity Suitability Score}
-
-The humidity also varies on a monthly basis and, as such, it is also necessary to calculate the humidity score for each month as illustrated in equation \ref{eq:monthly_humidity_score}.
-
-\begin{equation}
-\centering
-HumScore_{S}(x) = 
-\begin{cases}
-    0, & \text{if } x \leq min \text{ or } x \geq max \\
-    \frac{x - min}{prime_{start} - min} \times 100, & \text{if } x \in ]min,prime_{start}[ \\
-    100, & \text{if } x \in [prime_{start},prime_{end}] \\
-    (1 - \frac{x - prime_{end}}{max-prime_{end}}) \times 100, & \text{if } x \in ]prime_{end},max[ \\
-\end{cases}
-\label{eq:monthly_humidity_score}
-\end{equation}
-Where: \textit{HumScore$_{S}$(x)} is the humidity suitability score for specie \textit{S} given humidity \textit{x}; \textit{min} is the minimum humidity configured for specie \textit{S}; \textit{max} is the maximum humidity configured for specie \textit{S}; \textit{prime$_{start}$} is the start of the prime humidity range configured for specie \textit{S}; \textit{prime$_{end}$} is the end of the prime humidity range configured for specie \textit{S}.
-
-Given the humidity scores for each month, it is possible to calculate the \textit{average humidity score} using equation \ref{eq:avg_humidity_score}. 
-\begin{equation}
-\centering
-AvgHumScore_{S}(x) =
-\begin{cases}
-	\frac{\sum_{m=1}^{m=12} HumScore_{S}(m)}{12}, & \text{if } HumScore_{S}(m) > 0 \text{ for } m \in [1,12] \\
-    0,              & \text{otherwise}
-\end{cases}
-\label{eq:avg_humidity_score}
-\end{equation}
-
-\subsubsection{Temperature Suitability Score}
-
-Temperature also varies on a monthly basis and, as such, it is also necessary to calculate the temperature score for each month as illustrated in equation \ref{eq:monthly_temp_score}.
-
-\begin{equation}
-\centering
-TempScore_{S}(x) = 
-\begin{cases}
-    0, & \text{if } x \leq min \text{ or } x \geq max \\
-    \frac{x - min}{prime_{start} - min} \times 100, & \text{if } x \in ]min,prime_{start}[ \\
-    100, & \text{if } x \in [prime_{start},prime_{end}] \\
-    (1 - \frac{x - prime_{end}}{max-prime_{end}}) \times 100, & \text{if } x \in ]prime_{end},max[ \\
-\end{cases}
-\label{eq:monthly_temp_score}
-\end{equation}
-Where: \textit{TempScore$_{S}$(x)} is the temperature suitability score for specie \textit{S} given temperature \textit{x};\textit{min} is the minimum temperature configured for specie \textit{S}; \textit{max} is the maximum temperature configured for specie \textit{S}; \textit{prime$_{start}$} is the start of the prime temperature range configured for specie \textit{S};  \textit{prime$_{end}$} is the end of the prime temperature range configured for specie \textit{S}.
-
-Given the temperature scores for each month, it is possible to calculate the \textit{average temperature score} using equation \ref{eq:avg_temp_score}.
-
-\begin{equation}
-\centering
-AvgTempScore_{S}(x) =
-\begin{cases}
-	\frac{\sum_{m=1}^{m=12} TempScore_{S}(m)}{12}, & \text{if } TempScore_{S}(m) > 0 \text{ for } m \in [1,12] \\
-    0,              & \text{otherwise}
-\end{cases}
-\label{eq:avg_temp_score}
-\end{equation}
-
-\subsubsection{Specie Suitability Score}
-
-The suitability score gives an overview of the specie's suitability and is calculated using equation \ref{eq:specie_suitability_score}
+The overall suitability score gives an overview of the species suitability to the environment for all resources and is calculated as described in equation \ref{eq:specie_suitability_score}
 
 \begin{equation}
 \begin{split}
 \centering
-Score_{S}(s,i,h,t) = 
+OSS(S,sl) = 
 \begin{cases}
-	\frac{SlopeScore_{S}(s) + AvgIllumScore_{S}(i) + AvgHumScore_{S}(h) + AvgTempScore_{S}(x)}{4}, & \text{if } \\ TempScore_{S}(m) > 0 \text{ and } AvgIllumScore_{S}(m) > 0 \text{ and } \\ AvgHumScore_{S}(m) > 0 \text{ and } AvgTempScore_{S}(m) > 0 \\
-    0,              & \text{otherwise}
+	\frac{SS(S,sl) + \sum_{r}^{}RSS(S,r)}{4} \text{ for } r \in ITS, & \text{if } SS(sl) > 0 \text{ and } RSS(S,r) > 0 \text{ for } r \in ITS \\
+	0, &\text{ otherwise} \\
 \end{cases}
 \end{split}
 \label{eq:specie_suitability_score}
 \end{equation}
+Where: \textit{OSS(S)} is the overall suitability score for specie \textit{S}; \textit{AR} = \{ illumination,temperature,soil humdity \}; \textit{RSS(S,r)} is the resource suitability score for specie \textit{S} and resource \textit{r} (see equation \ref{eq:avg_score}); \textit{SS(S,sl)} is the slope suitability score for specie \textit{S} given slope \textit{sl} (see equation \ref{eq:slope_suitability_score}); 
 
 \subsection{Communicating the Specie Suitability Score}
 
-When all the terrain clusters have been created, the terrain suitability score for each specie in the plant database is calculated in relation to the resources of each individual cluster. If the calculated score is zero for all clusters, the specie is automatically filtered out to prevent the user from selecting it. \\
+When all the terrain clusters have been created, the terrain suitability score for each species in the plant database is calculated in relation to the resources of each individual cluster. If the calculated score is zero for all clusters, the species is automatically filtered out to prevent the user from selecting it. \\
 
-Color coding is used to make further use of the specie suitability score and intuitively communicate to the user the species most suited to the environment (see figure \ref{fig:specie_color_coding}).\\
+To further communicate this information, selectable species are sorted in descending order of their overall specie suitability score. Colour coding is also used where each specie is associated with a colour ranging from red (very ill-suited) to light green (completely suited).\\
 
 \begin{figure}
 \center
 	\includegraphics[width=\textwidth/2]{specie_suitability_color.png}
-	\caption{ Color coding for specie suitability. The greener the highlight the more suited the specie is to the environment.}	
+	\caption{ Colour coding for specie suitability. The greener the highlight the more suited the specie is to the environment.}	
 	\label{fig:specie_color_coding}
 \end{figure}
 
-When the user selects a given specie, all intermediate scores which were used to calculate the \textit{specie suitability score} are communicated to the user in histogram form (see figure \ref{fig:specie_intermediate_suitability_scores}).
+When the user selects a given species, all intermediate scores which were used to calculate the \textit{specie suitability score} are communicated to the user in histogram form (see figure \ref{fig:specie_intermediate_suitability_scores}).
 
 \begin{figure}
 \center
 	\includegraphics[width=\textwidth]{specie_suitability_temp_and_avg.png}
-	\caption{ Average (top) and temperature (bottom) intermediate specie suitability histograms. Not displayed but also generated are the illumination and humidity intermediate specie suitability histograms.}	
+	\caption{ Overall (top) and temperature (bottom) intermediate species suitability histograms. Not displayed but also generated are the illumination and humidity intermediate species suitability histograms.}	
 	\label{fig:specie_intermediate_suitability_scores}
 \end{figure}
 
