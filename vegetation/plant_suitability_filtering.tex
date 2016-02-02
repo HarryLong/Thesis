@@ -8,7 +8,7 @@ As well as being used to filter out ill-suited species, this suitability score a
 
 \subsection{Calculating the Specie Suitability Score}
 
-The species suitability score associated with a given species, \textit{S}, for cluster \textit{C}, illustrates how suited species \textit{S} is to the environment of cluster \textit{C} on a range from 0 (completely ill-suited) to 100 (perfect conditions). To calculate this, the resource requirements of species \textit{S} are matched with the resource availability of cluster \textit{C}. To determine this score, it is first necessary to determine the specie's suitability to the environment in terms of \textit{slope}, \textit{illumination}, \textit{soil humidity} and \textit{temperature}. A separate score is calculated for each as discussed below.\\
+The species suitability score associated with a given species, \textit{S}, for cluster \textit{C}, illustrates how suited species \textit{S} is to the environment of cluster \textit{C} on a range from 0 (completely ill-suited) to 100 (perfect conditions). To calculate this, the resource requirements of species \textit{S} are matched with the resource availability of cluster \textit{C}. To determine this score, it is first necessary to determine the specie's suitability to the environment in terms of \textit{slope}, \textit{illumination}, \textit{soil humidity} and \textit{temperature}. A separate score is calculated for each as discussed below. Note that no filtering is based on illumination as it varies during the simulation as the canopy of taller plants shade that of the smaller ones.\\
 
 The slope suitability score determines how well suited the species is in terms of slope and is calculated as illustrated in equation \ref{eq:slope_suitability_score}.\\
 
@@ -24,7 +24,7 @@ SS(S,x) =
 \end{equation}
 Where: \textit{SS(S,x)} is the slope suitability score for specie \textit{S} given slope \textit{x}; \textit{S$_{sod}$} is slope of start of decline configured for specie \textit{S}; \textit{S$_{max}$} is the maximum slope configured for specie \textit{S}.
 
-Because the illumination, soil humidity and temperature vary on a monthly basis, it is necessary to calculate the score for each month as illustrated in equation \ref{eq:monthly_score}. The mean of these twelve months is then calculated as illustrated in equation \ref{eq:avg_score} to represent the overall suitability score for the given resource.
+Because the soil humidity and temperature vary on a monthly basis, it is necessary to calculate the score for each month as illustrated in equation \ref{eq:monthly_score}. The mean of these twelve months is then calculated as illustrated in equation \ref{eq:avg_score} to represent the overall suitability score for the given resource.
 
 \begin{equation}
 \centering
@@ -63,7 +63,7 @@ OSS(S,sl) =
 \end{split}
 \label{eq:specie_suitability_score}
 \end{equation}
-Where: \textit{OSS(S)} is the overall suitability score for specie \textit{S}; \textit{AR} = \{ illumination,temperature,soil humdity \}; \textit{RSS(S,r)} is the resource suitability score for specie \textit{S} and resource \textit{r} (see equation \ref{eq:avg_score}); \textit{SS(S,sl)} is the slope suitability score for specie \textit{S} given slope \textit{sl} (see equation \ref{eq:slope_suitability_score}); 
+Where: \textit{OSS(S)} is the overall suitability score for specie \textit{S}; \textit{AR} = \{temperature,soil humdity \}; \textit{RSS(S,r)} is the resource suitability score for specie \textit{S} and resource \textit{r} (see equation \ref{eq:avg_score}); \textit{SS(S,sl)} is the slope suitability score for specie \textit{S} given slope \textit{sl} (see equation \ref{eq:slope_suitability_score}); 
 
 \subsection{Communicating the Specie Suitability Score}
 
@@ -76,7 +76,7 @@ When the user selects a given species, all intermediate scores which were used t
 \begin{figure}
 \center
 	\includegraphics[width=\textwidth]{specie_suitability_temp_and_avg.png}
-	\caption{ Overall (top) and temperature (bottom) intermediate species suitability histograms. Not displayed but also generated are the illumination and humidity intermediate species suitability histograms.}	
+	\caption{ Overall (top) and temperature (bottom) intermediate species suitability histograms. Not displayed but also is the humidity intermediate species suitability histograms.}	
 	\label{fig:specie_intermediate_suitability_scores}
 \end{figure}
 
