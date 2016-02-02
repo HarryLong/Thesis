@@ -22,6 +22,7 @@
 \usepackage[toc,page]{appendix}
 \usepackage{gensymb}
 \usepackage{amssymb}
+\usepackage{longtable}
 
 \widowpenalty 10000
 \clubpenalty 10000
@@ -67,6 +68,8 @@ February 2016
 \listoffigures
 \listoftables
 
+\bibliographystyle{alpha}
+
 \include{Introduction/intro}
 
 \include{Background/background}
@@ -94,6 +97,11 @@ February 2016
 \include{vegetation/ecosystem_simulator}
 \include{vegetation/distribution_analysis_and_reproduction}
 
+\include{results/base}
+\include{results/tropical}
+
+\bibliography{MyCollection}{}
+
 \begin{appendices}
 \include{appendix/appendix_a}
 \include{appendix/appendix_b}
@@ -101,6 +109,4 @@ February 2016
 \include{appendix/appendix_d}
 \end{appendices}
 
-\bibliographystyle{alpha}
-\bibliography{MyCollection}{}
 \end{document}

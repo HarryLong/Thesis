@@ -1,6 +1,6 @@
 \section{Rivers \& Streams}
 
-In this section will be reviewed the various techniques that are used to place rivers and streams on a terrain. We will split the review material into the following categories, each with a dedicated section: \textit{Classification-based}, \textit{Simulation-based}, \textit{Heuristic-based}, \textit{Fractal-based} and \textit{Explicit}. \textit{Classification-based} methods use pre-classified data based on real-world analysis to determine the most suited water network given a set of user-defined or terrain-defined constraints. \textit{Simulation-based} techniques attempt to simulate natural phenomena such as gravity to determine the water networks on a given terrain. \textit{Heuristic-based} techniques use algorithms based on real-world observation in an attempt to produce a plausible river network on the terrain. \textit{Fractal-based} techniques use recursive algorithms in their attempt to generate plausible river networks. \textit{Explicit} techniques require the user to specify in great detail the path the river should follow on the terrain.\\
+In this section will be reviewed the various techniques that are used to place rivers and streams on a terrain. We will split the review material into the following categories, each with dedicated sections: \textit{Classification-based}, \textit{Simulation-based}, \textit{Heuristic-based}, \textit{Fractal-based} and \textit{Explicit}. \textit{Classification-based} methods use pre-classified data based on real-world analysis to determine the most suited water network given a set of user-defined or terrain-defined constraints. \textit{Simulation-based} techniques attempt to simulate natural phenomena such as gravity to determine the water networks on a given terrain. \textit{Heuristic-based} techniques use algorithms based on real-world observation in an attempt to produce a plausible river network on the terrain. \textit{Fractal-based} techniques use recursive algorithms in their attempt to generate plausible river networks. \textit{Explicit} techniques require the user to specify in great detail the path the river should follow on the terrain.\\
 
 The various techniques will be critiqued based on their realism, computational cost, the automation they provide and the amount of control the user has on the resulting scene. 
 
@@ -10,22 +10,18 @@ Classification-based methods use real-world analysis of river networks to determ
 
 Emilien et al \cite{Emilien2014} use classification-based techniques in their research focused on the lesser explored area of procedurally generated waterfall scenes. They model waterfalls as three separate segments: \textit{running water}, \textit{free-fall} and \textit{pool}. \textit{Running water} segments are parts of the water network in continuous contact with the terrain. \textit{Free-fall} segments are parts which break terrain contact (i.e. waterfall). Lastly, \textit{pool} segments represent the water-basin formed where free-fall segments meet the terrain. \\
 Given a terrain, the user models running water and pool segments by defining control points and free-fall segments by defining a parabola. The control points for the running water and pool segments are not constrained to being in contact with the terrain as the terrain will adapt accordingly. The only constraint is that the path must continuously flow downhill. Based on this input, the system calculates plausible water flow intensities which, if required, can be overridden by the user for finer control.\\
-The slope and water flow intensity requirements are then used as input to the waterfall classification (figure \ref{Waterfall classifications}) in order to determine realistic waterfall scenes to generate.\\
+The slope and water flow intensity requirements are then used as input to the waterfall classification (figure \ref{fig:waterfall_classification}) in order to determine realistic waterfall scenes to generate.\\
 
 \begin{figure}[h]
   \centering
 	\includegraphics[]{waterfall_classification.png}
 	\caption{Waterfall classifications \cite{Emilien2014}}
-	\label{Waterfall classifications}
+	\label{fig:waterfall_classification}
 \end{figure}
 
 By automatically generating plausible waterfall scenes based on trajectory input from the user, the technique strikes a good balance between automation and user control. In terms of computational complexity, the work by Emilien et al \cite{Emilien2014} is able to produce complex waterfall scenes in near real-time.
 
-\subsection{Simulation-based}
-
-Simulation-based techniques attempt to reproduce real-world phenomena in order to generate realistic river networks on terrains. The phenomena they attempt to reproduce differ and can be split into the following categories which will be discussed further: \textit{Gravity}, \textit{Erosion} and \textit{Rainfall}.
-
-\subsubsection{Gravity-simulation} \label{ssec:gravitation}
+\subsection{Simulation-based: Gravity} \label{subsec:gravitation}
 
 Gravity simulating techniques attempt to determine the path water will take on a terrain by algorithmically replicating the effects of gravity. \\
 
@@ -37,31 +33,31 @@ In their work on modelling the effects of hydraulic erosion, Št'Ava et al. \cit
 
 These techniques can produce very plausible results but have the downside of being dependent on the base terrain as their height-field must cater for river networks in the first place. This is not the case, however, for the work by Št'Ava et al. \cite{StAva2008} for which the gravitation simulation is used as a feedback loop to model terrain erosion. The performance of these methods depend heavily on the level of detail of the underlying water flow simulation. Št'Ava et al. \cite{StAva2008}, for example, succeed in generating the water flow in real-time by optimizing their algorithms to use the heavily parallel architecture of GPUs.
 
-\subsubsection{Erosion-simulation}
+\subsection{Simulation-based: Erosion}
 
 Erosion-based simulations attempt to produce realistic terrains by modelling the effects of erosion. Erosion results from exogenic processes (water flow, wind, temperature) and is characterised by the removal of soil and rock from one location on earth's surface to be redeposited on another. Earth's landscape is a direct consequence of erosion and reproducing this phenomena accurately is core to procedurally generating accurate landscapes. Both Kelly et al. \cite{Kelley1988} and Št'Ava et al. \cite{StAva2008} attempt to produce plausible terrains by modelling these effects.\\
 
 In the work by Kelley et al. \cite{Kelley1988}, the user specifies, on a horizontal plane, the terrain outline along with the main trunk stream. The terrain outline is used to configure the terrain extremities once ported to a three-dimensional space. The main trunk stream specifies the path which the highest order water stream should follow on the resulting terrain. Given this terrain outline and the position of the initial main trunk stream, the system iteratively increments the number of nodes which form the main trunk in order to add streams to the network. The number of new nodes added depends on the drainage area (surface area that a stream needs to channel) and the soil type as more resistant soil materials (e.g. stone) will be less influenced by water erosion than weaker ones (e.g. clay). \\
 
-Št'Ava et al. \cite{StAva2008} are able to simulate the effects of hydraulic erosion on a terrain in real-time by using the massively parallel architectures of GPUs. Virtual pipettes are used by the user to drop water at required locations on the terrain and a gravitation simulation mentioned previously (\ref{gravitation-based}) is used to determine the initial water course on the terrain. Whilst the water is being routed through the terrain, the effects of \textit{force-based} and \textit{dissolution-based} erosion are simulated. \textit{Force-based} erosion is a direct consequence of the the force of the water on the terrain surface (figure \ref{force-based erosion}). Dissolution-based erosion is a consequence of the water mass on the terrain surface under the water and is most often characterised by a smoothing effect (figure \ref{dissolution_based_erosion-based erosion}).\\
+Št'Ava et al. \cite{StAva2008} are able to simulate the effects of hydraulic erosion on a terrain in real-time by using the massively parallel architectures of GPUs. Virtual pipettes are used by the user to drop water at required locations on the terrain and a gravitation simulation mentioned previously (\ref{subsec:gravitation}) is used to determine the initial water course on the terrain. Whilst the water is being routed through the terrain, the effects of \textit{force-based} and \textit{dissolution-based} erosion are simulated. \textit{Force-based} erosion is a direct consequence of the the force of the water on the terrain surface (figure \ref{fig:force_based_erosion}). Dissolution-based erosion is a consequence of the water mass on the terrain surface under the water and is most often characterised by a smoothing effect (figure \ref{fig:dissolution_based_erosion}).\\
 
 \begin{figure}[h]
   \centering
 	\includegraphics[scale=0.5]{dissolution_based_erosion.png}
 	\caption{Simulation of dissolution-based erosion erosion caused by water movement\cite{StAva2008}}
-	\label{dissolution_based_erosion-based erosion}
+	\label{fig:dissolution_based_erosion}
 \end{figure}
 
 \begin{figure}[h]
   \centering
 	\includegraphics[width=\textwidth]{force_based_erosion.png}
 	\caption{Simulation of the effect of force-based erosion caused by running water \cite{StAva2008}}
-	\label{force-based erosion}
+	\label{fig:force_based_erosion}
 \end{figure}
 
 Whether modelling erosion indirectly like in the work by Kelley et al. \cite{Kelley1988} which builds the terrain around models of erosion or directly like the work by Št'Ava et al. \cite{StAva2008} which simulates the effect of erosion in real-time, both succeed in producing plausible terrains with integrated river networks. Fine-control over the resulting terrain, however, is limited in the work by Kelley et al. \cite{Kelley1988} due to extensive automation. This is overcome in the work by \cite{StAva2008} et al. by permitting the user to place water using a virtual pipette and remodel the terrain relief on-the-fly. In terms of computational cost, Št'Ava et al. \cite{StAva2008} are able to reproduce the effects of erosion in real-time.  
 
-\subsubsection{Rainfall simulations}
+\subsection{Simulation-based: Rainfall}
 
 In order to determine where on the terrain rivers will appear, work by Soon Tee \cite{Teoh2008} performs a rainfall simulation to determine both the location and quantity of water at different points on the terrain followed by a gravitation simulation (mentioned above) to determine the course of the water on the terrain. The rainfall simulation requires the user to specify wind direction and maximum rainfall. Then, starting from the source of the wind, the system simulates clouds moving in the direction of the wind with a configured velocity. When contact is made with points on the terrain, water is dropped on the corresponding cell. The amount of water dropped increases with altitude and zeroes out when all available rainfall is depleted. \\
 
@@ -115,16 +111,16 @@ This heuristic approach offers an extensive level of automation and, as a result
 
 Another technique employed to produce river streams is by employing fractal-based algorithms. Such methods use recursive splitting and string rewriting to determine plausible river networks. 
 
-In their work, Pmsinkiewicz et al. use a fractal-based technique based on midpoint-displacement to procedurally generate plausible rivers on a terrain. Midpoint-displacement is most commonly used for procedurally generating realistic terrain height-maps and works follows follows: Given a starting triangle representing a terrain \textit{A}, midpoint-displacement iteratively subdivides \textit{A} it into four smaller triangles. Each time new triangle vertices are created they are displaced vertically by a random offset. This process is repeated until a given recursion limit is reached. See figure \ref{Midpoint displacement} for an example of a single iteration of the process.
+In their work, Pmsinkiewicz et al. use a fractal-based technique based on midpoint-displacement to procedurally generate plausible rivers on a terrain. Midpoint-displacement is most commonly used for procedurally generating realistic terrain height-maps and works follows follows: Given a starting triangle representing a terrain \textit{A}, midpoint-displacement iteratively subdivides \textit{A} it into four smaller triangles. Each time new triangle vertices are created they are displaced vertically by a random offset. This process is repeated until a given recursion limit is reached. See figure \ref{fig:midpoint_displacement} for an example of a single iteration of the process.
 
 \begin{figure}[h]
   \centering
 	\includegraphics[width=\textwidth]{midpoint_displacement.png}
 	\caption{A single iteration of midpoint displacement for the creation of mountains \cite{Prusinkiewicz1993}. New vertices $y_{A}$, $y_{B}$ and $y_{C}$ are created and shifted vertically by a random offset}
-	\label{Midpoint displacement}
+	\label{fig:midpoint_displacement}
 \end{figure}
 
-To adapt this method to the generation of rivers on the terrain, rather than vertically displace newly formed triangle vertices, there edges are labelled as \textit{entry}, \textit{exit} or \textit{neutral} (figure \ref{Single production of midpoint displacement adapted to river generation. Given the initial triangle, four valid split scenarios.}). An \textit{entry edge} defines the point of entry for the river into the triangle, an \textit{exit edge} the point of exit and a \textit{neutral edge} prevents the river from passing through. \\
+To adapt this method to the generation of rivers on the terrain, rather than vertically displace newly formed triangle vertices, there edges are labelled as \textit{entry}, \textit{exit} or \textit{neutral} (figure \ref{fig:single_prod_of_midpoint_displacement}). An \textit{entry edge} defines the point of entry for the river into the triangle, an \textit{exit edge} the point of exit and a \textit{neutral edge} prevents the river from passing through. \\
 
 When a production step is applied and a triangle split, the following constraints must be applied:
 \begin{itemize}
@@ -138,7 +134,7 @@ When a production step is applied and a triangle split, the following constraint
   \centering
 	\includegraphics[width=\textwidth]{midpoint_displacement_for_rivers_1.png}
 	\caption{Single production of midpoint displacement adapted to river generation \cite{Prusinkiewicz1993}. Given the initial triangle, four valid split scenarios.}
-	\label{Single production of midpoint displacement adapted to river generation. Given the initial triangle, four valid split scenarios. }
+	\label{fig:single_prod_of_midpoint_displacement}
 \end{figure}
 
 One difficulty with this technique is to ensure two adjacent triangles are coherent once split. That is, that the exit edge of one coincides with the entry edge of the other. To solve this, the location of edge vertices are used as the key to a random number generating hash table which, based on its output number, determines the segment that will be crossed by the river, if any.  \\
@@ -165,7 +161,7 @@ Rather than placing vector-lines, the work by Soon Tee \cite{Teoh2008} and Št'A
 
 As these methods provide very little automation in terms of guaranteeing consistency in the scene, the resulting realism is very much user-dependent. Real-time action-reaction feedback is essential with explicit modelling and so the majority of the methods run in real-time.
 
-\subsection{Conclusion} \label{Conclusion}
+\subsection{Summary} \label{Summary}
 
 Each technique has it's associated pros and cons and so choosing which one is best suited depends heavily on the requirements of the system. For example, if the terrain is fixed, using techniques which simulate real-time erosion of the terrain would be ill-suited. Similarly, if fine control over the resulting scene is necessary, heavily automated procedural methods which generate realistic scenes using very little user input would certainly not meet the requirements of the system. In this section we will summarize the pros and cons of the individual techniques in table form. These techniques will be rated based on:
 \begin{itemize}

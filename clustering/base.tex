@@ -1,4 +1,4 @@
-\chapter{Clustering}
+\chapter{Clustering} \label{chap:clustering}
 
 Each point on the terrain has a number of associated resource properties (summarised in table \ref{tab:point_resources}), which are used to determine suitable vegetation and, using an ecosystem simulator, a distribution of this vegetation. However, this simulator is computationally expensive and running it for each terrain vertex is infeasible. As such, to make the number of ecosystem simulations manageable, clustering is performed on the terrain based on the resources associated with individual points. The clustering algorithm used is \textit{K-Means Clustering}, discussed in section \ref{sec:clustering}. To accelerate clustering towards interactive feedback, it is implemented to run on the GPU, details of which can be found in section \label{sec:gpu_clustering}. To conclude, the performance and results of the clustering algorithm are discussed.
 
