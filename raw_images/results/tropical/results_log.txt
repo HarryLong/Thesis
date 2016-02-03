@@ -1,0 +1,1640 @@
+Starting /home/harry/workspaces/qt-workspace/CubeInSpace-build/CubeInSpace...
+** OPEN GL INFO **
+- Version: 4.5.0 NVIDIA 346.96
+***** TERRAGEN FILE SUMMARY *****
+Width: 256
+Height: 256
+Mode: 0
+Minimum height: 0
+Max height: 0
+Scale: 30
+HeightScale: 1
+BaseHeight: 0
+Planet Radius: 6370
+*********************************
+/home/harry/workspaces/qt-workspace/CubeInSpace-build/CubeInSpace exited with code 0
+
+Debugging starts
+** OPEN GL INFO **
+- Version: 4.5.0 NVIDIA 346.96
+***** TERRAGEN FILE SUMMARY *****
+Width: 256
+Height: 256
+Mode: 0
+Minimum height: 0
+Max height: 0
+Scale: 30
+HeightScale: 1
+BaseHeight: 0
+Planet Radius: 6370
+*********************************
+***** TERRAGEN FILE SUMMARY *****
+Width: 512
+Height: 512
+Mode: 0
+Minimum height: 9.03049
+Max height: 93.1221
+Scale: 13.7854
+HeightScale: 0.00149536
+BaseHeight: 49
+Planet Radius: 6370
+*********************************
+Finding closest cluster
+All database tables created successfully!
+Cluster slope:  23.0989
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  69
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  23.0989
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  23.0989
+Specie slope properties: [ 10 , 25 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  13
+Cluster slope:  23.0989
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  23.0989
+Specie slope properties: [ 15 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  46
+Finding closest cluster
+All database tables created successfully!
+Cluster slope:  16.9345
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  52
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  32.7109
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  57
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  69.0654
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  3.0571
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  52
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  42.995
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  28
+Cluster temp min:  100
+Cluster slope:  20
+Cluster slope:  22.9493
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  54
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  54.0538
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  8.55721
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  11.8835
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  54
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  33.4151
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  69
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  16.9345
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  32.7109
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  49
+Cluster slope:  69.0654
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  3.0571
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  42.995
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  22.9493
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  54.0538
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  8.55721
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  11.8835
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  33.4151
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  44
+Cluster slope:  16.9345
+Specie slope properties: [ 10 , 25 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  54
+Cluster slope:  32.7109
+Specie slope properties: [ 10 , 25 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  69.0654
+Specie slope properties: [ 10 , 25 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  3.0571
+Specie slope properties: [ 10 , 25 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  42.995
+Specie slope properties: [ 10 , 25 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  22.9493
+Specie slope properties: [ 10 , 25 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  14
+Cluster slope:  54.0538
+Specie slope properties: [ 10 , 25 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  8.55721
+Specie slope properties: [ 10 , 25 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  11.8835
+Specie slope properties: [ 10 , 25 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  87
+Cluster slope:  33.4151
+Specie slope properties: [ 10 , 25 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  16.9345
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  32.7109
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  69.0654
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  3.0571
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  42.995
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  23
+Cluster temp min:  100
+Cluster slope:  60
+Cluster slope:  22.9493
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  54.0538
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  5
+Cluster slope:  8.55721
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  11.8835
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  33.4151
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  16.9345
+Specie slope properties: [ 15 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  87
+Cluster slope:  32.7109
+Specie slope properties: [ 15 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  69.0654
+Specie slope properties: [ 15 , 30 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  3.0571
+Specie slope properties: [ 15 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  42.995
+Specie slope properties: [ 15 , 30 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  22.9493
+Specie slope properties: [ 15 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  47
+Cluster slope:  54.0538
+Specie slope properties: [ 15 , 30 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  8.55721
+Specie slope properties: [ 15 , 30 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  11.8835
+Specie slope properties: [ 15 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  33.4151
+Specie slope properties: [ 15 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  0
+All database tables created successfully!
+All database tables created successfully!
+All database tables created successfully!
+All database tables created successfully!
+All database tables created successfully!
+All database tables created successfully!
+All database tables created successfully!
+All database tables created successfully!
+Printing points of category 4
+Written file:  "/tmp/HarrysMasters-SroOiN/input_4.jpg"
+Input image written to: /tmp/HarrysMasters-SroOiN/input
+Starting statistican analysis
+Configuration file written to: /tmp/HarrysMasters-SroOiN/configuration.conf
+Configuration CSV file written to: /tmp/HarrysMasters-SroOiN/csv/configuration.conf.csv
+Points processed: 1 / 370
+Radial distribution file for categories: 4 and 4 written to file: /tmp/HarrysMasters-SroOiN/radial_distribution/category_4_and_4.rad
+CSV distribution file for categories: 4 and 4 written to file: /tmp/HarrysMasters-SroOiN/csv/category_4_and_4_pair_correlation.csv
+Category properties file for category 4 written to: /tmp/HarrysMasters-SroOiN/category_properties/category_4.category_properties
+Category properties CSV file for category 4 written to: /tmp/HarrysMasters-SroOiN/csv/category_4_properties.csv
+Duration: 202 milliseconds.
+All database tables created successfully!
+Unique path: /home/harry/.ecotracker/1
+SIMULATION TIME -->  4059 ms
+All database tables created successfully!
+Input image written to: /tmp/HarrysMasters-npABVd/input
+Starting statistican analysis
+Configuration file written to: /tmp/HarrysMasters-npABVd/configuration.conf
+Configuration CSV file written to: /tmp/HarrysMasters-npABVd/csv/configuration.conf.csv
+Debugging has finished
+
+Debugging starts
+** OPEN GL INFO **
+- Version: 4.5.0 NVIDIA 346.96
+***** TERRAGEN FILE SUMMARY *****
+Width: 256
+Height: 256
+Mode: 0
+Minimum height: 0
+Max height: 0
+Scale: 30
+HeightScale: 1
+BaseHeight: 0
+Planet Radius: 6370
+*********************************
+Debugging has finished
+
+Debugging starts
+** OPEN GL INFO **
+- Version: 4.5.0 NVIDIA 346.96
+***** TERRAGEN FILE SUMMARY *****
+Width: 256
+Height: 256
+Mode: 0
+Minimum height: 0
+Max height: 0
+Scale: 30
+HeightScale: 1
+BaseHeight: 0
+Planet Radius: 6370
+*********************************
+***** TERRAGEN FILE SUMMARY *****
+Width: 512
+Height: 512
+Mode: 0
+Minimum height: 9.03049
+Max height: 93.1221
+Scale: 13.7854
+HeightScale: 0.00149536
+BaseHeight: 49
+Planet Radius: 6370
+*********************************
+Finding closest cluster
+All database tables created successfully!
+Cluster slope:  23.0989
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  23.0989
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  23.0989
+Specie slope properties: [ 10 , 25 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  13
+Cluster slope:  23.0989
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  23.0989
+Specie slope properties: [ 15 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  46
+Finding closest cluster
+All database tables created successfully!
+Cluster slope:  18.3719
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  97
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  31.5297
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  69.0744
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  2.99278
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  98
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  43.3347
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  17
+Cluster slope:  21.2942
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  53.9085
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  8.2734
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  11.1613
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  99
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  34.4856
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  18.3719
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  31.5297
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  56
+Cluster slope:  69.0744
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  2.99278
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  43.3347
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  21.2942
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  53.9085
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  8.2734
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  11.1613
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  34.4856
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  37
+Cluster slope:  18.3719
+Specie slope properties: [ 10 , 25 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  44
+Cluster slope:  31.5297
+Specie slope properties: [ 10 , 25 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  69.0744
+Specie slope properties: [ 10 , 25 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  2.99278
+Specie slope properties: [ 10 , 25 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  43.3347
+Specie slope properties: [ 10 , 25 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  21.2942
+Specie slope properties: [ 10 , 25 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  25
+Cluster slope:  53.9085
+Specie slope properties: [ 10 , 25 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  8.2734
+Specie slope properties: [ 10 , 25 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  11.1613
+Specie slope properties: [ 10 , 25 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  92
+Cluster slope:  34.4856
+Specie slope properties: [ 10 , 25 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  18.3719
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  31.5297
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  69.0744
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  2.99278
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  43.3347
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  58
+Cluster slope:  21.2942
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  53.9085
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  5
+Cluster slope:  8.2734
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  11.1613
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  34.4856
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  18.3719
+Specie slope properties: [ 15 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  78
+Cluster slope:  31.5297
+Specie slope properties: [ 15 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  69.0744
+Specie slope properties: [ 15 , 30 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  2.99278
+Specie slope properties: [ 15 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  43.3347
+Specie slope properties: [ 15 , 30 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  21.2942
+Specie slope properties: [ 15 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  58
+Cluster slope:  53.9085
+Specie slope properties: [ 15 , 30 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  8.2734
+Specie slope properties: [ 15 , 30 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  11.1613
+Specie slope properties: [ 15 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  34.4856
+Specie slope properties: [ 15 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  0
+All database tables created successfully!
+All database tables created successfully!
+All database tables created successfully!
+All database tables created successfully!
+All database tables created successfully!
+All database tables created successfully!
+All database tables created successfully!
+Input image written to: /tmp/HarrysMasters-OpW8Ez/input
+Starting statistican analysis
+Configuration file written to: /tmp/HarrysMasters-OpW8Ez/configuration.conf
+Configuration CSV file written to: /tmp/HarrysMasters-OpW8Ez/csv/configuration.conf.csv
+Debugging has finished
+
+Starting /home/harry/workspaces/qt-workspace/CubeInSpace-build/CubeInSpace...
+** OPEN GL INFO **
+- Version: 4.5.0 NVIDIA 346.96
+***** TERRAGEN FILE SUMMARY *****
+Width: 256
+Height: 256
+Mode: 0
+Minimum height: 0
+Max height: 0
+Scale: 30
+HeightScale: 1
+BaseHeight: 0
+Planet Radius: 6370
+*********************************
+/home/harry/workspaces/qt-workspace/CubeInSpace-build/CubeInSpace exited with code 0
+
+Starting /home/harry/workspaces/qt-workspace/CubeInSpace-build/CubeInSpace...
+** OPEN GL INFO **
+- Version: 4.5.0 NVIDIA 346.96
+***** TERRAGEN FILE SUMMARY *****
+Width: 256
+Height: 256
+Mode: 0
+Minimum height: 0
+Max height: 0
+Scale: 30
+HeightScale: 1
+BaseHeight: 0
+Planet Radius: 6370
+*********************************
+***** TERRAGEN FILE SUMMARY *****
+Width: 512
+Height: 512
+Mode: 0
+Minimum height: 9.03049
+Max height: 93.1221
+Scale: 13.7854
+HeightScale: 0.00149536
+BaseHeight: 49
+Planet Radius: 6370
+*********************************
+Finding closest cluster
+All database tables created successfully!
+Cluster slope:  23.0989
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  43
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  23.0989
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  68
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  23.0989
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  68
+Cluster temp min:  100
+Cluster slope:  19
+Cluster slope:  23.0989
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  23.0989
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  69
+Finding closest cluster
+All database tables created successfully!
+Cluster slope:  22.3343
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  30
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  32.2704
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  34
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  69.092
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  2.95581
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  3
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  42.9369
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  21
+Cluster slope:  11.8319
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  28
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  54.1674
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  8.0803
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  14.0102
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  19
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  32.1679
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  44
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  22.3343
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  86
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  32.2704
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  80
+Cluster temp min:  100
+Cluster slope:  52
+Cluster slope:  69.092
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  2.95581
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  86
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  42.9369
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  11.8319
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  86
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  54.1674
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  8.0803
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  14.0102
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  96
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  32.1679
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  66
+Cluster temp min:  100
+Cluster slope:  52
+Cluster slope:  22.3343
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  86
+Cluster temp min:  100
+Cluster slope:  27
+Cluster slope:  32.2704
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  80
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  69.092
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  2.95581
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  86
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  42.9369
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  11.8319
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  86
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  54.1674
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  8.0803
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  14.0102
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  96
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  32.1679
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  66
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  22.3343
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  97
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  32.2704
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  69.092
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  2.95581
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  57
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  42.9369
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  60
+Cluster slope:  11.8319
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  95
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  54.1674
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  4
+Cluster slope:  8.0803
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  14.0102
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  81
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  32.1679
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  22.3343
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  77
+Cluster slope:  32.2704
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  69.092
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  2.95581
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  42.9369
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  11.8319
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  54.1674
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  8.0803
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  14.0102
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  32.1679
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  0
+All database tables created successfully!
+All database tables created successfully!
+All database tables created successfully!
+All database tables created successfully!
+All database tables created successfully!
+All database tables created successfully!
+All database tables created successfully!
+Printing points of category 2
+Written file:  "/tmp/HarrysMasters-97A0Wu/input_2.jpg"
+Input image written to: /tmp/HarrysMasters-97A0Wu/input
+Starting statistican analysis
+Configuration file written to: /tmp/HarrysMasters-97A0Wu/configuration.conf
+Configuration CSV file written to: /tmp/HarrysMasters-97A0Wu/csv/configuration.conf.csv
+Points processed: 1 / 1740
+Points processed: 1001 / 1740
+Radial distribution file for categories: 2 and 2 written to file: /tmp/HarrysMasters-97A0Wu/radial_distribution/category_2_and_2.rad
+CSV distribution file for categories: 2 and 2 written to file: /tmp/HarrysMasters-97A0Wu/csv/category_2_and_2_pair_correlation.csv
+Category properties file for category 2 written to: /tmp/HarrysMasters-97A0Wu/category_properties/category_2.category_properties
+Category properties CSV file for category 2 written to: /tmp/HarrysMasters-97A0Wu/csv/category_2_properties.csv
+Duration: 202 milliseconds.
+All database tables created successfully!
+Unique path: /home/harry/.ecotracker/1
+SIMULATION TIME -->  6817 ms
+All database tables created successfully!
+Printing points of category 2
+Written file:  "/tmp/HarrysMasters-dPoznf/input_2.jpg"
+Input image written to: /tmp/HarrysMasters-dPoznf/input
+Starting statistican analysis
+Configuration file written to: /tmp/HarrysMasters-dPoznf/configuration.conf
+Configuration CSV file written to: /tmp/HarrysMasters-dPoznf/csv/configuration.conf.csv
+Points processed: 1 / 1693
+Points processed: 1001 / 1693
+Radial distribution file for categories: 2 and 2 written to file: /tmp/HarrysMasters-dPoznf/radial_distribution/category_2_and_2.rad
+CSV distribution file for categories: 2 and 2 written to file: /tmp/HarrysMasters-dPoznf/csv/category_2_and_2_pair_correlation.csv
+Category properties file for category 2 written to: /tmp/HarrysMasters-dPoznf/category_properties/category_2.category_properties
+Category properties CSV file for category 2 written to: /tmp/HarrysMasters-dPoznf/csv/category_2_properties.csv
+Duration: 201 milliseconds.
+All database tables created successfully!
+Unique path: /home/harry/.ecotracker/2
+SIMULATION TIME -->  6632 ms
+All database tables created successfully!
+Printing points of category 5
+Printing points of category 3
+Printing points of category 2
+Written file:  "/tmp/HarrysMasters-FTaTlI/input_5.jpg"
+Written file:  "/tmp/HarrysMasters-FTaTlI/input_3.jpg"
+Written file:  "/tmp/HarrysMasters-FTaTlI/input_2.jpg"
+Input image written to: /tmp/HarrysMasters-FTaTlI/input
+Starting statistican analysis
+Configuration file written to: /tmp/HarrysMasters-FTaTlI/configuration.conf
+Configuration CSV file written to: /tmp/HarrysMasters-FTaTlI/csv/configuration.conf.csv
+Points processed: 1 / 1732
+Points processed: 1 / 1168
+Points processed: 1 / 1732
+Points processed: 1 / 1732
+Points processed: 1 / 1007
+Points processed: 1001 / 1168
+Radial distribution file for categories: 2 and 2 written to file: /tmp/HarrysMasters-FTaTlI/radial_distribution/category_2_and_2.rad
+CSV distribution file for categories: 2 and 2 written to file: /tmp/HarrysMasters-FTaTlI/csv/category_2_and_2_pair_correlation.csv
+Points processed: 1001 / 1732
+Points processed: 1001 / 1732
+Points processed: 1001 / 1732
+Points processed: 1001 / 1007
+Radial distribution file for categories: 5 and 5 written to file: /tmp/HarrysMasters-FTaTlI/radial_distribution/category_5_and_5.rad
+CSV distribution file for categories: 5 and 5 written to file: /tmp/HarrysMasters-FTaTlI/csv/category_5_and_5_pair_correlation.csv
+Points processed: 1 / 1168
+Radial distribution file for categories: 3 and 3 written to file: /tmp/HarrysMasters-FTaTlI/radial_distribution/category_3_and_3.rad
+CSV distribution file for categories: 3 and 3 written to file: /tmp/HarrysMasters-FTaTlI/csv/category_3_and_3_pair_correlation.csv
+Radial distribution file for categories: 5 and 3 written to file: /tmp/HarrysMasters-FTaTlI/radial_distribution/category_3_and_5.rad
+CSV distribution file for categories: 5 and 3 written to file: /tmp/HarrysMasters-FTaTlI/csv/category_3_and_5_pair_correlation.csv
+Radial distribution file for categories: 2 and 3 written to file: /tmp/HarrysMasters-FTaTlI/radial_distribution/category_3_and_2.rad
+CSV distribution file for categories: 2 and 3 written to file: /tmp/HarrysMasters-FTaTlI/csv/category_3_and_2_pair_correlation.csv
+Points processed: 1001 / 1168
+Radial distribution file for categories: 5 and 2 written to file: /tmp/HarrysMasters-FTaTlI/radial_distribution/category_2_and_5.rad
+CSV distribution file for categories: 5 and 2 written to file: /tmp/HarrysMasters-FTaTlI/csv/category_2_and_5_pair_correlation.csv
+Category properties file for category 3 written to: /tmp/HarrysMasters-FTaTlI/category_properties/category_3.category_properties
+Category properties file for category 5 written to: /tmp/HarrysMasters-FTaTlI/category_properties/category_5.category_properties
+Category properties file for category 2 written to: /tmp/HarrysMasters-FTaTlI/category_properties/category_2.category_properties
+Category properties CSV file for category 5 written to: /tmp/HarrysMasters-FTaTlI/csv/category_5_properties.csv
+Category properties CSV file for category 2 written to: /tmp/HarrysMasters-FTaTlI/csv/category_2_properties.csv
+Category properties CSV file for category 3 written to: /tmp/HarrysMasters-FTaTlI/csv/category_3_properties.csv
+Duration: 208 milliseconds.
+All database tables created successfully!
+Unique path: /home/harry/.ecotracker/3
+SIMULATION TIME -->  31820 ms
+All database tables created successfully!
+Printing points of category 5
+Printing points of category 3
+Printing points of category 2
+Written file:  "/tmp/HarrysMasters-iawqX4/input_5.jpg"
+Written file:  "/tmp/HarrysMasters-iawqX4/input_3.jpg"
+Written file:  "/tmp/HarrysMasters-iawqX4/input_2.jpg"
+Input image written to: /tmp/HarrysMasters-iawqX4/input
+Starting statistican analysis
+Configuration file written to: /tmp/HarrysMasters-iawqX4/configuration.conf
+Configuration CSV file written to: /tmp/HarrysMasters-iawqX4/csv/configuration.conf.csv
+Points processed: 1 / 1724
+Points processed: 1 / 1724
+Points processed: 1 / 1724
+Points processed: 1 / 1196
+Points processed: 1001 / 1724
+Points processed: 1001 / 1196
+Radial distribution file for categories: 5 and 2 written to file: /tmp/HarrysMasters-iawqX4/radial_distribution/category_2_and_5.rad
+CSV distribution file for categories: 5 and 2 written to file: /tmp/HarrysMasters-iawqX4/csv/category_2_and_5_pair_correlation.csv
+Points processed: 1001 / 1724
+Points processed: 1 / 977
+Points processed: 1 / 1196
+Points processed: 1001 / 1724
+Radial distribution file for categories: 2 and 3 written to file: /tmp/HarrysMasters-iawqX4/radial_distribution/category_3_and_2.rad
+CSV distribution file for categories: 2 and 3 written to file: /tmp/HarrysMasters-iawqX4/csv/category_3_and_2_pair_correlation.csv
+Radial distribution file for categories: 5 and 3 written to file: /tmp/HarrysMasters-iawqX4/radial_distribution/category_3_and_5.rad
+CSV distribution file for categories: 5 and 3 written to file: /tmp/HarrysMasters-iawqX4/csv/category_3_and_5_pair_correlation.csv
+Radial distribution file for categories: 5 and 5 written to file: /tmp/HarrysMasters-iawqX4/radial_distribution/category_5_and_5.rad
+CSV distribution file for categories: 5 and 5 written to file: /tmp/HarrysMasters-iawqX4/csv/category_5_and_5_pair_correlation.csv
+Points processed: 1001 / 1196
+Radial distribution file for categories: 3 and 3 written to file: /tmp/HarrysMasters-iawqX4/radial_distribution/category_3_and_3.rad
+CSV distribution file for categories: 3 and 3 written to file: /tmp/HarrysMasters-iawqX4/csv/category_3_and_3_pair_correlation.csv
+Radial distribution file for categories: 2 and 2 written to file: /tmp/HarrysMasters-iawqX4/radial_distribution/category_2_and_2.rad
+CSV distribution file for categories: 2 and 2 written to file: /tmp/HarrysMasters-iawqX4/csv/category_2_and_2_pair_correlation.csv
+Category properties file for category 5 written to: /tmp/HarrysMasters-iawqX4/category_properties/category_5.category_properties
+Category properties CSV file for category 5 written to: /tmp/HarrysMasters-iawqX4/csv/category_5_properties.csv
+Category properties file for category 3 written to: /tmp/HarrysMasters-iawqX4/category_properties/category_3.category_properties
+Category properties CSV file for category 3 written to: /tmp/HarrysMasters-iawqX4/csv/category_3_properties.csv
+Category properties file for category 2 written to: /tmp/HarrysMasters-iawqX4/category_properties/category_2.category_properties
+Category properties CSV file for category 2 written to: /tmp/HarrysMasters-iawqX4/csv/category_2_properties.csv
+Duration: 208 milliseconds.
+All database tables created successfully!
+Unique path: /home/harry/.ecotracker/4
+SIMULATION TIME -->  31731 ms
+All database tables created successfully!
+SIMULATION TIME -->  275 ms
+All database tables created successfully!
+SIMULATION TIME -->  307 ms
+Finding closest cluster
+All database tables created successfully!
+Cluster slope:  22.3343
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  30
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  32.2704
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  34
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  69.092
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  2.95581
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  3
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  42.9369
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  21
+Cluster slope:  11.8319
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  28
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  54.1674
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  8.0803
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  14.0102
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  19
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  32.1679
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  44
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  22.3343
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  86
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  32.2704
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  80
+Cluster temp min:  100
+Cluster slope:  52
+Cluster slope:  69.092
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  2.95581
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  86
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  42.9369
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  11.8319
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  86
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  54.1674
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  8.0803
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  14.0102
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  96
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  32.1679
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  66
+Cluster temp min:  100
+Cluster slope:  52
+Cluster slope:  22.3343
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  86
+Cluster temp min:  100
+Cluster slope:  27
+Cluster slope:  32.2704
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  80
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  69.092
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  2.95581
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  86
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  42.9369
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  11.8319
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  86
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  54.1674
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  8.0803
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  14.0102
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  96
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  32.1679
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  66
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  22.3343
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  97
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  32.2704
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  69.092
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  2.95581
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  57
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  42.9369
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  60
+Cluster slope:  11.8319
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  95
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  54.1674
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  4
+Cluster slope:  8.0803
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  14.0102
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  81
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  32.1679
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  22.3343
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  77
+Cluster slope:  32.2704
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  69.092
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  2.95581
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  42.9369
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  11.8319
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  54.1674
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  8.0803
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  14.0102
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  32.1679
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  0
+Finding closest cluster
+All database tables created successfully!
+Cluster slope:  22.3343
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  30
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  32.2704
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  34
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  69.092
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  2.95581
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  3
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  42.9369
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  21
+Cluster slope:  11.8319
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  28
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  54.1674
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  8.0803
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  14.0102
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  19
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  32.1679
+Specie slope properties: [ 35 , 45 ]
+Cluster humidity min score:  44
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  22.3343
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  86
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  32.2704
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  80
+Cluster temp min:  100
+Cluster slope:  52
+Cluster slope:  69.092
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  2.95581
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  86
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  42.9369
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  11.8319
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  86
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  54.1674
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  8.0803
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  14.0102
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  96
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  32.1679
+Specie slope properties: [ 25 , 40 ]
+Cluster humidity min score:  66
+Cluster temp min:  100
+Cluster slope:  52
+Cluster slope:  22.3343
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  86
+Cluster temp min:  100
+Cluster slope:  27
+Cluster slope:  32.2704
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  80
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  69.092
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  2.95581
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  86
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  42.9369
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  11.8319
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  86
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  54.1674
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  8.0803
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  14.0102
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  96
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  32.1679
+Specie slope properties: [ 15 , 25 ]
+Cluster humidity min score:  66
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  22.3343
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  97
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  32.2704
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  69.092
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  2.95581
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  57
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  42.9369
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  60
+Cluster slope:  11.8319
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  95
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  54.1674
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  4
+Cluster slope:  8.0803
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  14.0102
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  81
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  32.1679
+Specie slope properties: [ 35 , 55 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  22.3343
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  77
+Cluster slope:  32.2704
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  69.092
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  2.95581
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  42.9369
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  11.8319
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  54.1674
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  0
+Cluster slope:  8.0803
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  0
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  14.0102
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  100
+Cluster slope:  32.1679
+Specie slope properties: [ 20 , 30 ]
+Cluster humidity min score:  100
+Cluster temp min:  100
+Cluster slope:  0d
