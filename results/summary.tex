@@ -1,0 +1,18 @@
+\section{Summary}
+
+Weather stations and satellites continuously monitor weather at all four corners of the globe and the resulting data made freely available. Because this system requires the same data as input, it makes it very easy to model any type of environment. Finding and specifying the input data to model these two environments, for example, took less that ten minutes. The more unintuitive input control is maybe the soil infiltration rate as it necessitates that the user knows the correlation between soil type and soil infiltration rate. This could be improved, however, by providing a list of soils to the user and the correlation done automatically.\\
+
+The water networks that the system generates accurately reflect the variation in precipitation quantity and intensity configured. This is apparent as the networks vary in size and depth on a monthly basis as the amount of calculated standing water varies. More so, the water networks are generated very quickly for all twelve months and the water flow simulation is rendered in real-time, therefore ensuring the interaction is kept interactive. \\
+
+Similarly, the clustering algorithm also runs in real-time, permitting users to quickly visualise the affect of varying the number of clusters to generate. However, as the number of clusters to produce increases, identifying the different clusters on the terrain becomes difficult and the amount of associated cluster data displayed to the user, overwhelming. A solution to this would be to automatically determine the number of clusters to generate based on terrain resource variability and a more intuitive "level of realism" configuration parameter. By doing so, the clustering element can be bypassed entirely from a user perspective and processed entirely in the background.\\
+
+In terms of vegetation, the system accurately determines the species best suited to each cluster and effectively communicates this to the user during the species selection phase.\\
+By analysing the average size and instance count of individual species produced by the ecosystem simulator for each cluster, it is apparent that their vigour reflects their suitability to the clusters environment. From the resulting vegetation distributions, it is also clear that the species present within the simulation has a large impact on resulting distributions by, for example, providing vital shade necessary for their survival.\\
+Finding the necessary configuration data for plant species can be difficult to find, however. Although optimal water, sun exposure and temperature requirements can be found relatively easily, determining the lower and upper limits is more difficult. A solution to this would be to model plant functional types rather than individual plant species. Plant functional types encompass a number of species and corresponding resource requirement data can be preconfigured with the help of biologists. Modelling individual plant species could then be done by the user using its parent functional type as a template for parameter specification.\\
+
+
+Extensible Designed to cater for large amounts of plants (plant suitability filtering)
+User decides on realism (with performance trade offs)
+Plant data hard to find...
+No temperature clusters really...
+Hard to tell number of clusters to create.
