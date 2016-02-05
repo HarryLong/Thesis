@@ -32,7 +32,7 @@
 \begin{titlepage}
 \begin{center}
 \Huge
-\textbf{Using procedural methods to generate realistic virtual rural worlds}
+\textbf{Procedurally generated realistic virtual rural worlds}
 \includegraphics[width = 400px]{uct_logo.jpg} \\
 \large
 \vfill
@@ -63,6 +63,25 @@ February 2016
 \normalsize
 \end{minipage}
 \end{center}
+
+\begin{abstract}
+Manually creating virtual rural worlds is often a difficult and lengthy task for artists as plant species that appear, plant distributions and water networks must be deduced such that they realistically reflect the environment being modelled.\\
+As virtual worlds grow in size and complexity, climates vary on the terrain itself and a single ecosystem is no longer sufficient to realistically model vegetative content. Consequentially, the task is only getting more difficult for these artists.\\
+Procedural methods are extensively used in computer graphics to partially or fully automate some tasks and take some of the burden off the user. Input parameters for these procedural algorithms are often unintuitive, however, and their impact on the final results, unclear.  \\
+This thesis proposes, implements, and evaluates an approach to procedural generate vegetation and water networks for realistic virtual rural worlds. Rather than placing vegetative content and water networks to reflect the environment being modelled, the work-flow is mirrored and the user models the environment directly by stating the resources it offers. These intuitive input parameters are subsequently used to configure procedural algorithms and determine suitable vegetation, plant distributions and water networks. By design, the precision and placeable plant species are configurable so any type of environment can be modelled at various levels of detail.\\
+Overall, the results are promising and the system used to model a multitude of test environments with minimal effort. 
+\end{abstract}
+
+\renewcommand{\abstractname}{Acknowledgements}
+\begin{abstract}
+Firstly, I would like to thank my primary supervisor, James Gain, for his ongoing support for the past two years. His knowledge, guidance and feedback has been invaluable and essential to this research.\\
+
+I would like to thank my secondary supervisor, Marie-Paul Cani, for her contributions to this work and enabling me to spend some time meeting her and fellow researchers at the INRIA research center in Grenoble, France.\\
+
+I would also like to thank all members of the Procedural Interest Group at the University of Cape Town for sharing their knowledge and feedback on a weekly basis. My fellow lab-mates also deserve thanking here as they helped keep my sanity throughout (as best as possible).\\
+
+Finally, I want to thank the National Research Foundation for helping with the funding of this thesis through the Technology and Human Resources for Industry Programme in the form of THRIP grant TP2011071600004.
+\end{abstract}
 
 \tableofcontents
 \listoffigures
@@ -99,6 +118,10 @@ February 2016
 
 \include{results/base}
 \include{results/tropical}
+\include{results/mountains}
+\include{results/summary}
+
+\include{conclusion/conclusion}
 
 \bibliography{MyCollection}{}
 
@@ -108,6 +131,7 @@ February 2016
 \include{appendix/appendix_c}
 \include{appendix/appendix_d}
 \include{appendix/appendix_e}
+\include{appendix/appendix_f}
 \end{appendices}
 
 \end{document}
