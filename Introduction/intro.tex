@@ -35,7 +35,14 @@ For the \textit{second goal}, lots of thought must be put into making all user o
 Maintaining a continuous feedback loop between user action and corresponding reaction is extremely important for both user-friendliness and to optimize usage. In an attempt to meet our \textit{third goal} therefore, efficient algorithms must be developed in order to keep there time complexity to a minimum. When suited, these algorithms should be developed to run on the GPU. \\
 
 \section{Contributions}
-\todo{State contributions of this thesis}
+
+The primary contributions of this thesis are:
+\begin{itemize}
+\item A carefully designed graphical interface permitting users to model any environment with minimal effort.
+\item An efficient procedural water network generation algorithm which relies solely on soil, rainfall and terrain properties.
+\item A novel vegetation generation component which uses clustering, statistical analysis and a simulator to ensure both realism and efficiency.
+\end{itemize}
 
 \section{Structure}
-\todo{Outline structure of the thesis}
+
+To start, a detailed overview of existing work is discussed in chapter \ref{chap:background}. To better understand the individual system components discussed within the body of this text, first an overview of the system is given. This is done in chapter \ref{chap:system_overview}. How the base terrain is specified, associated resources configured and water content procedurally generated is outlined in chapter \ref{chap:terrain_and_resources}. The clustering algorithm used to group vertices based on associated resources is discussed and its performance analysed in chapter \ref{chap:clustering}. Chapter \ref{chap:vegetation} discusses the techniques used to deduce suitable vegetation and efficiently generate highly detailed and large scale plant distributions. Test environments are generated and the systems strengths and weaknesses discussed in chapter \ref{chap:results}. Finally, chapter \ref{chap:conclusion} concludes this thesis and discusses future directions for this work.
