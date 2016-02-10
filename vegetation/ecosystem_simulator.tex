@@ -99,14 +99,14 @@ To calculate the individual strength values, in the range [-100,100], a graph is
 \begin{figure}
 \center
 	\includegraphics[scale=0.7]{2_value_strength.jpg}
-	\caption{ Graph used to calculate the slope and age strength of a given plant instance where: \textbf{P$_{1}$} represents the value of \textit{start of decline} and \textbf{P$_{2}$} is the \textit{maximum} configured for the given species. }	
+	\caption{ \textit{Graph used to calculate the slope and age strength of a given plant instance where: \textbf{P$_{1}$} represents the value of \textit{start of decline} and \textbf{P$_{2}$} is the \textit{maximum} configured for the given species.} }	
 	\label{fig:2_value_strength}
 \end{figure}
 
 \begin{figure}
 \center
 	\includegraphics[scale=0.7]{4_value_strength.jpg}
-	\caption{ Graph used to calculate the temperature, illumination and humidity strength of a given plant instance where: \textbf{P$_{1}$} and \textbf{P$_{4}$} are the \textit{minimum} and \textit{maximum} and \textbf{P$_{2}$} and \textbf{P$_{3}$} form the \textit{prime range} configured for the given species.  }	
+	\caption{ \textit{Graph used to calculate the temperature, illumination and humidity strength of a given plant instance where: \textbf{P$_{1}$} and \textbf{P$_{4}$} are the \textit{minimum} and \textit{maximum} and \textbf{P$_{2}$} and \textbf{P$_{3}$} form the \textit{prime range} configured for the given species.}  }	
 	\label{fig:4_value_strength}
 \end{figure}
 
@@ -156,7 +156,7 @@ The number of plants present in the simulation will heavily influence its perfor
 \begin{figure}
 \center
 	\includegraphics[scale=0.7]{ecosimulator_test_plant_count.png}
-	\caption{ Processing time based on plant count. Total simulation time for 100 years: 271 seconds}	
+	\caption{ \textit{Processing time based on plant count. Total simulation time for 100 years: 271 seconds}}	
 	\label{fig:ecosimulator_test_plant_count}
 \end{figure}
 
@@ -165,7 +165,7 @@ Another property that heavily impacts performance is the root and canopy growth.
 \begin{figure}
 \center
 	\includegraphics[scale=0.7]{ecosimulator_test_per_plant.png}
-	\caption{ Evolution of the monthly processing time normalised based on plant count. The processing time increases as the plants grow larger since they cover more grid cells. Total simulation time for one hundred years: ~49 seconds for \textit{S$_{base}$}, ~122 seconds for \textit{S$_{X2}$} and 166 seconds for \textit{S$_{X3}$}}
+	\caption{ \textit{Evolution of the monthly processing time normalised based on plant count. The processing time increases as the plants grow larger since they cover more grid cells. Total simulation time for one hundred years: ~49 seconds for \textit{S$_{base}$}, ~122 seconds for \textit{S$_{X2}$} and 166 seconds for \textit{S$_{X3}$}}}
 	\label{fig:ecosimulator_test_per_plant}
 \end{figure}
 
@@ -181,7 +181,7 @@ To test whether self-thinning is successfully modelled in the ecosystem simulato
 \begin{figure}
 \center
 	\includegraphics[scale=0.7]{self_thinning.png}
-	\caption{ Self thinning test: plant count tracked throughout three separate simulations differing only in available humidity. For all three runs the plant density reaches a maximum tipping-point after which plant density reduces. Note that the more available moisture there is, the more severe the slope of descent is following the tipping point. This is because, with more soil moisture available, plants thrive and reach greater sizes. Because of this increased spatial coverage, the killing off of smaller plants is more severe. So, although the plant count is smaller by the end of the simulations when there is more humidity, the average plant size is larger.}
+	\caption{ \textit{Self thinning test: plant count tracked throughout three separate simulations differing only in available humidity. For all three runs the plant density reaches a maximum tipping-point after which plant density reduces. Note that the more available moisture there is, the more severe the slope of descent is following the tipping point. This is because, with more soil moisture available, plants thrive and reach greater sizes. Because of this increased spatial coverage, the killing off of smaller plants is more severe. So, although the plant count is smaller by the end of the simulations when there is more humidity, the average plant size is larger.}}
 	\label{fig:self_thinning_test_results}
 \end{figure}
 
@@ -192,14 +192,14 @@ Given plant species \textit{A} with a fast growth rate and species \textit{B} wi
 \begin{figure}
 \center
 	\includegraphics[scale=0.7]{succession_plant_avg_size.png}
-	\caption{ Succession Test: Average size of the slow growing S$_{slow}$ (red) and fast growing S$_{fast}$ (blue) throughout a simulation run in optimal conditions. Note that the plant count drops severely at the 300 and 500 mark for S$_{fast}$ and S$_{slow}$ respectively as resources are configured such that conditions are ideal for these species. This leads to a large quantity of them dying of age and, because the difference between start of decline and maximum age configured for these species is very small, it is done performed very sharply.}
+	\caption{ \textit{Succession Test: Average size of the slow growing S$_{slow}$ (red) and fast growing S$_{fast}$ (blue) throughout a simulation run in optimal conditions. Note that the plant count drops severely at the 300 and 500 mark for S$_{fast}$ and S$_{slow}$ respectively as resources are configured such that conditions are ideal for these species. This leads to a large quantity of them dying of age and, because the difference between start of decline and maximum age configured for these species is very small, it is done performed very sharply.}}
 	\label{fig:succession_plants_avg_size}
 \end{figure}
 
 \begin{figure}
 \center
 	\includegraphics[width=\textwidth]{succession_plants_render.png}
-	\caption{ Succession Test: Appearance of the slow growing S$_{slow}$ (white) and fast growing S$_{fast}$ (red) at different times during the simulation. From left-to-right, top-top-bottom: 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100 years.}
+	\caption{ \textit{Succession Test: Appearance of the slow growing S$_{slow}$ (white) and fast growing S$_{fast}$ (red) at different times during the simulation. From left-to-right, top-top-bottom: 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100 years.}}
 	\label{fig:succession_plants_render}
 \end{figure}
 
@@ -210,7 +210,7 @@ The \textit{propagation} property simply states that plants \textit{propagate} i
 \begin{figure}
 \center
 	\includegraphics[width=\textwidth]{propagation_test_render.png}
-	\caption{ Propagation Test: Evolution through time of a simulation starting from a single seed plant of grass. From left-to-right, top-to-bottom: 2, 10, 20, 30, 40, 50, 60, 70 years in.}
+	\caption{ \textit{Propagation Test: Evolution through time of a simulation starting from a single seed plant of grass. From left-to-right, top-to-bottom: 2, 10, 20, 30, 40, 50, 60, 70 years in.}}
 	\label{fig:propagation_test_render}
 \end{figure}
 
@@ -221,7 +221,7 @@ To ensure a given plant species thrives better when the environment is more suit
 \begin{figure}
 \center
 	\includegraphics[width=\textwidth]{varying_resource_test.png}
-	\caption{ Varying resource test: Average canopy width throughout simulations varying only in available moisture and with only plant species \textit{S$_{base}$}. It shows that the average canopy width is low when the configured humidity is outside the species optimal humidity range (22mm and 38mm), improves as it approaches optimal range (24mm and 36mm) and reaches its peak when the humidity is within the optimal range (26mmn, 28mm, 30mm, 32mm and 34mm).}
+	\caption{ \textit{Varying resource test: Average canopy width throughout simulations varying only in available moisture and with only plant species \textit{S$_{base}$}. It shows that the average canopy width is low when the configured humidity is outside the species optimal humidity range (22mm and 38mm), improves as it approaches optimal range (24mm and 36mm) and reaches its peak when the humidity is within the optimal range (26mmn, 28mm, 30mm, 32mm and 34mm).}}
 	\label{fig:varying_resource_test}
 \end{figure}
 
@@ -232,7 +232,7 @@ Plants that are heavily dependent on illumination struggle to grow in areas shad
 \begin{figure}
 \center
 	\includegraphics[width=\textwidth]{shade_propagation_test.png}
-	\caption{ Shade Test: Results of a simulation run with \textit{S$_{smallroots}$} (red), grass (white) after 10 years. Top-left: Rendered with both species. Top-right: Only grass rendered in order to clearly visualise the empty areas at the exact locations the canopies of \textit{S$_{smallroots}$} appear. Bottom: The same simulation run with only grass, clearly showing the empty areas disappear.} 
+	\caption{ \textit{Shade Test: Results of a simulation run with \textit{S$_{smallroots}$} (red), grass (white) after 10 years. Top-left: Rendered with both species. Top-right: Only grass rendered in order to clearly visualise the empty areas at the exact locations the canopies of \textit{S$_{smallroots}$} appear. Bottom: The same simulation run with only grass, clearly showing the empty areas disappear.}} 
 	\label{fig:shade_test}
 \end{figure}
 
@@ -243,6 +243,6 @@ As discussed in \ref{subsec:spawning_plants}, species which strive in shaded are
 \begin{figure}
 \center
 	\includegraphics[width=\textwidth]{shade_loving_test.png}
-	\caption{ Shade Loving Test: Simulation with \textit{S$_{smallroots}$} (red), grass (white) and \textit{S$_{shadeloving}$} (green) after 15 years. Left: All species rendered. Right: All except \textit{S$_{smallroots}$} rendered. It shows clearly that the only instances of \textit{S$_{shadeloving}$} which survive are those under the canopies of \textit{S$_{smallroots}$} (red).}
+	\caption{ \textit{Shade Loving Test: Simulation with \textit{S$_{smallroots}$} (red), grass (white) and \textit{S$_{shadeloving}$} (green) after 15 years. Left: All species rendered. Right: All except \textit{S$_{smallroots}$} rendered. It shows clearly that the only instances of \textit{S$_{shadeloving}$} which survive are those under the canopies of \textit{S$_{smallroots}$} (red).}}
 	\label{fig:shade_loving_test}
 \end{figure}

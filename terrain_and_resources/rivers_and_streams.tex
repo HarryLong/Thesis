@@ -73,7 +73,7 @@ When calculated value of \textit{WEC} is less than or equal to zero, no water ca
 \begin{figure}
 \center
 	\includegraphics[width=\textwidth]{water_evacuation_all_examples.jpg}
-	\caption{ Example water-evacuation scenarios. Left: All water can be evacuated from source vertex (middle). Middle: A portion of water can be evacuated from source vertex (middle). Right: No water can be evacuated from source vertex (middle).}
+	\caption{ \textit{Example water-evacuation scenarios. Left: All water can be evacuated from source vertex (middle). Middle: A portion of water can be evacuated from source vertex (middle). Right: No water can be evacuated from source vertex (middle).}}
 	\label{fig:evacuation_scenarios}
 \end{figure}
 
@@ -84,7 +84,7 @@ When attempting to evacuate water from vertices on the terrain extremities, one 
 \begin{figure}
 \center
 	\includegraphics[width=\textwidth/2]{water_evacuation_border.png}
-	\caption{ Border of vertices generated around the terrain to cater for water evacuation at the extremities. Orange vertices form the border. }
+	\caption{ \textit{Border of vertices generated around the terrain to cater for water evacuation at the extremities. Orange vertices form the border.} }
 	\label{fig:evacuation_border}
 \end{figure}
 
@@ -134,7 +134,7 @@ Each thread within a work-group relates to a unique vertex on the terrain from w
 \begin{figure}
 \center
 	\includegraphics[width=\textwidth]{water_flow_dest_conflicts.png}
-	\caption{ Memory conflict cause by 8 surrounding threads attempting to write to a single destination memory location. }
+	\caption{ \textit{Memory conflict cause by 8 surrounding threads attempting to write to a single destination memory location.} }
 	\label{fig:water_flow_dest_conflicts}
 \end{figure}
 
@@ -143,7 +143,7 @@ To prevent such memory conflicts, a temporary three-dimensional array is allocat
 \begin{figure}
 \center
 	\includegraphics[width=\textwidth]{water_flow_memory_conflict_prevention.png}
-	\caption{ Memory conflict prevention by using a three dimensional array to aggregate the water to add. }
+	\caption{ \textit{Memory conflict prevention by using a three dimensional array to aggregate the water to add.} }
 	\label{fig:water_flow_dest_conflict_prevent}
 \end{figure}
 
@@ -154,21 +154,21 @@ Because local memory cannot be shared amongst work-groups, a problem arises when
 \begin{figure}
 \center
 	\includegraphics[width=\textwidth/2]{inter_work_group_reduction_textures_horizontal.jpg}
-	\caption{ Global memory allocation requirement (green) to cater for inter work group memory access in the horizontal direction. \textit{WG} = work group}
+	\caption{ \textit{Global memory allocation requirement (green) to cater for inter work group memory access in the horizontal direction. \textit{WG} = work group}}
 	\label{fig:water_flow_inter_wg_reduc_horiz}
 \end{figure}
 
 \begin{figure}
 \center
 	\includegraphics[width=\textwidth/2]{inter_work_group_reduction_textures_vertical.jpg}
-	\caption{ Global memory allocation requirement (green) to cater for inter work group memory access in the vertical direction. \textit{WG} = work group}
+	\caption{ \textit{Global memory allocation requirement (green) to cater for inter work group memory access in the vertical direction. \textit{WG} = work group}}
 	\label{fig:water_flow_inter_wg_reduc_vert}
 \end{figure}
 
 \begin{figure}
 \center
 	\includegraphics[width=\textwidth/2]{inter_work_group_reduction_textures_diagonal.jpg}
-	\caption{ Global memory allocation requirement (green) to cater for inter work group memory access in the diagonal direction. \textit{WG} = work group}
+	\caption{ \textit{Global memory allocation requirement (green) to cater for inter work group memory access in the diagonal direction. \textit{WG} = work group}}
 	\label{fig:water_flow_inter_wg_reduc_diag}
 \end{figure}
 
@@ -186,14 +186,14 @@ As can be seen in the results summarised in figure \ref{fig:water_flow_processin
 \begin{figure}
 \center
 	\includegraphics[width=\textwidth]{water_flow_processing_time_total.png}
-	\caption{ Total water-flow simulation time for 100 millimetres per terrain vertex. Analysis performed for terrains with dimensions: 128 by 128, 256 by 256, 512 by 512 and 1024 by 1024.}
+	\caption{ \textit{Total water-flow simulation time for 100 millimetres per terrain vertex. Analysis performed for terrains with dimensions: 128 by 128, 256 by 256, 512 by 512 and 1024 by 1024.}}
 	\label{fig:water_flow_processing_time_total}
 \end{figure}
 
 \begin{figure}
 \center
 	\includegraphics[width=\textwidth]{water_flow_processing_time_per_iteration.png}
-	\caption{ Average time for a single iteration of the water-flow for 100 millimetres per terrain vertex. Analysis performed for terrains with dimensions: 128 by 128, 256 by 256, 512 by 512 and 1024 by 1024.}
+	\caption{ \textit{Average time for a single iteration of the water-flow for 100 millimetres per terrain vertex. Analysis performed for terrains with dimensions: 128 by 128, 256 by 256, 512 by 512 and 1024 by 1024.}}
 	\label{fig:water_flow_processing_time_per_iteration}
 \end{figure}
 
@@ -207,20 +207,20 @@ An important simplification worth noting of the water-flow simulation is that wa
 \begin{figure}
 \center
 	\includegraphics[width=\textwidth]{water_flow_test_1.png}
-	\caption{ Top: Real world water-network at geographic coordinate location: 42\textdegree38'N 111\textdegree35'W. Bottom: Replica using the water-flow simulation.}
+	\caption{ \textit{Top: Real world water-network at geographic coordinate location: 42\textdegree38'N 111\textdegree35'W. Bottom: Replica using the water-flow simulation.}}
 	\label{fig:water_flow_test_1}
 \end{figure}
 
 \begin{figure}
 \center
 	\includegraphics[width=\textwidth]{water_flow_test_2.png}
-	\caption{ Top: Real world water-network at geographic coordinate location: 49\textdegree39'N 116\textdegree52'W. Bottom: Replica using the water-flow simulation.}
+	\caption{ \textit{Top: Real world water-network at geographic coordinate location: 49\textdegree39'N 116\textdegree52'W. Bottom: Replica using the water-flow simulation.}}
 	\label{fig:water_flow_test_2}
 \end{figure}
 
 \begin{figure}
 \center
 	\includegraphics[width=\textwidth]{water_flow_test_3.png}
-	\caption{ Top: Real world water-network at geographic coordinate location: 42\textdegree38'N 111\textdegree35'W. Bottom: Replica using the water-flow simulation.}
+	\caption{ \textit{Top: Real world water-network at geographic coordinate location: 42\textdegree38'N 111\textdegree35'W. Bottom: Replica using the water-flow simulation.}}
 	\label{fig:water_flow_test_3}
 \end{figure}
