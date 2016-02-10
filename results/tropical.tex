@@ -90,7 +90,7 @@ The number of clusters to generate is set to ten. The clustered terrain is shown
 
 Five tropical rainforest plant species are configured for this test: \textit{Brazil nut}, \textit{Cavendish banana}, \textit{Heliconia}, \textit{King of Bromeliads} and \textit{Orchid}. The properties associated with each are summarized in appendix \ref{AppendixE}.\\
 
-The specie suitability filtering (see section \ref{sec:plant_suitability_filtering}) automatically filters out some species from being inserted in some clusters as the resources of the given clusters do not meet the requirements of the given species. Table \ref{tab:results_tropical_species_suitability} summarizes this information and illustrates the species which are suited to individual clusters and, if not, the resource which prevents it. From this, it is possible to conclude that no plants are able to grow, and therefore no ecosystem simulator needs to be run, for clusters 3, 5, 7 and 8. \textit{Clusters 3, 5 and 7} have to steep a slope and too little soil humidity to cater for these species. \textit{Cluster 8} has too moist soil as it represents the points on the terrain with standing water.\\
+The species suitability filtering (see section \ref{sec:plant_suitability_filtering}) automatically filters out some species from being inserted in some clusters as the resources of the given clusters do not meet the requirements of the given species. Table \ref{tab:results_tropical_species_suitability} summarizes this information and illustrates the species which are suited to individual clusters and, if not, the resource which prevents it. From this, it is possible to conclude that no plants are able to grow, and therefore no ecosystem simulator needs to be run, for clusters 3, 5, 7 and 8. \textit{Clusters 3, 5 and 7} have to steep a slope and too little soil humidity to cater for these species. \textit{Cluster 8} has too moist soil as it represents the points on the terrain with standing water.\\
 
 \definecolor{color_red}{rgb}{1.0,0.0,0.0}
 \definecolor{color_green}{rgb}{0.0,1.0,0.0}
@@ -177,7 +177,7 @@ The specie suitability filtering (see section \ref{sec:plant_suitability_filteri
 	  \label{tab:results_tropical_species_suitability}
 \end{table}
 
-Figures \ref{fig:results_tropical_brazil_nut_suitability}, \ref{fig:results_tropical_cavendish_banana_suitability}, \ref{fig:results_tropical_heliconia_suitability}, \ref{fig:results_tropical_king_of_bromeliads_suitability}, \ref{fig:results_tropical_orchid_suitability} and table \ref{tab:results_tropical_species_slope_suitability} illustrate how suited the remaining clusters are for each plant species. This information proves especially useful to determine how suited given species are in terms of illumination as the specie suitability scoring ignores this resource due to the fact it varies throughout a simulation as plants grow and project shade.\\
+Figures \ref{fig:results_tropical_brazil_nut_suitability}, \ref{fig:results_tropical_cavendish_banana_suitability}, \ref{fig:results_tropical_heliconia_suitability}, \ref{fig:results_tropical_king_of_bromeliads_suitability}, \ref{fig:results_tropical_orchid_suitability} and table \ref{tab:results_tropical_species_slope_suitability} illustrate how suited the remaining clusters are for each plant species. This information proves especially useful to determine how suited given species are in terms of illumination as the species suitability scoring ignores this resource due to the fact it varies throughout a simulation as plants grow and project shade.\\
 From this, it is possible to conclude that: \textit{Clusters 9 and 10} prevents \textit{Brazil Nut}, \textit{Cavendish Banana} and \textit{Heliconia} from growing as their minimum illuminations goes below these species lower limits. These clusters also prevents shade-loving \textit{King of Bromeliads} and \textit{Orchids} from growing as their maximum illuminations surpasses the species upper limits. Clusters 9 and 10 are therefore unsuited to all species.\\
 \textit{Cavendish Banana} and \textit{Brazil Nut} plants are unsuited to clusters 1 and 2 as the clusters minimum illumination goes below the species lower limit.\\
 \textit{King of Bromeliads} and \textit{Orchids} are unsuited to all clusters as their maximum illuminations surpass the species upper-limit. However, as these species are shade-loving, there is a possibility they survive in the undergrowth of striving plant instances.\\
@@ -426,6 +426,6 @@ Unlike other plant species, \textit{Heliconia} reach a greater average size in t
 		\hline                                                       
 		\end{tabular}
 	\label{tab:results_tropical_species_cluster_properties}	
-	\caption{Tropical rainforest: Vegetative content of the hundred by hundred metre simulation window for each cluster. CB and KOB represent species Cavendish Banana and King of Bromeliads, respectively.}
+	\caption{Tropical rainforest: Vegetation content of the hundred by hundred metre simulation window for each cluster. CB and KOB represent species Cavendish Banana and King of Bromeliads, respectively.}
 \end{table}
 

@@ -7,7 +7,7 @@ This section will review different methods to generate suitable vegetation for v
 \textit{Probabilistic Placement} methods use statistical models to generate suitable vegetation.\\ 
 \textit{Simulators} attempt to algorithmically reproduce plants battling for available resources.\\
 
-We will measure the success of these techniques based on the level of automation they provide, the realism they achieve, their computational cost and their adaptability. Adaptability, here, represents the ease at which a given technique is able to model a number of different vegetative scenarios. \\
+We will measure the success of these techniques based on the level of automation they provide, the realism they achieve, their computational cost and their adaptability. Adaptability, here, represents the ease at which a given technique is able to model a number of different vegetation scenarios. \\
 
 \subsection{Explicit Placement} \label{Explicit Placement}
 Explicit placement methods require input from the user to determine the location and properties of individual plants. \\
@@ -160,7 +160,7 @@ Water evaporates during photosynthesis as the plant exchanges water for carbon d
 Where:
 \begin{itemize}
 \item \textit{E(x,t)} is the potential for matter production of the \textit{x}-th leaf at the \textit{t}-th cycle. It is proportional to the incoming radiant energy up to a certain threshold, after which it remains constant. 
-\item \textit{R} is the hydraulic resistance of the given leaf. This resistance is what limits water evaporation (photosynthesis) and therefore growth. It varies depending in the specie and surface area.
+\item \textit{R} is the hydraulic resistance of the given leaf. This resistance is what limits water evaporation (photosynthesis) and therefore growth. It varies depending in the species and surface area.
 \end{itemize} 
 Intuitively, this formula calculates the total available fresh matter, \textit{$Q_{m}$}, that can be produced for an individual plant \textit{P} at a given time \textit{t}, by calculating the photosynthesis potential of each individual leaf of \textit{P} given the current lighting.\\
 
@@ -193,7 +193,7 @@ An extension to basic L-systems, referred to as open L-systems, adds a communica
 By introduction multiset L-Systems, Lane and Przemyslaw ~\cite{Lane2002} extend L-systems yet further to model an ecosystem simulator. The production rules for multiset L-systems work in two stages. The first, identical to basic L-Systems, produces a new string given an input string and production rule. The second, splits the resulting string into new sets using a predefined separation symbol. In their work, the different sets represent different plant instances, thus enabling new plants to spawn during the production steps. When building their L-System, Lane and Przemyslaw ~\cite{Lane2002} focus on reproducing three important properties of nature, each distinctly testable to determine the plausibility of the results:
 \begin{itemize}
 \item \textit{Self-thinning}: When plants grow, their resource requirements increase and, as a direct consequence, inter-plant competition for resources increases. Eventually, the competition becomes too intense and resources too scarce leading to more vigorous plants starving smaller plants. At this point, self thinning begins and plant densities decrease.
-\item \textit{Succession}: Given plant specie \textit{A} with a fast growth rate and specie \textit{B} with a slower growth rate but higher shade tolerance. At first, the faster growing specie \textit{A} will dominate and flourish but, with time, the slower growing but more shade tolerant specie \textit{B} will flourish and dominate.
+\item \textit{Succession}: Given plant species \textit{A} with a fast growth rate and species \textit{B} with a slower growth rate but higher shade tolerance. At first, the faster growing species \textit{A} will dominate and flourish but, with time, the slower growing but more shade tolerant species \textit{B} will flourish and dominate.
 \item \textit{Propagation}: Plants often propagate in clusters surrounding the seeding plant.
 \end{itemize}
 
@@ -206,9 +206,9 @@ The L-System they implemented contains different production rules to represent t
     \label{fig:plant_placement_using_an_ecosystem_simulator_modelled_by_L_system}
 \end{figure}
 
-Work by Deussen et al. ~\cite{Deussen1998} also uses L-Systems as the basis for an ecosystem simulator. As an extension to the work by Lane and Przemyslaw ~\cite{Lane2002}, they introduce the notion of soil humidity and an associated soil per specie humidity preference.
+Work by Deussen et al. ~\cite{Deussen1998} also uses L-Systems as the basis for an ecosystem simulator. As an extension to the work by Lane and Przemyslaw ~\cite{Lane2002}, they introduce the notion of soil humidity and an associated soil per species humidity preference.
 
-A direct consequence of the automation provided by these ecosystems is that fine control over the final vegetative content is lost. Deussen et al. ~\cite{Deussen1998} overcome this, however, by offering a hybrid approach where the ecosystem simulator is first used to populate the entire terrain and explicit instancing is used thereafter for the detailing .\\
+A direct consequence of the automation provided by these ecosystems is that fine control over the final vegetation content is lost. Deussen et al. ~\cite{Deussen1998} overcome this, however, by offering a hybrid approach where the ecosystem simulator is first used to populate the entire terrain and explicit instancing is used thereafter for the detailing .\\
 
 Another weakness of procedural ecosystems based on L-Systems worth mentioning is that the communication parameter is binary; in the work by Lane et al. ~\cite{Lane2002} a plant will be dominated as soon as it’s radius intersects another larger plant, at which point it will die with a set probability. This probability of death will stay constant and will not increase as this domination increases. Similarly, in the humidity model of Deussen et al. ~\cite{Deussen1998}, a plant has a preference for wet or dry areas and there is no notion of a measurable humidity preference range. This could prove problematic to model species which are able to adapt to a multitude of environments with varying resource availability (e.g. grass). \\
 

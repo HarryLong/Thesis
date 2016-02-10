@@ -6,7 +6,7 @@ Rather than permit the user to select any plant from the database, including tho
 
 As well as being used to filter out ill-suited species, this suitability score also highlights the species best suited to the given environment and could, as a consequence, prove to be useful information for the user when selecting plant species. Various methods are used to effectively communicate the suitability score, details of which are discussed below.
 
-\subsection{Calculating the Specie Suitability Score}
+\subsection{Calculating the Species Suitability Score}
 
 The species suitability score associated with a given species, \textit{S}, for cluster \textit{C}, illustrates how suited species \textit{S} is to the environment of cluster \textit{C} on a range from 0 (completely ill-suited) to 100 (perfect conditions). To calculate this, the resource requirements of species \textit{S} are matched with the resource availability of cluster \textit{C}. To determine this score, it is first necessary to determine the specie's suitability to the environment in terms of \textit{slope}, \textit{illumination}, \textit{soil humidity} and \textit{temperature}. A separate score is calculated for each as discussed below. Note that no filtering is based on illumination as it varies during the simulation as the canopy of taller plants shade that of the smaller ones.\\
 
@@ -22,7 +22,7 @@ SS(S,x) =
 \end{cases}
 \label{eq:slope_suitability_score}
 \end{equation}
-Where: \textit{SS(S,x)} is the slope suitability score for specie \textit{S} given slope \textit{x}; \textit{S$_{sod}$} is slope of start of decline configured for specie \textit{S}; \textit{S$_{max}$} is the maximum slope configured for specie \textit{S}.
+Where: \textit{SS(S,x)} is the slope suitability score for species \textit{S} given slope \textit{x}; \textit{S$_{sod}$} is slope of start of decline configured for species \textit{S}; \textit{S$_{max}$} is the maximum slope configured for species \textit{S}.
 
 Because the soil humidity and temperature vary on a monthly basis, it is necessary to calculate the score for each month as illustrated in equation \ref{eq:monthly_score}. The mean of these twelve months is then calculated as illustrated in equation \ref{eq:avg_score} to represent the overall suitability score for the given resource.
 
@@ -37,7 +37,7 @@ MRS(S,r,x) =
 \end{cases}
 \label{eq:monthly_score}
 \end{equation}
-Where: \textit{MRS(S,r,x)} is the monthly suitability score for specie \textit{S} and resource \textit{r} given resource value \textit{x} at the given month; \textit{S$_{min}$(r)} is the minimum configured for specie \textit{S} and resource \textit{r};\textit{S$_{max}$(r)} is the maximum configured for specie \textit{S} and resource \textit{r}; \textit{S$_{ps}$(r)} and \textit{S$_{pe}$(r)} constitute the start and end of the prime range configured for species \textit{S} and resource \textit{r}, respectively.\\
+Where: \textit{MRS(S,r,x)} is the monthly suitability score for species \textit{S} and resource \textit{r} given resource value \textit{x} at the given month; \textit{S$_{min}$(r)} is the minimum configured for species \textit{S} and resource \textit{r};\textit{S$_{max}$(r)} is the maximum configured for species \textit{S} and resource \textit{r}; \textit{S$_{ps}$(r)} and \textit{S$_{pe}$(r)} constitute the start and end of the prime range configured for species \textit{S} and resource \textit{r}, respectively.\\
 
 \begin{equation}
 \centering
@@ -48,7 +48,7 @@ RSS(S,r) =
 \end{cases}
 \label{eq:avg_score}
 \end{equation}
-Where: \textit{RSS(S,r)} is the resource suitability score for specie \textit{S} and resource \textit{r}; \textit{value(r,m)} is the value of resource \textit{r} at month \textit{m}; \textit{MRS(S,r,rv)} is the monthly resource score for specie \textit{S}, resource \textit{r} and resource value \textit{rv} (see equation \ref{eq:monthly_score});\\
+Where: \textit{RSS(S,r)} is the resource suitability score for species \textit{S} and resource \textit{r}; \textit{value(r,m)} is the value of resource \textit{r} at month \textit{m}; \textit{MRS(S,r,rv)} is the monthly resource score for species \textit{S}, resource \textit{r} and resource value \textit{rv} (see equation \ref{eq:monthly_score});\\
 
 The overall suitability score gives an overview of the species suitability to the environment for all resources and is calculated as described in equation \ref{eq:specie_suitability_score}
 
@@ -63,15 +63,15 @@ OSS(S,sl) =
 \end{split}
 \label{eq:specie_suitability_score}
 \end{equation}
-Where: \textit{OSS(S)} is the overall suitability score for specie \textit{S}; \textit{AR} = \{temperature,soil humdity \}; \textit{RSS(S,r)} is the resource suitability score for specie \textit{S} and resource \textit{r} (see equation \ref{eq:avg_score}); \textit{SS(S,sl)} is the slope suitability score for specie \textit{S} given slope \textit{sl} (see equation \ref{eq:slope_suitability_score}); 
+Where: \textit{OSS(S)} is the overall suitability score for species \textit{S}; \textit{AR} = \{temperature,soil humdity \}; \textit{RSS(S,r)} is the resource suitability score for species \textit{S} and resource \textit{r} (see equation \ref{eq:avg_score}); \textit{SS(S,sl)} is the slope suitability score for species \textit{S} given slope \textit{sl} (see equation \ref{eq:slope_suitability_score}); 
 
-\subsection{Communicating the Specie Suitability Score}
+\subsection{Communicating the Species Suitability Score}
 
 When all the terrain clusters have been created, the terrain suitability score for each species in the plant database is calculated in relation to the resources of each individual cluster. If the calculated score is zero for all clusters, the species is automatically filtered out to prevent the user from selecting it. \\
 
-To further communicate this information, selectable species are sorted in descending order of their overall specie suitability score. Colour coding is also used where each specie is associated with a colour ranging from red (very ill-suited) to light green (completely suited).\\
+To further communicate this information, selectable species are sorted in descending order of their overall species suitability score. Colour coding is also used where each species is associated with a colour ranging from red (very ill-suited) to light green (completely suited).\\
 
-When the user selects a given species, all intermediate scores which were used to calculate the \textit{specie suitability score} are communicated to the user in histogram form (see figure \ref{fig:specie_intermediate_suitability_scores}).
+When the user selects a given species, all intermediate scores which were used to calculate the \textit{species suitability score} are communicated to the user in histogram form (see figure \ref{fig:specie_intermediate_suitability_scores}).
 
 \begin{figure}
 \center
