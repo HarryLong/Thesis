@@ -44,7 +44,7 @@ Where: \textit{M$_{allocated}$(P$_{n}$)} is the humidity allocated to plant \tex
 If \textit{M$_{requested}$} is more than \textit{M$_{available}$}, however, the humidity is deemed insufficient and the allocation follows algorithm \ref{alg:humidity_allocation_insufficient_calc} which prioritises water distribution to the more vigorous plants. The vigour of a plant is estimated based on its root size. This ensures stronger plants have better access to water than smaller, weaker ones.\\
 
 \begin{algorithm}
-\caption{Algorithm to distribute soil moisture within a cell when the quantity is insufficient.}
+\caption{\textit{Algorithm to distribute soil moisture within a cell when the quantity is insufficient.}}
 \begin{algorithmic}[1]
 \REQUIRE Initialize $S_{remaining}$ as the total moisture available in the cell.
 \REQUIRE Initialize $S$ as the set of all plants whose roots intersect the cell, sorted in decreasing order of root size
