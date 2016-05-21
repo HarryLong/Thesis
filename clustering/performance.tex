@@ -13,9 +13,11 @@ The performance of the CPU and GPU clustering implementations are analysed below
 
 \subsection{CPU Performance}
 
-Figure \ref{fig:aggregate_clustering_performance} shows the clustering time achieved on the CPU for different terrain sizes and number of clusters. From this data, it is possible to conclude that the clustering time increases linearly with the number of clusters and the clustering time is proportional to terrain area.
+Figure \ref{fig:aggregate_clustering_performance} shows the clustering time achieved on the CPU for different terrain sizes and number of clusters. From this data, it is possible to conclude that the clustering time increases linearly with the number of clusters and the clustering time is proportional to terrain area.\\
 
-Although the clustering time is reasonable for smaller terrains, this processing time increases sharply with terrain size. This is especially true when combined with an increase in the number of clusters to generate. Generating ten clusters on a large terrain (1024 by 1024) takes just over 2.5 minutes.
+Although the clustering time is reasonable for smaller terrains, this processing time increases sharply with terrain size. This is especially true when combined with an increase in the number of clusters to generate. Generating ten clusters on a large terrain (1024 by 1024) takes just over 2.5 minutes.\\
+
+Due to limited scope, the CPU implementation is not optimized and is single-threaded.\\
 
 \subsection{GPU Performance}
 

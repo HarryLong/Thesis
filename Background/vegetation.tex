@@ -1,6 +1,6 @@
 \section{Vegetation}
 
-Vegetation is core to rural landscapes. The species present along with their associated densities create a relationship between ecosystems and areas on earth on which resources are adequate. To ensure realism in virtual environments, much emphasize must be put on efficiently modelling these underlying ecosystems.\\
+Vegetation is core to rural landscapes. The species present along with their associated densities create a relationship between ecosystems and areas on earth on which resources are adequate. To ensure realism in virtual environments, much emphasis must be put on efficiently modelling these underlying ecosystems.\\
 
 This section will review different methods to generate suitable vegetation for virtual worlds. These methods can be split into three main categories: \textit{Explicit Instancing, Probabilistic Instancing} and \textit{Plant Growth Modelling}.\\
 \textit{Explicit Placement} require explicit user-input to directly or indirectly pinpoint exact locations for individual plant instances.\\
@@ -50,9 +50,10 @@ Before performing the analysis, the following parameters are configured:
 \item \textbf{R\textsubscript{min}}: The minimum distance from which point distances need to be analysed.\\
 \item \textbf{R\textsubscript{max}}: The maximum distance after which point distances don't need to be analysed.\\
 \item \textbf{Bin size}: When analysing the distances of given points, it is necessary to aggregate the points which reside at similar distances into bins. The bin size is the range represented by a single bin.\\
+\item \textbf{Category ranking}: If there are points of multiple categories (different plant species, for example), it is necessary to generate a category ranking. This ranking will affect the order in which the points are placed during the reproduction and the analysis data to generate.\\
 \end{itemize}
 
-A core part of radial distribution analysis is generating pair correlation histograms for each category pair combination. A pair correlation histogram \textit{H\textsubscript{AB}} represents the variation in the distance between points of of category \textit{C\textsubscript{A}} and \textit{C\textsubscript{B}} ranging from \textit{R\textsubscript{min}} to \textit{R\textsubscript{max}} in \textit{bin size} increments (figure \ref{fig:pair_correlation_histograms}) \\
+A core part of radial distribution analysis is generating pair correlation histograms for the necessary category pair combination. A pair correlation histogram \textit{H\textsubscript{AB}} represents the variation in the distance between points of of category \textit{C\textsubscript{A}} and \textit{C\textsubscript{B}} ranging from \textit{R\textsubscript{min}} to \textit{R\textsubscript{max}} in \textit{bin size} increments (figure \ref{fig:pair_correlation_histograms}). Pair correlation histograms do not need to be generated for each category pair combination. Given a category \textit{x}, it is only necessary to produce the pair correlation histograms H\textsubscript{xy} for R\textsubscript{y} $\leq$ R\textsubscript{x} where R\textsubscript{y} is the rank of category \textsubscript{y}. The reason for this becomes apparent when discussing the reproduction \ref{paragraph:prob_placement_radial_dist_reproduction}  \\
 
 \begin{figure}[h]
   \centering
@@ -83,14 +84,15 @@ Where:
 \item \textit{X} are the points of category X (reference points).
 \item \textit{Y} are the points of category Y (target points)    .
 \item \textit{d\textsubscript{r}} is the annular shell width.
+\item \textit{d(x\textsubscript{i}, y\textsubscript{j}}) is the distance from point x\textsubscript{i} to y\textsubscript{j}.
 \item \textit{A} is the total analysed area.
 \item \textit{n\textsubscript{x}} and \textit{n\textsubscript{y}} are the number of points of categories \textit{x} and \textit{y} respectively. Note that pairwise histograms also need to be calculated for points of the same category. In this situation, category \textit{x} and category \textit{y} would be the same.
 \item \textit{d\textsubscript{A}} is the area of the annular shell being analysed.
 \end{itemize}
 
-Conceptually, this formula calculates the variance from the average density of the target category at incremental distances from points of the reference category.\\
+Conceptually, this formula iterates through the points of each source category (\textit{X}) and determines the number of points of the different target categories (\textit{Y}) at incremental distances of the annular shell size. Normalization is performed based on the area of the annular shell as there would naturally be more points in annular shells at further distances from the source point as the area covered will be larger.\\
 
-\paragraph{Reproduction}
+\paragraph{Reproduction} \label{paragraph:prob_placement_radial_dist_reproduction}
 
 In order to reproduce the distribution of the input exemplar, points are added iteratively whilst matching as closely as possible the corresponding pair correlation histogram data calculated during the analysis stage. Metropolis-Hastings sampling ~\cite{Hurtut2009} is the most common way to do this. It involves performing a fixed number of point birth-and-death perturbations. A change from the initial arrangement \textit{X} to the new arrangement \textit{X'} is accepted with probability \textit{R}, where:
 
@@ -113,7 +115,7 @@ Where:
 \item \textit{Y} are all points of category \textit{Y}.
 \item h\textsubscript{X,Y\textsubscript{k}}(d(x\textsubscript{i}, y\textsubscript{j})) is the value retrieved from the pairwise histogram of categories \textit{X} and \textit{Y} given the distance between points \textit{x\textsubscript{i}} and \textit{y\textsubscript{i}}.
 \end{itemize}
-Intuitively, the PDF defines, given a set of points, the aggregate strength of the current distribution.\\
+Intuitively, the PDF defines, given a set of points, the aggregate strength of the current distribution. It does so by iterating through each point and determining the points at a distance within R\textsubscript{min} and R\textsubscript{max} and of a higher or equal category ranking. Given this information, the generated pairwise histograms are used to calculate an aggregate strength. \\
 
 Because the PDF formula is a product, calculating it for a new layout \textit{X'} with appended/removed point \textit{P} only involves calculating the PDF for the single reference point \textit{P}. As a consequence, reproduction can be performed very efficiently. In their work, Emilien and Cani ~\cite{Emilien} are able to perform analysis and reproduction in near real-time.\\
 
@@ -188,7 +190,7 @@ The aim of ecosystem simulators is to determine, given an initial state \textbf{
 The state of the system represents individual plant instances with associated location and properties. \\
 
 Lindenmayer systems, commonly referred to as L-systems, use a formal grammar along with a set of production rules to iteratively create larger strings from a starting string called the axiom. Such systems are commonly used to model plants and plant growth ~\cite{Prusinkiewicz1990,Deussen2002,Boudon2012,Prusinkiewicz1993}. \\
-An extension to basic L-systems, referred to as open L-systems, adds a communication grammar which permits the set of production rules to behave differently depending on predefined conditions ~\cite{Prusinkiewicz1996}. In their work modelling the growth of struce trees, Berezovskava et al. \cite{Berezovskava1997} use different production rules depending on local bud density. This is a simplified representation of buds competing for available light. \\
+An extension to basic L-systems, referred to as open L-systems, adds a communication grammar which permits the set of production rules to behave differently depending on predefined conditions ~\cite{Prusinkiewicz1996}. In their work modelling the growth of spruce trees, Berezovskava et al. \cite{Berezovskava1997} use different production rules depending on local bud density. This is a simplified representation of buds competing for available light. \\
 
 By introduction multiset L-Systems, Lane and Przemyslaw ~\cite{Lane2002} extend L-systems yet further to model an ecosystem simulator. The production rules for multiset L-systems work in two stages. The first, identical to basic L-Systems, produces a new string given an input string and production rule. The second, splits the resulting string into new sets using a predefined separation symbol. In their work, the different sets represent different plant instances, thus enabling new plants to spawn during the production steps. When building their L-System, Lane and Przemyslaw ~\cite{Lane2002} focus on reproducing three important properties of nature, each distinctly testable to determine the plausibility of the results:
 \begin{itemize}
@@ -263,4 +265,5 @@ Which technique (Explicit, Probabilistic or Simulators) to use entirely depends 
 \end{table}
 
 Given a set of plant species, available resources and terrain, our system must be able to specify the locations of individual plants. The output must be: visually realistic; easily scalable in order to be able to re-run simulations with different input species; computationally efficient to ensure the effect of user actions appear in close to real-time. \\
-Given these requirements, a hybrid approach is best suited which combines the adaptability and realism of ecosystem simulators with the computational efficiency of probabilistic placement. Computationally expensive ecosystem simulator runs will be performed beforehand in order to acquire the necessary distribution data. This data will then be stored in order for it to be queried at a later stage without having to redo expensive simulations. When placing vegetation in the virtual world, pre-calculated distribution data will be queried and probabilistic instancing used to fill user-defined areas with suited plant species and realistic distributions. \\
+Given these requirements, a hybrid approach is best suited which combines the adaptability and realism of ecosystem simulators with the computational efficiency of probabilistic placement. More specifically, the ecosystem simulator will inspire heavily from previous work by Deussen et al. ~\cite{Deussen1998} and Lane and Przemyslaw ~\cite{Lane2002}. Radial distribution analysis, inspired by the work by Emilien et al. \cite{Emilien},  will be used for probabilistic placement.\\
+Computationally expensive ecosystem simulator runs will be performed beforehand in order to acquire the necessary distribution data. This data will then be stored in order for it to be queried at a later stage without having to redo expensive simulations. When placing vegetation in the virtual world, pre-calculated distribution data will be queried and probabilistic instancing used to fill user-defined areas with suited plant species and realistic distributions. \\

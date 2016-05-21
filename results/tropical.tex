@@ -1,6 +1,6 @@
 \section{Tropical Rainforest} \label{sec:results_trop_rainforest}
 
-Tropical rainforest or equatorial climates are characterised by frequent and heavy rainfall and are situated on or close to the equator. Because of their location they have are no seasons and therefore very little temperature and illumination variance throughout the year.\\
+Tropical rainforest or equatorial climates are characterised by frequent and heavy rainfall and are situated on or close to the equator. Because of their location they have no seasons and therefore very little temperature and illumination variance throughout the year.\\
 
 Toamasina, a city in Madagascar at latitude 18\textdegree south, is the location on which climate data is based for these tests.\\
 
@@ -46,13 +46,6 @@ The number of generated clusters is set to ten. The clustered terrain is shown i
 	\includegraphics[width=\textwidth]{results_tropical_clusters_on_terrain.png}
 	\caption{ \textit{Tropical rainforest: Resulting terrain clusters.} }
 	\label{fig:results_tropical_terrain_clusters}
-\end{figure}
-
-\begin{figure}[htb!]
-\center
-	\includegraphics[height=\textheight-60pt,keepaspectratio]{results_tropical_clusters_hum_temp_illum.png}
-	\caption{ \textit{Tropical rainforest: Monthly sun exposure (top), temperatures (middle) and soil moistures (bottom) for each terrain cluster. Note that soil humidity data is removed for clusters (3 and 7) as the corresponding values are too small.}}
-	\label{fig:results_tropical_cluster_hum_temp_illum}
 \end{figure}
 
 \begin{table}[htb!]
@@ -179,41 +172,6 @@ Figures \ref{fig:results_tropical_brazil_nut_suitability}, \ref{fig:results_trop
 From this, it is possible to conclude that: \textit{Clusters 9 and 10} prevent \textit{Brazil Nut}, \textit{Cavendish Banana} and \textit{Heliconia} from growing as their minimum illuminations falls below these species lower limits. These clusters also prevent shade-loving \textit{King of Bromeliads} and \textit{Orchids} from growing as their maximum illumination surpasses the species upper limits. Clusters 9 and 10 are therefore unsuited to all species.\\
 \textit{Cavendish Banana} and \textit{Brazil Nut} plants are unsuited to clusters 1 and 2 as the clusters minimum illumination falls below the species lower limit.\\
 \textit{King of Bromeliads} and \textit{Orchids} are universally unsuited as the clusters maximum illuminations surpass the species upper-limit. However, as these species are shade-loving, there is a possibility they survive in the undergrowth of striving plant instances. Given all this, the clusters to which plant species are suited and plausible distributions created are clusters 1, 2, 4 and 6. Together, these clusters make up only 70\% of the terrain.\\
-
-\begin{figure}[htb!]
-\center
-	\includegraphics[height=\textheight-100pt,keepaspectratio]{brazil_nut_suitability.png}
-	\caption{ \textit{Tropical rainforest: Brazil nut suitability to clusters 1, 2, 4, 6, 9 and 10 in terms of soil moisture (top), illumination (middle) and temperature. The thick green lines and red lines delimit the species prime range and absolute limits, respectively.} }
-	\label{fig:results_tropical_brazil_nut_suitability}
-\end{figure}
-
-\begin{figure}[htb!]
-\center
-	\includegraphics[height=\textheight-100pt,keepaspectratio]{cavendish_banana_suitability.png}
-	\caption{ \textit{Tropical rainforest: Cavendish Banana suitability to clusters 1, 2, 4, 6, 9 and 10 in terms of soil moisture (top), illumination (middle) and temperature. The thick green lines and red lines delimit the species prime range and absolute limits, respectively.}}
-	\label{fig:results_tropical_cavendish_banana_suitability}
-\end{figure}
-
-\begin{figure}[htb!]
-\center
-	\includegraphics[height=\textheight-100pt,keepaspectratio]{heliconia_suitability.png}
-	\caption{\textit{Tropical rainforest: Heliconia suitability to clusters 1, 2, 4, 6, 9 and 10 in terms of soil moisture (top), illumination (middle) and temperature. The thick green lines and red lines delimit the species prime range and absolute limits, respectively.}}
-	\label{fig:results_tropical_heliconia_suitability}
-\end{figure}
-
-\begin{figure}[htb!]
-\center
-	\includegraphics[height=\textheight-100pt,keepaspectratio]{king_of_bromeliads_suitability.png}
-	\caption{ \textit{Tropical rainforest: King of Bromeliads suitability to clusters 1, 2, 4, 6, 9 and 10 iin terms of soil moisture (top), illumination (middle) and temperature. The thick green lines and red lines delimit the species prime range and absolute limits, respectively. Note that because the king of bromeliads is a shade-loving species, the minimum illumination line is not present as it is overlapped by the start of prime range line.}}
-	\label{fig:results_tropical_king_of_bromeliads_suitability}
-\end{figure}
-
-\begin{figure}[htb!]
-\center
-	\includegraphics[height=\textheight-100pt,keepaspectratio]{orchid_suitability.png}
-	\caption{ \textit{Tropical rainforest: Orchid suitability to clusters 1, 2, 4, 6, 9 and 10 in terms of soil moisture (top), illumination (middle) and temperature. The thick green lines and red lines delimit the species prime range and absolute limits, respectively. Note that because the king of bromeliads is a shade-loving specie, the minimum illumination line is not present as it is overlapped by the start of prime range line.}}
-	\label{fig:results_tropical_orchid_suitability}
-\end{figure}
 
 \begin{table}[htb!]
   \centering

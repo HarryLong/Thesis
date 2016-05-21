@@ -19,6 +19,10 @@ D(A,B) = \sum_{n=1}^{m} (A_{n} - B_{n}) ^{2}
 
 Where: \textbf{A} and \textbf{B} are either data points or a cluster mean; \textbf{n} $\in$ \textbf{$\mathbb{R}_{m}$} is the dimensionality of the data set; \textbf{A$_{n}$} is the value of data point A in dimension \textit{n}.
 
+\subsection{Algorithm Complexity}
+
+For each clustering iteration, the algorithm needs to run through each data point twice. The first time, the distance between the data point and each mean cluster is calculated in order to determine the cluster membership.  The second time is to calculate the new cluster means. Given this, the algorithm complexity is $ 2 \times K \ times n \times i$ where: \textit{K} is the number of clusters, \textit{n} is the number of data points and \textit{i} is the total number of clustering iterations performed.
+
 \subsection{Normalisation}
 
 The Euclidean distance calculation outlined in equation \ref{eq:cluster_dist_calc} works well when all values have similar scale. Unfortunately, this is not the case for terrain resource data as illumination, slope, temperature and soil humidity are all measured in different units. This means that a one millimetre change in soil humidity will have as much of an influence on clustering as a one degree change in temperature. To equalise the effect on clustering across all resources, normalisation is performed based on the range of the individual resources. Equation \ref{eq:cluster_dist_calc_real} is used to calculate the Euclidean distance between two terrain positions (or cluster means) \textit{A} and \textit{B} for clustering.
@@ -36,7 +40,8 @@ Where:\textit{S(x)} is the slope of a point or cluster mean x; \textit{R$_{T}$(x
 
 \subsection{Configuring the Number of Clusters, K} \label{subsec:n_cluster_conf}
 
-The value of \textit{K} will affect the number of ecosystem simulators which need to be run when placing vegetation on the terrain. Although larger values will potentially result in more realistic vegetation distributions, the added simulations will require additional processing time. Choosing a good value for \textit{K} is therefore about finding a balance between realism and processing time and, as such, depends on user requirements. Because of this, the value of \textit{K} is required as input from the user before the clustering is performed.
+The value of \textit{K} will affect the number of ecosystem simulators which need to be run when placing vegetation on the terrain. Although larger values will potentially result in more realistic vegetation distributions, the added simulations will require additional processing time. Choosing a good value for \textit{K} is therefore about finding a balance between realism and processing time and, as such, depends on user requirements. Too small of a K value will negatively impact realism as insufficient clusters will be generated and terrain vertices will be gathered into a same cluster even if they differ heavily in their underlying resources. Too big a value of K will negatively impact performance as ecosystem simulator runs will be performed to fill distinct areas of the terrain which are heavily similar in terms of the resources they offer. Because of this, the value of \textit{K} is required as input from the user before the clustering is performed.\\
+Admitably, \textit{K} can be an abstract to users who don't have an understanding of K-means clustering. Future work could build on this and automatically calculate a suitable value of \textit{K} given the variance of the resources on the terrain.\\
 
 \subsection{Choosing Seed Cluster Means} \label{subsec:init_clusters}
 

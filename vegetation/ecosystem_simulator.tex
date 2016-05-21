@@ -1,6 +1,36 @@
 \section{Ecosystem Simulator} \label{sec:ecosystem_simulator}
 
-Once the user selects the union of all species to appear in all clusters of the terrain, it is necessary to determine a valid vegetation distribution for each. To do so, an ecosystem simulator is used as in the work of Deussen et al \cite{Deussen1998} and Lane and Przemyslaw \cite{Lane2002}. Unlike these other ecosystem simulators, however, our approach is not based on L-Systems, and models both resource requirements and resource availability in greater detail. The purpose of the ecosystem simulator is to determine, given a vegetation state, \textit{S$_{t}$} at time \textit{t}, the state \textit{S$_{t+n}$} at time \textit{t+n}, for any value of n. To do so, the simulation advances through time at monthly intervals and the strength of all plant instances are iteratively re-calculated. This strength of a given plant depends on it's age, available resources and surrounding plants with which it is competing for resources. This calculated value directly influences the plants growth and ability to survive.\\
+Once the user selects the union of all species to appear in all clusters of the terrain, it is necessary to determine a valid vegetation distribution for each. To do so, an ecosystem simulator is used as in the work of Deussen et al \cite{Deussen1998} and Lane and Przemyslaw \cite{Lane2002}. Unlike these other ecosystem simulators, however, our approach is not based on L-Systems, and models both resource requirements and resource availability in greater detail. The purpose of the ecosystem simulator is to determine, given a vegetation state, \textit{S$_{t}$} at time \textit{t}, the state \textit{S$_{t+n}$} at time \textit{t+n}, for any value of n. To do so, the simulation advances through time at monthly intervals and the strength of all plant instances are iteratively re-calculated (see algorithm \ref{alg:ecosimulator_pseudocode}). This strength of a given plant depends on it's age, available resources and surrounding plants with which it is competing for resources. This calculated value directly influences the plants growth and ability to survive.\\
+
+\begin{algorithm}
+\caption{\textit{Ecosystem simulator algorithm.}}
+\begin{algorithmic}[1]
+\REQUIRE Initialize $C$ as the set of all simulation cells.
+\REQUIRE getRootIntersectPlants($C_{n}$) is a function which returns all plant's which roots intersects cell 
+$C_{n}$.
+\REQUIRE getCanopyIntersectPlants($C_{n}$) is a function which returns all plant's which canopy intersects cell $C_{n}$.
+\REQUIRE allocateSoilMoisture(p, $Cn_{moisture}$) is a function which allocates moisture to plant p given the moisture available $Cn_{moisture}$ in the given cell.
+\REQUIRE allocateIllumination(p, $Cn_{illumination}$) is a function which allocates illumination to plant p given the available illumination $Cn_{illumination}$ in the given cell.
+\REQUIRE calculateStrength(p) is a function which calculates the strength of plant p based on the resources distributed to it and it's age.
+\REQUIRE grow(p) is a function which grows plant p based on it's strength and species growth properties.
+\REQUIRE killIfNecessary(p) is a function which kills off plant p based if necessary based on its calculated strength.
+\FOR{$C_{n}$ in $C$}
+	\STATE rootIntersectingPlants = getRootIntersectPlants($C_{n}$) RootSize($P_{n}$)
+	\FOR{$p$ in $C_{n}$}
+		\STATE allocateSoilMoisture($p$, $Cn_{moisture}$)
+		\STATE allocateIllumination($p$, $Cn_{illumination}$)
+		\STATE calculateStrength($p$) 
+	\ENDFOR
+\ENDFOR
+\FOR{$C_{n}$ in $C$}
+	\FOR{$p$ in $C_{n}$}
+		\STATE grow($p$)
+		\STATE killIfNecessary($p$)
+	\ENDFOR
+\ENDFOR
+\end{algorithmic}
+\label{alg:ecosimulator_pseudocode}
+\end{algorithm}
 
 \subsection{Gridded Simulation Area}
 
@@ -149,9 +179,22 @@ If no instance of the given species is present in the simulation (i.e it is the 
 
 A species is deemed shade-loving if its configured minimum daily illumination is zero. Such species thrive in the undergrowth of other plants. Spawning shade-loving species in the same way as other plants would drastically limit their chance of survival because the probability of a random seed location falling in the canopy of an existing plant is very low. For this reason, when there are no instances of the given shade-loving species present in the simulation window, the seed locations are located at random under the canopy of existing plants. If instances of the plant species are already present, however, they are used to propagate the seeds, just like with other, non shade-loving, plant species.
 
+\subsection{Algorithm Complexity} \label{subsec:ecosystem_algorithm_complexity}
+
+On a monthly basis, the algorithm must iterate through all plant instances twice for the following purpose: The first pass is to calculate the resources distributed to each plant instance depending on resources available, its associated strength, growth potential and probability of death. The second pass is to actually perform plant growth and kill off weak plants. Note that it is not possible to perform growth and death during the first pass as, doing so will subsequently effect the strength and probability of death of other plants. In other words, doing so would make the ecosimulator produce different results depending on the order in which the plants are iterated over.\\
+Given this information, the complexity of this algorithm is \textbf{m $\times$ 2n} where: \textbf{n} is the number of plants present in the simulation at any given month and \textbf{m} is the number of months for which the simulation must be run. 
+
 \subsection{Performance} \label{subsec:ecosytem_performance}
 
-The number of plants present in the simulation will heavily influence its performance as the strength of each plant needs to be recalculated on a monthly basis. To test the influence of plant count on simulation execution time, a simulation is run with a single species of plant and the monthly processing time analysed alongside the number of plants present. The plant used is grass as is has no canopy and very minimal root coverage, therefore permitting a large number of instances to grow simultaneously (see appendix \ref{AppendixB} for properties of the specie). The resources were set to be optimal for maximizing plant count and minimizing intra-plant competition. The simulation is started with only a single instance and, as the simulation progresses and seeding is performed, the number of instances increases. The results are summarized in Figure \ref{fig:ecosimulator_test_plant_count} and show that the processing time increases linearly with plant count. The jump at the 65 thousand plant mark occurred repeatedly over multiple tests. Although just a hypothesise, the most likely cause is that it is a tipping point at which page swapping starts to occur due to saturated RAM.\\
+The number of plants present in the simulation will heavily influence its performance as the strength of each plant needs to be recalculated on a monthly basis. As can be seen in figure \ref{fig:ecosimulator_test_memory_usage}, with a linear relationship between plant count and memory usage, this also has a big impact on memory. With a maximum of just under 17 megabytes for over 46 thousand plant instances, this remains manageable, however.\\
+To test the influence of plant count on simulation execution time, a simulation is run with a single species of plant and the monthly processing time analysed alongside the number of plants present. The plant used is grass as is has no canopy and very minimal root coverage, therefore permitting a large number of instances to grow simultaneously (see appendix \ref{AppendixB} for properties of the specie). The resources were set to be optimal for maximizing plant count and minimizing intra-plant competition. The simulation is started with only a single instance and, as the simulation progresses and seeding is performed, the number of instances increases. The results are summarized in Figure \ref{fig:ecosimulator_test_plant_count} and show that the processing time increases linearly with plant count. The jump at the 65 thousand plant mark occurred repeatedly over multiple tests. Although just a hypothesise, the most likely cause is that it is a tipping point at which page swapping starts to occur due to saturated RAM.\\
+
+\begin{figure}
+\center
+	\includegraphics[scale=0.7]{ecosimulator_memory_usage.png}
+	\caption{ \textit{Memory usage based on plant count. It shows a linear relationship between memory usage and plant count}}	
+	\label{fig:ecosimulator_test_memory_usage}
+\end{figure}
 
 \begin{figure}
 \center
@@ -192,7 +235,7 @@ Given plant species \textit{A} with a fast growth rate and species \textit{B} wi
 \begin{figure}
 \center
 	\includegraphics[scale=0.7]{succession_plant_avg_size.png}
-	\caption{ \textit{Succession Test: Average size of the slow growing S$_{slow}$ (red) and fast growing S$_{fast}$ (blue) throughout a simulation run in optimal conditions. Note that the plant count drops severely at the 300 and 500 mark for S$_{fast}$ and S$_{slow}$ respectively as resources are configured such that conditions are ideal for these species. This leads to a large quantity of them dying of age and, because the difference between start of decline and maximum age configured for these species is very small, it is done performed very sharply.}}
+	\caption{ \textit{Succession Test: Average size of the slow growing S$_{slow}$ (red) and fast growing S$_{fast}$ (blue) throughout a simulation run in optimal conditions. Note that the plant count drops severely at the 300 and 500 mark for S$_{fast}$ and S$_{slow}$ respectively as resources are configured such that conditions are ideal for these species. This leads to a large quantity of them dying of age and, because the difference between start of decline and maximum age configured for these species is very small, this decrease is very sharp.}}
 	\label{fig:succession_plants_avg_size}
 \end{figure}
 
@@ -238,7 +281,8 @@ Plants that are heavily dependent on illumination struggle to grow in areas shad
 
 \textbf{SHADE-LOVING TEST}\\
 
-As discussed in \ref{subsec:spawning_plants}, species which strive in shaded areas are deemed shade-loving. The shade can be caused by the terrain relief or by the shadow cast by the canopy of taller plants. To test whether the ecosystem simulator successfully caters for such plant species, a simulation identical to the shade test is run but with shade-loving species \textit{S$_{shadeloving}$} added (see appendix \ref{AppendixB} for species details). As seen by the snapshot of the simulation after fifteen years illustrated in figure \ref{fig:shade_loving_test}, instances of \textit{S$_{shadeloving}$} only appear in areas covered by the canopies of \textit{S$_{smallroots}$}.
+As discussed in \ref{subsec:spawning_plants}, species which strive in shaded areas are deemed shade-loving. The shade can be caused by the terrain relief or by the shadow cast by the canopy of taller plants. To test whether the ecosystem simulator successfully caters for such plant species, a simulation identical to the shade test is run but with shade-loving species \textit{S$_{shadeloving}$} added (see appendix \ref{AppendixB} for species details). As seen by the snapshot of the simulation after fifteen years illustrated in figure \ref{fig:shade_loving_test}, instances of \textit{S$_{shadeloving}$} only appear in areas covered by the canopies of \textit{S$_{smallroots}$}.\\
+The number of shade-loving plants at the end of the simulation is reasonably small. This is caused by the plant strength calculation algorithm and the technique employed for plant propagation. At first, shade-loving plants are unable to survive in the simulation as there are no plants large enough to cast shade. On an annual basis, the propagation algorithm attempts to spawn new shade-loving plants at random locations in the simulation window. It can take a while for a randomly selected location to be under the canopy of an existing plant and therefore permit it's survival. Another issue faced by the shade-loving species is that there size is very small when they first spawn and, as they are guaranteed to be within the neighbourhood of existing larger plants (which shade it), their chance of survival is very limited if soil moisture is scarce. This could be improved in future work by implementing the soil in layers as described in section \ref{subsec:humidity_distribution}
 
 \begin{figure}
 \center

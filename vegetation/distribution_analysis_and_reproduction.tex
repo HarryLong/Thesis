@@ -47,7 +47,25 @@ In order to generate the necessary analysis data, each point (plant) must be ite
 
 \subsection{Radial Distribution Reproduction}
 
-The purpose of the analysed radial distribution data is to later use it to reproduce distributions on larger scales which match the characteristics of the original input exemplars from the ecosystem simulator. To do so, the same reproduction technique described in section \ref{subsec:prob_placement_radial_dist} is employed with slight nuances described below.
+The purpose of the analysed radial distribution data is to later use it to reproduce distributions on larger scales which match the characteristics of the original input exemplars from the ecosystem simulator. To do so, the same reproduction technique described in section \ref{subsec:prob_placement_radial_dist} is employed with slight nuances described below. Pseudocode in figure \ref{alg:radial_dist_reproduction_algo} provides a summary of the core algorithm employed.
+
+\begin{algorithm}
+\caption{\textit{Radial distribution reproduction algorithm.}}
+\begin{algorithmic}[1]
+\REQUIRE Initialize $AllCategories$ as the set of all categories, sorted in decrementing order of their rank.
+\REQUIRE Initialize $AllPoints_{c}$ as the set of all points of category c.
+\REQUIRE $movePoint(c)$ is a function which takes a point c and moves it to a new random location. The new location for the given point is accepted or rejected based on the new strength of the distribution.
+\REQUIRE matchedDensityInitialize($c$) is a function which initializes points of category c to the correct density such as their distribution strength is non-zero. 
+\FOR{$category$ in $AllCategories$}
+	\STATE matchedDensityInitialize($category$)
+	\FOR{$point$ in $AllPoints_{c}$}
+		\STATE movePoint(point)
+		\STATE movePoint(point)
+	\ENDFOR
+\ENDFOR
+\end{algorithmic}
+\label{alg:radial_dist_reproduction_algo}
+\end{algorithm}
 
 \paragraph{Matched Density Initialization}
 
@@ -102,6 +120,8 @@ To determine whether intra and inter-species spacing is accurately reproduced, t
 \end{itemize}
 
 Note that the pair correlation histogram of the shade-loving species with itself (category 6 and 6) is substantially different between original and reproduction. The reason for this is because during the ecosystem simulator, seeding is performed from existing plant instances which will lead to the clustering of plants under the same canopy, very close to each other. During iterative point-moving, the probability of shade-loving plants to cluster under neighbouring canopy plants is very slim, however, and dispersion under all present canopy plants is much more likely.
+
+Note also that the aim of radial distribution reproduction is not to reproduce a ditribution matching exactly the input exemplar. This is unfeasible due to to the nature and configuration of the radial distribution reproduction algorithm. What radial distribution reproduction is able to do is prevent plants from being placed at illegal or very weak locations because the strength associated to the location is very low (or zero).
 
 \begin{figure}
 \center

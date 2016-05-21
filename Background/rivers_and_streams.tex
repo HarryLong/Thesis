@@ -1,4 +1,4 @@
-\section{Rivers \& Streams}
+\section{Rivers and Streams}
 
 In this section will be reviewed the various techniques that are used to place rivers and streams on a terrain. We will split the review material into the following categories, each with dedicated sections: \textit{Classification-based}, \textit{Simulation-based}, \textit{Heuristic-based}, \textit{Fractal-based} and \textit{Explicit}. \textit{Classification-based} methods use pre-classified data based on real-world analysis to determine the most suited water network given a set of user-defined or terrain-defined constraints. \textit{Simulation-based} techniques attempt to simulate natural phenomena such as gravity to determine the water networks on a given terrain. \textit{Heuristic-based} techniques use algorithms based on real-world observation in an attempt to produce a plausible river network on the terrain. \textit{Fractal-based} techniques use recursive algorithms in their attempt to generate plausible river networks. \textit{Explicit} techniques require the user to specify in great detail the path the river should follow on the terrain.\\
 
@@ -171,8 +171,6 @@ Each technique has it's associated pros and cons and so choosing which one is be
 \item \textit{User-control}: How much control the user has over the final scene. 
 \end{itemize}
 
-\textit{Classification-based}, \textit{Simulation-based}, \textit{Heuristic-based}, \textit{Fractal-based} and \textit{Explicit}
-
 \begin{table}[h]
   \centering
 	    \begin{tabular}{|p{4cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|}
@@ -211,4 +209,4 @@ Each technique has it's associated pros and cons and so choosing which one is be
 \end{table}
 
 In our system, the base terrain will take the form of a preloaded height map. Modifications to this terrain and modelling new terrains will be out-of-scope and, as such, all techniques which require such behaviour can be discarded.\\
-Rainfall is a vital requirement to plant life and, as such, gathering rainfall data will be essential to model realistic vegetation on the terrain. Using this rainfall data along with soil properties, it is possible to calculate the amount of standing water which has not been absorbed by the soil. Using this, along with a gravitation simulation, it should be possible to determine main river networks on the terrain based on water builds up. This water drainage simulation should work in real-time and its duration controllable by the user in order to have fine-control over the size and depth of the resulting river networks (i.e. a longer simulation will drain more water and, as such, the river networks will be less intense).
+Rainfall is a vital requirement to plant life and, as such, gathering rainfall data will be essential to model realistic vegetation on the terrain. Using this rainfall data along with soil properties, it is possible to calculate the amount of standing water which has not been absorbed by the soil. Using this, along with a gravitation simulation, it should be possible to determine main river networks on the terrain based on water builds up. The water drainage simulation employed here will be gravitational based and inspired from the hydrostatic pipe-model of Št'Ava et al. \cite{StAva2008}. It should be optimized to work in real-time and its duration controllable by the user in order to have fine-control over the size and depth of the resulting river networks (i.e. a longer simulation will drain more water and, as such, the river networks will be less intense).

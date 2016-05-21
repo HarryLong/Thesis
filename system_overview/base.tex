@@ -1,5 +1,29 @@
 \chapter{System Overview} \label{chap:system_overview}
 
+In this chapter are discussed the design requirements, motivations and constraints. Given this, a chosen architecture is discussed along with the individual components and how they fit together (as illustrated in figure \ref{fig:system_overview}).\\\\
+To conclude, the \textit{limitations} of the system will be discussed and \textit{comparisons and differences} drawn with previous work in the field.
+
+\section{Design Motivations} \label{sec:design_constraints}
+
+This work attempts to bridge the gap between ecosystem simulators and probabilistic placement by using the simulator to determine realistic vegetation distributions on a a predefined area and radial distribution analysis to efficiently reproduce it at any scale.\\
+By limiting the coverage area of the ecosystem simulator, it is possible to generate more accurate vegetation distributions by performing a more accurate simulation whilst keeping simulation times manageable.\\
+A combination of user-focused input tools, procedural methods and an efficient clustering algorithm is used to split the terrain into clusters based on the resources associated with each terrain vertex. By doing so, the system automatically determines the areas of the terrain which differ sufficiently in resources to necessitate a new vegetation distribution to be calculated.\\
+
+Given this, to meet the requirements of this research, the final system must present an interface which permits users to load a virtual terrain and easily specify position, clustering and resource properties. With all this information, the system should automatically determine terrain clusters and associated suitable plant species to suggest to the user. Finally, given the selected species, a suitable vegetation distribution must be generated.\\
+
+Given these constraints, the core system can be split into the following building blocks:
+\begin{itemize}
+\item The \textit{terrain and resource gatherer} whose purpose is to gather the terrain and associated resources.
+\item The \textit{resource clusterer} to cluster points of the terrain into clusters based on resource similarities.
+\item The \textit{plant data manager} which is responsible for gathering and storing plant species with their associated properties. It is also responsible for determining suitable plants given the calculated resources.
+\item The \textit{ecosystem simulator} which uses plant species data obtained from the \textit{plant data manager} to simulate plants battling for resources in a given environment.
+\item The \textit{distribution analyser and reproducer} which is able to store a plant distribution output from the ecosystem simulator and efficiently reproduce it at much larger scales.
+\end{itemize}
+
+Although these building blocks will work together to fulfil the requirements of our system, they are very much independent. As such, they are all implemented as seperate components which can function as standalone components or as libraries. Running individual components separately is also valuable as, for example, it makes it possible to use the ecosystem simulator to pre-calculate plant distribution data and, in turn, the distribution analyzer to calculate the underlying distribution characteristics.\\
+
+\section{Architecture} 
+
 \begin{figure}
 \center
 	\includegraphics[width=\textwidth]{system_overview.png}
@@ -7,13 +31,10 @@
 	\label{fig:system_overview}
 \end{figure}
 
-Multiple components serving specific purposes constitute the building blocks of the overall system, notably: \textit{resource gathering}, \textit{resource clustering}, \textit{plant selection}, \textit{ecosystem simulation} and \textit{distribution analysis and reproduction}. The purpose of this chapter is to give an overview of the system, each component and how they fit together (as illustrated in figure \ref{fig:system_overview}). To do so, an overview of each component is provided separately along with it's purpose, required inputs and outputs.\\
-To conclude, the \textit{limitations} of the system will be discussed and \textit{comparisons and differences} drawn with previous work in the field.
-
-\section{Resource Gatherer} \label{sec:resource_gatherer}
+\subsection{Resource Gatherer} \label{sec:resource_gatherer}
 
 Vegetation requires resources to grow and the distribution of these resources identifies a given species and associated it with a given climate and, subsequently, location on earth. Determining resource data is essential, therefore, to generating realistic virtual worlds as it is vital to determining vegetation distribution patterns. The purpose of the resource gatherer is to determine, for each terrain vertex: \textit{sun exposure}, \textit{soil humidity}, \textit{temperature} and \textit{slope}. Figure \ref{fig:system_overview_resource_gatherer} illustrates the output of the resource gatherer along with the user inputs required.\\
-The latitude and orientation of the terrain must be specified by the user in order to determine the sun position throughout the year. The \textit{sunlight exposure} calculation then determines, given this information and the terrain relief, the average daily illumination (in hours) received by each terrain vertex for each month of the year. To calculate the average illumination for a given month, the trajectory of the sun is calculated for the fifteenth day. \\
+The latitude and orientation of the terrain must be specified by the user in order to determine the sun position throughout the year. The \textit{sunlight exposure} calculation then determines, given this information and the terrain relief, the average daily illumination (in hours) received by each terrain vertex for each month of the year. To calculate the average illumination for a given month, the trajectory of the sun is calculated for the fifteenth day (discussed later in the body of the thesis). \\
 In order to calculate the \textit{soil humidity} for each month, the soil infiltration rate, monthly rainfall quantity and monthly rainfall intensity must be configured.\\
 To determine the \textit{temperature} of each terrain vertex, the user must specify the temperature at zero metres in June and December along with the associated lapse rate. These temperatures are then considered the annual minimum and maximum and are used to deduce the temperature for any month through linear interpolation. The lapse rate represents the decrease in temperature with altitude and is used to determine the temperature for any terrain vertex given its altitude. \\
 The \textit{slope} is determined automatically from the input terrain.\\
@@ -25,9 +46,10 @@ The \textit{slope} is determined automatically from the input terrain.\\
 	\label{fig:system_overview_resource_gatherer}
 \end{figure}
 
-\section{Resource Clusterer}
+\subsection{Resource Clusterer}
 
-Determining a suitable plant distribution for each individual terrain vertex is infeasible due to the associated computation cost. To reduce the amount of plant distributions to calculate, K-means clustering is performed on the terrain to group together points with similar resource properties. The mean value of each cluster is then used to determine suitable vegetation and its distribution. Figure \ref{fig:system_overview_resoure_clusterer} illustrates the input requirements and output of this component.\\
+Determining a suitable plant distribution for each individual terrain vertex is infeasible. Indeed, this would require running an instance of the the computationally expensive ecosystem simulator (see section \ref{subsec:ecosystem_algorithm_complexity}) for each individual terrain vertex.\\
+To reduce the amount of plant distributions to calculate, K-means clustering is performed on the terrain to group together points with similar resource properties. The mean value of each cluster is then used to determine suitable vegetation and its distribution. Figure \ref{fig:system_overview_resoure_clusterer} illustrates the input requirements and output of this component.\\
 The \textit{cluster count} which must be specified as input dictates how many clusters the algorithm produces. In essence, it controls the sensitivity of the clustering algorithm.\\
 The per-vertex resource data represents all the resource information discussed in section \ref{sec:resource_gatherer}.\\
 Given all this information, the clustering algorithm gathers points which are most similar in terms of resources into a set of \textit{k} clusters. \\
@@ -39,9 +61,9 @@ Given all this information, the clustering algorithm gathers points which are mo
 	\label{fig:system_overview_resoure_clusterer}
 \end{figure}
 
-\section{Plant Selector}
+\subsection{Plant Selector}
 
-Given the mean value of the individual clusters, the plant selector determines the plants which are able to survive in each terrain cluster and calculates for each of them a suitability score. This score depicts how suited a species is to each individual cluster and is displayed to the user for informational purposes in order to facilitate the species selection procedure. Figure \ref{fig:system_overview_plant_selector} shows the input requirements and outputs of this component.
+Given the mean value of the individual clusters, the plant selector determines the plants which are able to survive in each terrain cluster and calculates for each of them a suitability score. This score represents how suited a species is to each individual cluster and is displayed to the user for informational purposes in order to facilitate the species selection procedure. Figure \ref{fig:system_overview_plant_selector} shows the input requirements and outputs of this component.
 
 \begin{figure}
 \center
@@ -50,7 +72,7 @@ Given the mean value of the individual clusters, the plant selector determines t
 	\label{fig:system_overview_plant_selector}
 \end{figure}
 
-\section{Ecosystem Simulator}
+\subsection{Ecosystem Simulator}
 
 The ecosystem simulator is used to determine a valid plant distribution given a set of plant species and resources (soil humidity, illumination, slope and temperature). It simulates plants spawning, growing, battling and dying through time at monthly intervals on a hundred by hundred metre simulation area. Figure \ref{fig:system_overview_ecosystem_simulator} shows the input and output requirements of this component.
 
@@ -61,7 +83,7 @@ The ecosystem simulator is used to determine a valid plant distribution given a 
 	\label{fig:system_overview_ecosystem_simulator}
 \end{figure}
 
-\section{Distribution Analyser and Reproducer}
+\subsection{Distribution Analyser and Reproducer}
 
 Because the ecosystem simulator is computationally expensive, the simulation area is restricted to ten thousand square metres (hundred by hundred metres). In order to place vegetation in clusters with larger surface areas, radial distribution analysis and reproduction is performed \cite{Emilien,Boudon2007,Lane2002}. This technique analyses the variation in plant density over distance of an input exemplar in order to generate pair correlation histograms which are used to reproduce distributions matching the characteristics of the input exemplar. Because the reproduction is much less computationally costly than the ecosystem simulator, it is possible to efficiently produce distributions covering much larger areas. Figure \ref{fig:system_overview_distribution_analyser_and_reproducer} shows the input requirements and outputs of this component.
 
@@ -87,9 +109,5 @@ Because of these limitations, it is more accurate to see this system as a tool t
 Explicit instancing techniques \cite{Emilien,Deussen1998,Andujar2014} permit users to explicitly state the exact location of individual plant instances. Although this gives users fine-control over terrain content, the task can be long and tedious for very large terrains. Realism can also be poor in these systems as they rely entirely on the user for accurate vegetation placement.\\
 Ecosystem simulators techniques ~\cite{Lane2002,Deussen1998} attempt to overcome this by generating plausible plant distributions by algorithmically reproducing the competition for resources that occurs in nature during plant growth. In order to generate plant instances on areas large enough to fill entire terrains in a manageable time frame, however, these algorithms are often over-simplified.\\
 Probabilistic placement techniques such as that employed in the work by Emilien et al. \cite{Emilien} attempt to overcome the downside of explicit placement by analysing inter and intra plant distributions in order to replicate similar distributions on much wider areas. This way the user is only required to perform explicit plant placement on a small area, the distribution of which can be analysed and reproduced on any scale with no repetition. Vegetation realism is still not guaranteed, however, as the user is still responsible of producing the input exemplars as well as delimiting areas on the terrain on which to map the exemplar.\\
-
-This work attempts to bridge the gap between ecosystem simulators and probabilistic placement by using the simulator to determine realistic vegetation distributions on a a predefined area and radial distribution analysis to efficiently reproduce it at any scale.\\
-By limiting the coverage area of the ecosystem simulator, it is possible to generate more accurate vegetation distributions by performing a more accurate simulation whilst keeping simulation times manageable.\\
-A combination of user-focused input tools, procedural methods and an efficient clustering algorithm is used to split the terrain into clusters based on the resources associated with each terrain vertex. By doing so, the system automatically determines the areas of the terrain which differ sufficiently in resources to necessitate a new vegetation distribution to be calculated.\\
 
 

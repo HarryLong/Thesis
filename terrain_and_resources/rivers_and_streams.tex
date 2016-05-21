@@ -1,4 +1,4 @@
-\section{Rivers \& Streams} \label{sec:rivers_and_streams}
+\section{Rivers and Streams} \label{sec:rivers_and_streams}
 
 Water networks are essential to the realism of virtual rural terrains. These water networks are constituted of rivers and streams and are the consequence of water being transported by gravity from higher to lower elevation. The algorithm used to model water movement on the terrain is outlined below, along with details concerning the GPU implementation.\\
 Unlike work by \cite{Kelley1988} and Št'Ava et al. \cite{StAva2008}, this work does not simulate hydraulic erosion. That is, there is no feedback loop between water movement and the terrain to model changes in terrain relief.
@@ -94,7 +94,7 @@ The flow of water on the terrain can be measured by keeping track of the number 
 
 \subsection{GPU Implementation}
 
-Processing water flow on the terrain is computationally expensive as the amount of water to evacuate needs to be calculated iteratively for each terrain vertex. To accelerate the process it is implemented to make use of the heavily parallel architecture of GPU's. \\
+Processing water flow on the terrain is computationally expensive as the amount of water to evacuate needs to be calculated iteratively for each terrain vertex. To accelerate the process it is implemented to make use of the heavily parallel architecture of GPU's (see appendix \ref{AppendixI} for the shader code). \\
 
 GPU's have a single-core multiple thread (SIMT) architecture meaning each operation is performed simultaneously by a large number of threads on different input data. A \textit{work-group} is a grouping of threads within the GPU architecture which are guaranteed to run in parallel and which share local memory with very fast access speeds. One or more work-groups can execute at the same time.\\
 
@@ -138,7 +138,7 @@ Each thread within a work-group relates to a unique vertex on the terrain from w
 	\label{fig:water_flow_dest_conflicts}
 \end{figure}
 
-To prevent such memory conflicts, a temporary three-dimensional array is allocated in local storage (fast-access) for each work group in which water movement is written. The x and y dimensions of this temporary array are the width and height of the associated work-group respectively and each [x,y] pair represent a unique destination on the terrain in which water can be added. The third-dimension serves to prevent memory conflicts by giving each source vertex a unique index in which to write water to add (see figure\ref{fig:water_flow_dest_conflict_prevent}).\\
+One way to prevent this is to use atomic additions which ensure there are no memory conflicts between threads when writing to the same location in memory. Unfortunately, atomic additions are only possible with integer values. Here, the water levels are represented as floating points. This is important as if the water height is casted to an integer during the simulation, some water is lost. Although this isn't substantial for a single iteration, because the simulation performs thousands of iterations, it adds up. To prevent such memory conflicts with floating point values, a temporary three-dimensional array is allocated in local storage (fast-access) for each work group in which water movement is written. The x and y dimensions of this temporary array are the width and height of the associated work-group respectively and each [x,y] pair represent a unique destination on the terrain in which water can be added. The third-dimension serves to prevent memory conflicts by giving each source vertex a unique index in which to write water to add (see figure\ref{fig:water_flow_dest_conflict_prevent}).\\
 
 \begin{figure}
 \center
